@@ -1,0 +1,20 @@
+QCheckBox{  
+    spacing: 5px;  
+}  
+  
+QCheckBox::indicator{  
+    width: 15px;  
+    height: 15px;  
+}  
+  
+QCheckBox::indicator:unchecked{  
+    image:url(:/res/nock.png);  
+}  
+  
+QCheckBox::indicator:checked{  
+    image:url(:/res/ck.png);  
+}  
+  
+QCheckBox::indicator:checked:disabled{  
+    image:url(:/res/nock.png);  
+} 

@@ -1,0 +1,1262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>recordPlayWidget</class>
+ <widget class="QWidget" name="recordPlayWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1024</width>
+    <height>624</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <widget class="QComboBox" name="cameraSelectionComboBox">
+   <property name="geometry">
+    <rect>
+     <x>205</x>
+     <y>150</y>
+     <width>76</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>110</y>
+     <width>111</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>18</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"> #label_5 { 
+	color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+  } 
+ #label_5 * { 
+     background-color:; 
+ }</string>
+   </property>
+   <property name="text">
+    <string> 位置选择</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="playNextOnePushButton">
+   <property name="geometry">
+    <rect>
+     <x>660</x>
+     <y>565</y>
+     <width>51</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+background-image: url(:/monres/next.bmp);
+border-color: rgb(255, 255, 255);
+border-width: 1px;
+border-style: solid;}
+
+QPushButton:pressed
+{background-color: rgb(86, 164, 246);
+color: rgb(255, 255, 255);
+border-color: rgb(170, 170, 170);
+border-width: 2px;border-style: solid;}</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>41</width>
+     <height>41</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="stopPushButton">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>565</y>
+     <width>51</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+background-image: url(:/monres/stop.bmp);
+border-color: rgb(255, 255, 255);
+border-width: 1px;
+border-style: solid;}
+
+QPushButton:pressed
+{background-color: rgb(86, 164, 246);
+color: rgb(255, 255, 255);
+border-color: rgb(170, 170, 170);
+border-width: 2px;border-style: solid;}
+</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>41</width>
+     <height>41</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_7">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>140</y>
+     <width>151</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"> #label_7 { 
+	color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+  } 
+ #label_7 * { 
+     background-color:; 
+ }</string>
+   </property>
+   <property name="text">
+    <string>   摄像机</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="alarmPushButton">
+   <property name="geometry">
+    <rect>
+     <x>715</x>
+     <y>575</y>
+     <width>82</width>
+     <height>36</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+background-image: url(:/monres/alertoff.bmp);
+border-color: rgb(255, 255, 255);
+border-width: 1px;
+border-style: solid;}
+
+
+QPushButton:pressed
+{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_8">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>190</y>
+     <width>281</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>15</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"> #label_8 { 
+    background-color: rgb(255, 255, 255);
+  } 
+ #label_8 * { 
+     background-color:; 
+ }</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QTableWidget" name="recordFileTableWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>250</y>
+     <width>281</width>
+     <height>291</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-style: none;
+background-color: rgb(204, 232, 207);
+gridline-color: rgb(255, 255, 255);
+border-color: rgb(130, 135, 144);
+border-width: 1px;border-style: solid;</string>
+   </property>
+   <property name="showGrid">
+    <bool>false</bool>
+   </property>
+   <property name="columnCount">
+    <number>3</number>
+   </property>
+   <attribute name="horizontalHeaderCascadingSectionResizes">
+    <bool>false</bool>
+   </attribute>
+   <attribute name="horizontalHeaderDefaultSectionSize">
+    <number>100</number>
+   </attribute>
+   <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+    <bool>false</bool>
+   </attribute>
+   <attribute name="horizontalHeaderStretchLastSection">
+    <bool>true</bool>
+   </attribute>
+   <attribute name="verticalHeaderVisible">
+    <bool>false</bool>
+   </attribute>
+   <column>
+    <property name="text">
+     <string>选中</string>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="textAlignment">
+     <set>AlignCenter</set>
+    </property>
+    <property name="background">
+     <color>
+      <red>255</red>
+      <green>255</green>
+      <blue>255</blue>
+     </color>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>序号</string>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="textAlignment">
+     <set>AlignCenter</set>
+    </property>
+    <property name="background">
+     <color>
+      <red>255</red>
+      <green>255</green>
+      <blue>255</blue>
+     </color>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>视频</string>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="textAlignment">
+     <set>AlignCenter</set>
+    </property>
+    <property name="background">
+     <color>
+      <red>255</red>
+      <green>255</green>
+      <blue>255</blue>
+     </color>
+    </property>
+   </column>
+  </widget>
+  <widget class="QPushButton" name="playLastOnePushButton">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>565</y>
+     <width>51</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+background-image: url(:/monres/before.bmp);
+border-color: rgb(255, 255, 255);
+border-width: 1px;
+border-style: solid;}
+
+QPushButton:pressed
+{background-color: rgb(86, 164, 246);
+color: rgb(255, 255, 255);
+border-color: rgb(170, 170, 170);
+border-width: 2px;border-style: solid;}
+</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>41</width>
+     <height>41</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="queryPushButton">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>185</y>
+     <width>112</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+background-image: url(:/monres/search.bmp);
+border-color: rgb(255, 255, 255);
+border-width: 1px;
+border-style: solid;}
+
+
+QPushButton:pressed
+{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>101</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>18</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"> #label_2 { 
+	color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+  } 
+ #label_2 * { 
+     background-color:; 
+ }</string>
+   </property>
+   <property name="text">
+    <string> 回放设置</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_11">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>640</y>
+     <width>311</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>15</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"> #label_11 { 
+    background-color: rgb(255, 255, 255);
+  } 
+ #label_11 * { 
+     background-color:; 
+ }</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="downLoadPushButton">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>575</y>
+     <width>207</width>
+     <height>44</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+background-image: url(:/monres/videodownload.bmp);
+border-color: rgb(255, 255, 255);
+border-width: 1px;
+border-style: solid;}
+
+QPushButton:pressed
+{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="minusStepPushButton">
+   <property name="geometry">
+    <rect>
+     <x>880</x>
+     <y>560</y>
+     <width>68</width>
+     <height>58</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+background-image: url(:/monres/mslow.bmp);
+border-color: rgb(255, 255, 255);
+border-width: 1px;
+border-style: solid;}
+
+QPushButton:pressed
+{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>41</width>
+     <height>41</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="playPushButton">
+   <property name="geometry">
+    <rect>
+     <x>400</x>
+     <y>565</y>
+     <width>51</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+background-image: url(:/monres/start.bmp);
+border-color: rgb(255, 255, 255);
+border-width: 1px;
+border-style: solid;}
+
+QPushButton:pressed
+{background-color: rgb(86, 164, 246);
+color: rgb(255, 255, 255);
+border-color: rgb(170, 170, 170);
+border-width: 2px;border-style: solid;}
+</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>41</width>
+     <height>41</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_6">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>140</y>
+     <width>141</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"> #label_6 { 
+	color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+  } 
+ #label_6 * { 
+     background-color:; 
+ }</string>
+   </property>
+   <property name="text">
+    <string> 车厢号</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>80</y>
+     <width>71</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"> #label_4 { 
+	color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+  } 
+ #label_4 * { 
+     background-color:; 
+ }</string>
+   </property>
+   <property name="text">
+    <string> 结束时间</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="fastForwardPushButton">
+   <property name="geometry">
+    <rect>
+     <x>590</x>
+     <y>565</y>
+     <width>51</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+background-image: url(:/monres/fast.bmp);
+border-color: rgb(255, 255, 255);
+border-width: 1px;
+border-style: solid;}
+
+QPushButton:pressed
+{background-color: rgb(86, 164, 246);
+color: rgb(255, 255, 255);
+border-color: rgb(170, 170, 170);
+border-width: 2px;border-style: solid;}
+</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>41</width>
+     <height>41</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_9">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>210</y>
+     <width>101</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>18</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"> #label_9 { 
+	color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+  } 
+ #label_9 * { 
+     background-color:; 
+ }</string>
+   </property>
+   <property name="text">
+    <string> 文件列表</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="slowForwardPushButton">
+   <property name="geometry">
+    <rect>
+     <x>330</x>
+     <y>565</y>
+     <width>51</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+background-image: url(:/monres/slow.bmp);
+border-color: rgb(255, 255, 255);
+border-width: 1px;
+border-style: solid;}
+
+QPushButton:pressed
+{background-color: rgb(86, 164, 246);
+color: rgb(255, 255, 255);
+border-color: rgb(170, 170, 170);
+border-width: 2px;border-style: solid;}
+</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>41</width>
+     <height>41</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>40</y>
+     <width>71</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"> #label_3 { 
+	color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+  } 
+ #label_3 * { 
+     background-color:; 
+ }</string>
+   </property>
+   <property name="text">
+    <string> 起始时间</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="carSeletionComboBox">
+   <property name="geometry">
+    <rect>
+     <x>55</x>
+     <y>150</y>
+     <width>81</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="plusStepPushButton">
+   <property name="geometry">
+    <rect>
+     <x>950</x>
+     <y>560</y>
+     <width>68</width>
+     <height>58</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+background-image: url(:/monres/mfast.bmp);
+border-color: rgb(255, 255, 255);
+border-width: 1px;
+border-style: solid;}
+
+QPushButton:pressed
+{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>41</width>
+     <height>41</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QDateEdit" name="StartdateEdit">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>40</y>
+     <width>101</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="locale">
+    <locale language="Chinese" country="China"/>
+   </property>
+   <property name="keyboardTracking">
+    <bool>false</bool>
+   </property>
+   <property name="displayFormat">
+    <string>yyyy/M/dd </string>
+   </property>
+   <property name="calendarPopup">
+    <bool>false</bool>
+   </property>
+   <property name="timeSpec">
+    <enum>Qt::LocalTime</enum>
+   </property>
+   <property name="date">
+    <date>
+     <year>2000</year>
+     <month>2</month>
+     <day>2</day>
+    </date>
+   </property>
+  </widget>
+  <widget class="QDateEdit" name="EnddateEdit">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>80</y>
+     <width>101</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="locale">
+    <locale language="Chinese" country="China"/>
+   </property>
+   <property name="keyboardTracking">
+    <bool>false</bool>
+   </property>
+   <property name="displayFormat">
+    <string>yyyy/MM/dd</string>
+   </property>
+   <property name="calendarPopup">
+    <bool>false</bool>
+   </property>
+   <property name="currentSectionIndex">
+    <number>0</number>
+   </property>
+   <property name="timeSpec">
+    <enum>Qt::LocalTime</enum>
+   </property>
+   <property name="date">
+    <date>
+     <year>2000</year>
+     <month>2</month>
+     <day>2</day>
+    </date>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>45</y>
+     <width>31</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>时间</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_14">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>85</y>
+     <width>31</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>时间</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="canselPushButton">
+   <property name="geometry">
+    <rect>
+     <x>800</x>
+     <y>575</y>
+     <width>82</width>
+     <height>36</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+background-image: url(:/monres/cancel.bmp);
+border-color: rgb(255, 255, 255);
+border-width: 1px;
+border-style: solid;}
+
+QPushButton:pressed
+{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>460</x>
+     <y>565</y>
+     <width>51</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+background-image: url(:/monres/pause1.bmp);
+border-color: rgb(255, 255, 255);
+border-width: 1px;
+border-style: solid;}
+
+QPushButton:pressed
+{background-color: rgb(86, 164, 246);
+color: rgb(255, 255, 255);
+border-color: rgb(170, 170, 170);
+border-width: 2px;border-style: solid;}
+</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_12">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1024</width>
+     <height>624</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QProgressBar" name="fileDownloadProgressBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>550</y>
+     <width>271</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QProgressBar {
+	background-color: rgb(0, 193, 37);
+   border: 1px solid grey;
+   border-radius: 2px;
+   background-color: #FFFFFF;
+}
+ 
+QProgressBar::chunk {
+   background-color: #4FEE9C;
+   width: 20px;
+}
+ 
+QProgressBar {
+   border: 1px solid grey;
+   border-radius: 2px;
+   text-align: center;
+}</string>
+   </property>
+   <property name="value">
+    <number>0</number>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="StartcomboBox">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>40</y>
+     <width>71</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>0时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>1时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>3时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>4时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>5时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>6时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>7时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>8时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>9时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>10时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>11时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>12时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>13时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>14时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>15时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>16时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>17时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>18时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>19时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>20时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>21时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>22时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>23时</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="EndcomboBox">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>80</y>
+     <width>71</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>0时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>1时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>3时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>4时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>5时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>6时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>7时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>8时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>9时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>10时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>11时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>12时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>13时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>14时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>15时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>16时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>17时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>18时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>19时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>20时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>21时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>22时</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>23时</string>
+    </property>
+   </item>
+  </widget>
+  <zorder>label_12</zorder>
+  <zorder>label_5</zorder>
+  <zorder>stopPushButton</zorder>
+  <zorder>label_7</zorder>
+  <zorder>alarmPushButton</zorder>
+  <zorder>label_8</zorder>
+  <zorder>playLastOnePushButton</zorder>
+  <zorder>label_2</zorder>
+  <zorder>label_11</zorder>
+  <zorder>minusStepPushButton</zorder>
+  <zorder>playPushButton</zorder>
+  <zorder>label_6</zorder>
+  <zorder>label_4</zorder>
+  <zorder>fastForwardPushButton</zorder>
+  <zorder>label_9</zorder>
+  <zorder>slowForwardPushButton</zorder>
+  <zorder>label_3</zorder>
+  <zorder>carSeletionComboBox</zorder>
+  <zorder>plusStepPushButton</zorder>
+  <zorder>cameraSelectionComboBox</zorder>
+  <zorder>recordFileTableWidget</zorder>
+  <zorder>downLoadPushButton</zorder>
+  <zorder>playNextOnePushButton</zorder>
+  <zorder>StartdateEdit</zorder>
+  <zorder>EnddateEdit</zorder>
+  <zorder>label</zorder>
+  <zorder>label_14</zorder>
+  <zorder>canselPushButton</zorder>
+  <zorder>pushButton</zorder>
+  <zorder>queryPushButton</zorder>
+  <zorder>fileDownloadProgressBar</zorder>
+  <zorder>StartcomboBox</zorder>
+  <zorder>EndcomboBox</zorder>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

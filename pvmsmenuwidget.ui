@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>pvmsMenuWidget</class>
+ <widget class="QWidget" name="pvmsMenuWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1024</width>
+    <height>768</height>
+   </rect>
+  </property>
+  <property name="focusPolicy">
+   <enum>Qt::StrongFocus</enum>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="layoutDirection">
+   <enum>Qt::LeftToRight</enum>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">#pvmsMenuWidget { 
+border-image: url(:/monres/Pantobg.bmp); 
+} 
+#pvmsMenuWidget * { 
+border-image:url(); 
+}
+</string>
+  </property>
+  <widget class="QPushButton" name="recordPlayMenuPushButton">
+   <property name="geometry">
+    <rect>
+     <x>205</x>
+     <y>35</y>
+     <width>203</width>
+     <height>102</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>18</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+background-color: rgb(5, 135, 167);}
+
+QPushButton:hover{border-color: rgb(255, 255, 255);border-width: 2px;border-style: solid;}
+
+QPushButton:pressed
+{border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="flat">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="devManageMenuPushButton">
+   <property name="geometry">
+    <rect>
+     <x>615</x>
+     <y>35</y>
+     <width>203</width>
+     <height>102</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>18</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+background-color: rgb(5, 135, 167);}
+
+QPushButton:hover{border-color: rgb(255, 255, 255);border-width: 2px;border-style: solid;}
+
+QPushButton:pressed
+{border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="flat">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="devUpdateMenuPushButton">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>820</x>
+     <y>35</y>
+     <width>203</width>
+     <height>102</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>18</pointsize>
+    </font>
+   </property>
+   <property name="cursor">
+    <cursorShape>ArrowCursor</cursorShape>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+background-color: rgb(5, 135, 167);}
+
+QPushButton:hover{border-color: rgb(255, 255, 255);border-width: 2px;border-style: solid;}
+
+QPushButton:pressed
+{border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>203</width>
+     <height>102</height>
+    </size>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="flat">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pvmsMonitorMenuPushButton">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>35</y>
+     <width>203</width>
+     <height>102</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>18</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+background-color: rgb(5, 135, 167);}
+
+QPushButton:hover{border-color: rgb(255, 255, 255);border-width: 2px;border-style: solid;}
+
+QPushButton:pressed
+{border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="flat">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="inteAnalyMenuPushButton">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>35</y>
+     <width>203</width>
+     <height>102</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>18</pointsize>
+    </font>
+   </property>
+   <property name="cursor">
+    <cursorShape>ArrowCursor</cursorShape>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+background-color: rgb(5, 135, 167);}
+
+QPushButton:hover{border-color: rgb(255, 255, 255);border-width: 2px;border-style: solid;}
+
+QPushButton:pressed
+{border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>203</width>
+     <height>102</height>
+    </size>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="flat">
+    <bool>false</bool>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
