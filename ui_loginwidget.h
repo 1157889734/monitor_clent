@@ -35,6 +35,8 @@ public:
         if (loginWidget->objectName().isEmpty())
             loginWidget->setObjectName(QString::fromUtf8("loginWidget"));
         loginWidget->resize(1024, 768);
+        loginWidget->setMinimumSize(QSize(300, 350));
+        loginWidget->setMaximumSize(QSize(1024, 768));
         loginWidget->setStyleSheet(QString::fromUtf8("#loginWidget { \n"
 "border-image: url(:/monres/Pantobg - \345\211\257\346\234\254.bmp); \n"
 "} \n"

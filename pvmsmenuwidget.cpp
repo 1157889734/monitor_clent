@@ -97,8 +97,8 @@ pvmsMenuWidget::pvmsMenuWidget(QWidget *parent) :
     connect(m_devManagePage, SIGNAL(systimeSetSignal()), m_pvmsMonitorPage, SLOT(systimeSetSlot()));
     connect(m_pvmsMonitorPage, SIGNAL(hideAlarmWidgetSignal()), this, SLOT(hideAlarmWidgetSlot()));
     connect(m_pvmsMonitorPage, SIGNAL(showAlarmWidgetSignal()), this, SLOT(showAlarmWidgetSlot()));
-//    connect(this, SIGNAL(blackScreenSignal()), m_pvmsMonitorPage, SLOT(blackScreenCtrlSlot()));
-//    connect(this, SIGNAL(blackScreenExitSignal()), m_pvmsMonitorPage, SLOT(blackScreenExitCtrlSlot()));
+    connect(this, SIGNAL(blackScreenSignal()), m_pvmsMonitorPage, SLOT(blackScreenCtrlSlot()));
+    connect(this, SIGNAL(blackScreenExitSignal()), m_pvmsMonitorPage, SLOT(blackScreenExitCtrlSlot()));
 
 
 

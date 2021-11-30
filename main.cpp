@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 {
     qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
 
-    QApplication app(argc, argv);
+    MyApplication app(argc, argv);
 
 
     char acNvrServerIp[128] = {0}, acClientVersion[64] = {0};
@@ -163,12 +163,12 @@ int main(int argc, char *argv[])
 
 //    MyApplication app;
 
-//    QObject::connect(&app, SIGNAL(blackScreenSignal()), g_pvmsMenuPage, SLOT(blackScreenCtrlSlot()));
-//    QObject::connect(&app, SIGNAL(blackScreenExitSignal()), g_pvmsMenuPage, SLOT(blackScreenExitCtrlSlot()));
+    QObject::connect(&app, SIGNAL(blackScreenSignal()), g_pvmsMenuPage, SLOT(blackScreenCtrlSlot()));
+    QObject::connect(&app, SIGNAL(blackScreenExitSignal()), g_pvmsMenuPage, SLOT(blackScreenExitCtrlSlot()));
 
 	
-//    QObject::connect(g_pvmsMenuPage, SIGNAL(alarmHappenSignal()), &app, SLOT(alarmHappenSignalCtrl()));
-//    QObject::connect(g_pvmsMenuPage, SIGNAL(alarmClearSignal()), &app, SLOT(alarmClearSignalCtrl()));
+    QObject::connect(g_pvmsMenuPage, SIGNAL(alarmHappenSignal()), &app, SLOT(alarmHappenSignalCtrl()));
+    QObject::connect(g_pvmsMenuPage, SIGNAL(alarmClearSignal()), &app, SLOT(alarmClearSignalCtrl()));
 
 
 	

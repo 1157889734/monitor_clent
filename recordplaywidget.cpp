@@ -282,6 +282,11 @@ void recordPlayWidget::playSliderMoveSlot(int iPosTime)
 
     if (m_cmpHandle != NULL)
     {
+        if(CMP_STATE_PLAY != CMP_GetPlayStatus(m_cmpHandle))
+        {
+            return;
+        }
+
         m_iPlayFlag = 1;
         pthread_mutex_lock(&g_sliderValueSetMutex);
         m_playSlider->setValue(iPosTime);
@@ -309,6 +314,12 @@ void recordPlayWidget::playSliderPressSlot(int iPosTime)
     }
     if (m_cmpHandle != NULL)
     {
+
+        if(CMP_STATE_PLAY != CMP_GetPlayStatus(m_cmpHandle))
+        {
+            return;
+        }
+
         m_iPlayFlag = 1;
         pthread_mutex_lock(&g_sliderValueSetMutex);
         m_playSlider->setValue(iPosTime);
@@ -323,6 +334,11 @@ void recordPlayWidget::playPlusStepSlot()
     qint64 iPosTime = 0;
 
     if (NULL == m_cmpHandle)
+    {
+        return;
+    }
+
+    if(CMP_STATE_PLAY != CMP_GetPlayStatus(m_cmpHandle))
     {
         return;
     }
@@ -362,6 +378,10 @@ void recordPlayWidget::playMinusStepSlot()
         return;
     }
 
+    if(CMP_STATE_PLAY != CMP_GetPlayStatus(m_cmpHandle))
+    {
+        return;
+    }
     m_iPlayFlag = 1;
     setPlayButtonStyleSheet();
 
@@ -543,15 +563,6 @@ void recordPlayWidget::setRangeLabelSlot()
 void recordPlayWidget::setPlaySliderValueSlot(int iValue)    //实时刷新播放进度条的当前值
 {
     m_playSlider->setValue(iValue);
-}
-
-
-void recordPlayWidget::setPosition(int position)
-{
-    if (m_cmpHandle != NULL)
-    {
-        CMP_SetPosition(m_cmpHandle,position);
-    }
 }
 
 

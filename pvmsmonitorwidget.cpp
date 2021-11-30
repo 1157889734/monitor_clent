@@ -518,7 +518,7 @@ void *monitorThread(void *param)     //实时监控线程，对通道轮询、�
             //printf("tFullScreenCurTime=%d,pvmsMonitorPage->m_lastActionTime=%d\n",tFullScreenCurTime,pvmsMonitorPage->m_lastActionTime);
             if (pvmsMonitorPage->isHidden() != 1)   //只有当前处于受电弓监控界面时才做触发全屏处理
             {
-    //            pvmsMonitorPage->triggerFullScreenSignal();
+                pvmsMonitorPage->triggerFullScreenSignal();
             }
             pvmsMonitorPage->m_lastActionTime = tFullScreenCurTime;
         }
@@ -1260,8 +1260,6 @@ void pvmsMonitorWidget::fillLightSwitchSlot()
             return;
         }
 
-
-
 //        DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget open fillLight!\n");
         emit fillLightSwitchButtonTextCtrlSignal(0);  //触发让补光灯开关按钮显示文本的信号
 
@@ -1496,6 +1494,17 @@ void pvmsMonitorWidget::setFullScreenSignalCtrl()
         tPkt.iCh = 0;
         PutNodeToCmpQueue(m_ptQueue, &tPkt);
 
+        for (int i = 0; i < m_iCameraNum; i++)
+        {
+            CMP_SetPlayEnable(m_tCameraInfo[i].cmpHandle, 0);
+        }
+
+        T_WND_INFO tWndInfo;
+        tWndInfo.hWnd = m_playWin;
+        CMP_ChangeWnd(m_tCameraInfo[m_iCameraPlayNo].cmpHandle, &tWndInfo);
+        CMP_SetPlayEnable(m_tCameraInfo[m_iCameraPlayNo].cmpHandle, 1);
+
+
         m_channelStateLabel->setGeometry(452, 230, 130, 50);
         m_channelNoLabel->setGeometry(20, 690, 100, 50);
         if (m_presetPasswdConfirmPage != NULL)
@@ -1504,7 +1513,7 @@ void pvmsMonitorWidget::setFullScreenSignalCtrl()
 
         }
         emit hideAlarmWidgetSignal();
-//        m_iFullScreenFlag = 1;
+        m_iFullScreenFlag = 1;
     }
 
 }
@@ -1647,8 +1656,8 @@ void pvmsMonitorWidget::recordPlayCtrlSlot()
 void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
 {
     const char * rtsp_url[] = {
-                "rtsp://admin:12345@192.168.104.201", "rtsp://192.168.104.200",
-                "rtsp://admin:12345@192.168.104.201", "rtsp://192.168.104.200"};
+                "rtsp://admin:admin123@192.168.104.201", "rtsp://192.168.104.200",
+                "rtsp://admin:admin123@192.168.104.201", "rtsp://192.168.104.200"};
     int preindex=0,nextindex=0;
     int curindex = iCh;
     preindex = curindex==0?m_iCameraNum-1:curindex-1;
@@ -1864,7 +1873,6 @@ void pvmsMonitorWidget::videoChannelCtrl()
             {
                 if (0 == m_tCameraInfo[i].iCmpOpenFlag)
                 {
-//                    qDebug()<<"*****0000*******m_tCameraInfo[i].iCmpOpenFlag**i="<<i<<__LINE__;
                     tPkt.iMsgCmd = CMP_CMD_CREATE_CH;
                     tPkt.iCh = i;
                     PutNodeToCmpQueue(m_ptQueue, &tPkt);
@@ -1874,8 +1882,6 @@ void pvmsMonitorWidget::videoChannelCtrl()
             {
                 if (1 == m_tCameraInfo[i].iCmpOpenFlag)
                 {
-//                    qDebug()<<"*****1111*******m_tCameraInfo[i].iCmpOpenFlag**i="<<i<<__LINE__;
-
                     tPkt.iMsgCmd = CMP_CMD_DESTORY_CH;
                     tPkt.iCh = i;
                     PutNodeToCmpQueue(m_ptQueue, &tPkt);
@@ -2434,9 +2440,19 @@ void pvmsMonitorWidget::blackScreenCtrlSlot()     //黑屏触发信号处理，�
         m_playWin->resize(784, 624);
         m_iFullScreenFlag = 0;
 
-        tPkt.iMsgCmd = CMP_CMD_CHG_ALL_VIDEOWIN;
-        tPkt.iCh = 0;
-        PutNodeToCmpQueue(m_ptQueue, &tPkt);
+//        tPkt.iMsgCmd = CMP_CMD_CHG_ALL_VIDEOWIN;
+//        tPkt.iCh = 0;
+//        PutNodeToCmpQueue(m_ptQueue, &tPkt);
+
+        for (int i = 0; i < m_iCameraNum; i++)
+        {
+            CMP_SetPlayEnable(m_tCameraInfo[i].cmpHandle, 0);
+        }
+
+        T_WND_INFO tWndInfo;
+        tWndInfo.hWnd = NULL;
+        CMP_ChangeWnd(m_tCameraInfo[m_iCameraPlayNo].cmpHandle, &tWndInfo);
+        CMP_SetPlayEnable(m_tCameraInfo[m_iCameraPlayNo].cmpHandle, 1);
 
         if (m_channelStateLabel != NULL)
         {

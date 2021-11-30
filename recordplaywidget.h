@@ -101,8 +101,6 @@ public slots:
     void recordTableWidgetFillFunc();
     void setRangeLabelSlot();
 
-    void setPosition(int position);
-
 
 signals:
     void alarmPushButoonClickSignal();
