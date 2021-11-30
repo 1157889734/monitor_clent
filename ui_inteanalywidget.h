@@ -57,7 +57,7 @@ public:
     {
         if (inteAnalyWidget->objectName().isEmpty())
             inteAnalyWidget->setObjectName(QString::fromUtf8("inteAnalyWidget"));
-        inteAnalyWidget->resize(1024, 665);
+        inteAnalyWidget->resize(1024, 630);
         pushButton_15 = new QPushButton(inteAnalyWidget);
         pushButton_15->setObjectName(QString::fromUtf8("pushButton_15"));
         pushButton_15->setGeometry(QRect(90, 240, 112, 32));
@@ -137,7 +137,7 @@ public:
         comboBox_5->setFont(font);
         label_12 = new QLabel(inteAnalyWidget);
         label_12->setObjectName(QString::fromUtf8("label_12"));
-        label_12->setGeometry(QRect(300, 2, 724, 561));
+        label_12->setGeometry(QRect(300, 0, 724, 561));
         label_12->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);\n"
 "background-image: url(:/res/playerbk.png);"));
         pushButton_16 = new QPushButton(inteAnalyWidget);

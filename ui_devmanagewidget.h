@@ -40,7 +40,7 @@ public:
     {
         if (devManageWidget->objectName().isEmpty())
             devManageWidget->setObjectName(QString::fromUtf8("devManageWidget"));
-        devManageWidget->resize(1024, 624);
+        devManageWidget->resize(1024, 630);
         TrainNumberLineEdit = new QLineEdit(devManageWidget);
         TrainNumberLineEdit->setObjectName(QString::fromUtf8("TrainNumberLineEdit"));
         TrainNumberLineEdit->setGeometry(QRect(680, 10, 113, 27));
@@ -94,8 +94,8 @@ public:
         devStorageTableWidget->setGeometry(QRect(30, 355, 964, 211));
         devStorageTableWidget->setFont(font);
         devStorageTableWidget->setStyleSheet(QString::fromUtf8("border-style: none;\n"
-"background-color: rgb(204, 232, 207);\n"
-"gridline-color: rgb(255, 255, 255);\n"
+"background-color: rgb(255, 255, 255);\n"
+"gridline-color: rgb(130, 135, 144);\n"
 "border-color: rgb(130, 135, 144);\n"
 "border-width: 1px;border-style: solid;"));
         devStorageTableWidget->setFrameShape(QFrame::StyledPanel);
@@ -115,8 +115,8 @@ public:
         devStatusTableWidget->setGeometry(QRect(30, 80, 964, 225));
         devStatusTableWidget->setFont(font);
         devStatusTableWidget->setStyleSheet(QString::fromUtf8("border-style: none;\n"
-"background-color: rgb(204, 232, 207);\n"
-"gridline-color: rgb(255, 255, 255);\n"
+"background-color: rgb(255, 255, 255);\n"
+"gridline-color: rgb(130, 135, 144);\n"
 "border-color: rgb(130, 135, 144);\n"
 "border-width: 1px;border-style: solid;"));
         devStatusTableWidget->setProperty("showDropIndicator", QVariant(true));
@@ -134,7 +134,7 @@ public:
         devStorageLabel->setStyleSheet(QString::fromUtf8("color: rgb(0, 0, 0);"));
         label_2 = new QLabel(devManageWidget);
         label_2->setObjectName(QString::fromUtf8("label_2"));
-        label_2->setGeometry(QRect(0, 0, 1024, 624));
+        label_2->setGeometry(QRect(0, 0, 1024, 630));
         label_2->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
         lineEdit = new QLineEdit(devManageWidget);
         lineEdit->setObjectName(QString::fromUtf8("lineEdit"));

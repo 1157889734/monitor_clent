@@ -1667,8 +1667,6 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
 
         if( NULL == m_tCameraInfo[iCh].cmpHandle)
         {
-            qDebug()<<"*****11111*CMP_CMD_CREATE_CH******ich="<<iCh<<__LINE__;
-
             cmplayInit();
             m_tCameraInfo[iCh].cmpHandle = CMP_Init(&m_RealMonitorVideos, CMP_VDEC_NORMAL);
             CMP_OpenMediaPreview(m_tCameraInfo[iCh].cmpHandle, /*rtsp_url[iCh]*/m_tCameraInfo[iCh].acCameraRtspUrl, CMP_TCP);
@@ -1679,7 +1677,6 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
     }
     else if(CMP_CMD_DESTORY_CH == iType)
     {
-        qDebug()<<"******CMP_CMD_DESTORY_CH******ich="<<iCh<<__LINE__;
         if( NULL != m_tCameraInfo[iCh].cmpHandle)
         {
             CMP_CloseMedia(m_tCameraInfo[iCh].cmpHandle);
@@ -1698,39 +1695,6 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
     else if(CMP_CMD_ENABLE_CH == iType)
     {
 
-
-        qDebug()<<"******CMP_CMD_ENABLE_CH***show******ich="<<iCh<<__LINE__;
-
-#if 0
-        for(int i =0;i < m_iCameraNum;i++)
-        {
-            if(i== curindex || i== preindex || i==nextindex)
-            {
-                qDebug()<<"******CMP_CMD_ENABLE_CH***open******ich="<<i<<__LINE__;
-
-//                  CMP_PlayMedia(m_tCameraInfo[i].cmpHandle);
-                if( NULL != m_tCameraInfo[i].cmpHandle)
-                {
-                    CMP_SetPlayState(m_tCameraInfo[i].cmpHandle,CMP_STATE_PLAY);
-                }
-            }
-            else
-            {
-                qDebug()<<"******CMP_CMD_ENABLE_CH***close******ich="<<i<<__LINE__;
-                if( NULL != m_tCameraInfo[i].cmpHandle)
-                {
-                    CMP_SetPlayState(m_tCameraInfo[iCh].cmpHandle, CMP_STATE_IDLE);
-//                      CMP_PauseMedia(m_tCameraInfo[i].cmpHandle);
-//                    CMP_SetPlayState(m_tCameraInfo[i].cmpHandle,CMP_STATE_IDLE);
-    //                CMP_SetPlayEnable(m_tCameraInfo[i].cmpHandle, 0);
-//                    CMP_CloseMedia(m_tCameraInfo[i].cmpHandle);
-//                    CMP_UnInit(m_tCameraInfo[i].cmpHandle);
-                }
-
-            }
-        }
-#endif
-
         if(m_tCameraInfo[iCh].cmpHandle != NULL)
         {
             if(m_playWin->isVisible())
@@ -1742,7 +1706,6 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
     }
     else if(CMP_CMD_DISABLE_CH == iType)
     {
-//        qDebug()<<"******CMP_CMD_DISABLE_CH***hide******ich="<<iCh<<__LINE__;
 
         if(m_tCameraInfo[iCh].cmpHandle != NULL)
         {

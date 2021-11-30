@@ -102,7 +102,7 @@ public:
     {
         if (devUpdateWidget->objectName().isEmpty())
             devUpdateWidget->setObjectName(QString::fromUtf8("devUpdateWidget"));
-        devUpdateWidget->resize(1024, 665);
+        devUpdateWidget->resize(1024, 630);
         devUpdateWidget->setFocusPolicy(Qt::StrongFocus);
         devUpdateWidget->setStyleSheet(QString::fromUtf8(""));
         permissonManagePushButton = new QPushButton(devUpdateWidget);

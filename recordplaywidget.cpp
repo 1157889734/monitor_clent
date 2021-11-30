@@ -282,11 +282,6 @@ void recordPlayWidget::playSliderMoveSlot(int iPosTime)
 
     if (m_cmpHandle != NULL)
     {
-        if(CMP_STATE_PLAY != CMP_GetPlayStatus(m_cmpHandle))
-        {
-            return;
-        }
-
         m_iPlayFlag = 1;
         pthread_mutex_lock(&g_sliderValueSetMutex);
         m_playSlider->setValue(iPosTime);
@@ -314,12 +309,6 @@ void recordPlayWidget::playSliderPressSlot(int iPosTime)
     }
     if (m_cmpHandle != NULL)
     {
-
-        if(CMP_STATE_PLAY != CMP_GetPlayStatus(m_cmpHandle))
-        {
-            return;
-        }
-
         m_iPlayFlag = 1;
         pthread_mutex_lock(&g_sliderValueSetMutex);
         m_playSlider->setValue(iPosTime);
@@ -334,11 +323,6 @@ void recordPlayWidget::playPlusStepSlot()
     qint64 iPosTime = 0;
 
     if (NULL == m_cmpHandle)
-    {
-        return;
-    }
-
-    if(CMP_STATE_PLAY != CMP_GetPlayStatus(m_cmpHandle))
     {
         return;
     }
@@ -378,10 +362,6 @@ void recordPlayWidget::playMinusStepSlot()
         return;
     }
 
-    if(CMP_STATE_PLAY != CMP_GetPlayStatus(m_cmpHandle))
-    {
-        return;
-    }
     m_iPlayFlag = 1;
     setPlayButtonStyleSheet();
 
@@ -557,41 +537,12 @@ void recordPlayWidget::recordTableWidgetFillSlot()
 
 void recordPlayWidget::setRangeLabelSlot()
 {
-#if 0
-    char acStr[32] = {0};
-    int iMin = 0, iSec = 0;
 
-    iMin = m_iPlayRange / 60;
-    iSec = m_iPlayRange % 60;
-
-    snprintf(acStr, sizeof(acStr), "%02d", iMin);
-    ui->rangeMinLabel->setText(QString(QLatin1String(acStr)));
-
-    memset(acStr, 0, sizeof(acStr));
-    snprintf(acStr, sizeof(acStr), "%02d", iSec);
-    ui->rangeSecLabel->setText(QString(QLatin1String(acStr)));
-#endif
 }
 
 void recordPlayWidget::setPlaySliderValueSlot(int iValue)    //实时刷新播放进度条的当前值
 {
-#if 0
-
-    char acStr[32] = {0};
-    int iMin = 0, iSec = 0;
-    iMin = iValue / 60;
-    iSec = iValue % 60;
-
-    snprintf(acStr, sizeof(acStr), "%02d", iMin);
-//    ui->playMinLabel->setText(QString(QLatin1String(acStr)));
-
-    memset(acStr, 0, sizeof(acStr));
-    snprintf(acStr, sizeof(acStr), "%02d", iSec);
-//    ui->playSecLabel->setText(QString(QLatin1String(acStr)));
-#endif
     m_playSlider->setValue(iValue);
-
-
 }
 
 
@@ -766,7 +717,6 @@ void recordPlayWidget::recordDownloadSlot()
         box.exec();
         return;
     }
-    qDebug()<<"***********ui->recordFileTableWidget->rowCount()****"<<ui->recordFileTableWidget->rowCount()<<__LINE__;
 
     if (ui->recordFileTableWidget->rowCount() > 0)
     {
@@ -777,7 +727,6 @@ void recordPlayWidget::recordDownloadSlot()
                 break;
             }
         }
-        qDebug()<<"***********ui->recordFileTableWidget->rowCount()****"<<ui->recordFileTableWidget->rowCount()<<__LINE__;
 
         if (row == ui->recordFileTableWidget->rowCount())
         {
@@ -788,7 +737,6 @@ void recordPlayWidget::recordDownloadSlot()
             msgBox.exec();
             return;
         }
-        qDebug()<<"***********ui->recordFileTableWidget->rowCount()****"<<ui->recordFileTableWidget->rowCount()<<__LINE__;
 
         if (access("/media/usb0/", F_OK) < 0)
         {
@@ -813,14 +761,11 @@ void recordPlayWidget::recordDownloadSlot()
         }
 
         idex = ui->carSeletionComboBox->currentIndex();
-        qDebug()<<"***********idex****"<<idex<<__LINE__;
-
 
         if (idex < 0)
         {
             return;
         }
-        qDebug()<<"***********idex****"<<idex<<__LINE__;
         m_iFtpServerIdex = idex;
 
         memset(&tTrainConfigInfo, 0, sizeof(T_TRAIN_CONFIG));
@@ -831,7 +776,6 @@ void recordPlayWidget::recordDownloadSlot()
 
 
         m_tFtpHandle[idex] = FTP_CreateConnect(acIpAddr, FTP_SERVER_PORT, PftpProc);
-        qDebug()<<"***********idex****"<<m_tFtpHandle[idex]<<"**********idex="<<idex<<__LINE__;
 
         if (0 == m_tFtpHandle[idex])
         {
@@ -847,7 +791,6 @@ void recordPlayWidget::recordDownloadSlot()
                 {
                     snprintf(acSaveFileName, sizeof(acSaveFileName), "%s%s", "/media/usb0/", parseFileName(m_acFilePath[row]));
                 }
-                qDebug()<<"****************acSaveFileName="<<acSaveFileName<<__LINE__;
 //                DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] add download file:%s!\n", __FUNCTION__, m_acFilePath[row]);
                 iRet = FTP_AddDownLoadFile(m_tFtpHandle[idex], m_acFilePath[row], acSaveFileName);
                 if (iRet < 0)

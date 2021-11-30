@@ -54,8 +54,8 @@ public:
         tableWidget->setObjectName(QString::fromUtf8("tableWidget"));
         tableWidget->setGeometry(QRect(30, 60, 341, 231));
         tableWidget->setStyleSheet(QString::fromUtf8("border-style: none;\n"
-"background-color: rgb(204, 232, 207);\n"
-"gridline-color: rgb(255, 255, 255);\n"
+"background-color: rgb(255, 255, 255);\n"
+"gridline-color: rgb(130, 135, 144);\n"
 "border-color: rgb(130, 135, 144);\n"
 "border-width: 1px;border-style: solid;"));
         addpushButton = new QPushButton(usergroupManage);

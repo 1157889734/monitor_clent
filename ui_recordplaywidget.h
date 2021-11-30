@@ -65,7 +65,7 @@ public:
     {
         if (recordPlayWidget->objectName().isEmpty())
             recordPlayWidget->setObjectName(QString::fromUtf8("recordPlayWidget"));
-        recordPlayWidget->resize(1024, 624);
+        recordPlayWidget->resize(1024, 630);
         recordPlayWidget->setStyleSheet(QString::fromUtf8(""));
         cameraSelectionComboBox = new QComboBox(recordPlayWidget);
         cameraSelectionComboBox->setObjectName(QString::fromUtf8("cameraSelectionComboBox"));
@@ -182,8 +182,8 @@ public:
         recordFileTableWidget->setGeometry(QRect(0, 250, 281, 291));
         recordFileTableWidget->setFont(font);
         recordFileTableWidget->setStyleSheet(QString::fromUtf8("border-style: none;\n"
-"background-color: rgb(204, 232, 207);\n"
-"gridline-color: rgb(255, 255, 255);\n"
+"background-color: rgb(255, 255, 255);\n"
+"gridline-color: rgb(130, 135, 144);\n"
 "border-color: rgb(130, 135, 144);\n"
 "border-width: 1px;border-style: solid;"));
         recordFileTableWidget->setShowGrid(false);
@@ -434,7 +434,7 @@ public:
 ""));
         label_12 = new QLabel(recordPlayWidget);
         label_12->setObjectName(QString::fromUtf8("label_12"));
-        label_12->setGeometry(QRect(0, 0, 1024, 624));
+        label_12->setGeometry(QRect(0, 0, 1024, 630));
         label_12->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
         fileDownloadProgressBar = new QProgressBar(recordPlayWidget);
         fileDownloadProgressBar->setObjectName(QString::fromUtf8("fileDownloadProgressBar"));
