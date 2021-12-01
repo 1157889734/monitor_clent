@@ -27,7 +27,7 @@ pvmsMenuWidget *g_pvmsMenuPage = NULL;   //受电弓监控主菜单页面
 
 int main(int argc, char *argv[])
 {
-    qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
+//    qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard",-1));
 
     MyApplication app(argc, argv);
 

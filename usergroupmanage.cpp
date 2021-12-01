@@ -10,7 +10,7 @@
 #include "state.h"
 
 
-
+static int g_ibShowKeyboard = 0;
 static int g_curTextState = 0;
 
 usergroupManage::usergroupManage(QWidget *parent) :
@@ -24,6 +24,9 @@ usergroupManage::usergroupManage(QWidget *parent) :
     ui->tableWidget->setShowGrid(true);
     ui->tableWidget->setColumnCount(2);
 
+    ui->usernamelineEdit->installEventFilter(this);
+    ui->passwdlineEdit->installEventFilter(this);
+    ui->surelineEdit->installEventFilter(this);
 
     QStringList header;
     header<<tr("用户名")<<tr("类型");
@@ -51,6 +54,12 @@ usergroupManage::usergroupManage(QWidget *parent) :
 
     connect(ui->tableWidget,SIGNAL(itemClicked(QTableWidgetItem*)),this,SLOT(table_choose_fuction(QTableWidgetItem*)));
 
+    mCkeybord = new CKeyboard(this,0);
+    mCkeybord->setGeometry(50,200,924,200);
+    mCkeybord->hide();
+
+    connect(this,SIGNAL(show_hide_Signal(int)),this,SLOT(show_hide_Funtion(int)));
+    connect(mCkeybord,SIGNAL(KeyboardPressKeySignal(char)),this,SLOT(KeyboardPressKeySlots(char)));
 
 
 }
@@ -60,8 +69,124 @@ usergroupManage::~usergroupManage()
     delete g_buttonGroup;
     g_buttonGroup = NULL;
 
+    delete mCkeybord;
+    mCkeybord = NULL;
+
     delete ui;
 }
+
+void usergroupManage::show_hide_Funtion(int value)
+{
+    if(0 == value)
+    {
+        mCkeybord->hide();
+    }
+    else
+    {
+        mCkeybord->show();
+    }
+}
+void usergroupManage::KeyboardPressKeySlots(char key)
+{
+    if(key==BSPACE)
+     {
+         if(ui->usernamelineEdit->hasFocus())//输入框1焦点
+         {
+             if(!ui->usernamelineEdit->selectedText().isEmpty())
+             {
+                  ui->usernamelineEdit->del();
+             }
+             else
+             {
+                 ui->usernamelineEdit->backspace();
+             }
+         }
+         else if(ui->passwdlineEdit->hasFocus())//输入框1焦点
+         {
+             if(!ui->passwdlineEdit->selectedText().isEmpty())
+             {
+                  ui->passwdlineEdit->del();
+             }
+             else
+             {
+                 ui->passwdlineEdit->backspace();
+             }
+         }
+         else if(ui->surelineEdit->hasFocus())//输入框1焦点
+         {
+             if(!ui->surelineEdit->selectedText().isEmpty())
+             {
+                  ui->surelineEdit->del();
+             }
+             else
+             {
+                 ui->surelineEdit->backspace();
+             }
+         }
+
+    }
+    else if(key == ENTER)
+    {
+        ShowKeyboardSlots(0);
+    }
+    else
+    {
+        if(ui->usernamelineEdit->hasFocus())//输入框1焦点
+        {
+            ui->usernamelineEdit->insert(QString( key));
+        }
+        else if(ui->passwdlineEdit->hasFocus())//输入框1焦点
+        {
+            ui->passwdlineEdit->insert(QString( key));
+        }
+        else if(ui->surelineEdit->hasFocus())//输入框1焦点
+        {
+            ui->surelineEdit->insert(QString( key));
+        }
+    }
+}
+
+
+void usergroupManage::ShowKeyboardSlots(int nShow)
+{
+    if(0 == nShow)
+    {
+        emit show_hide_Signal(nShow);
+        g_ibShowKeyboard =0;
+    }
+    else
+    {
+        if(g_ibShowKeyboard ==0)
+        {
+            emit show_hide_Signal(nShow);
+            g_ibShowKeyboard =1;
+        }
+    }
+}
+bool usergroupManage::eventFilter(QObject *obj, QEvent *e)
+{
+    if(e->type() == QEvent::MouseButtonPress)
+    {
+        if((obj == ui->usernamelineEdit && ui->usernamelineEdit->isEnabled()) || (obj == ui->passwdlineEdit && ui->passwdlineEdit->isEnabled())
+           ||   (obj == ui->surelineEdit && ui->surelineEdit->isEnabled()))         //判断是不是我创建的label触发了事件
+        {
+            ShowKeyboardSlots(1);
+        }
+
+    }
+    else if(e->type() == QEvent::FocusOut)
+    {
+        if(obj == ui->usernamelineEdit || obj == ui->passwdlineEdit ||  obj == ui->surelineEdit)
+        {
+            ShowKeyboardSlots(0);
+        }
+
+    }
+    return QWidget::eventFilter(obj, e);
+
+
+}
+
 
 void usergroupManage::init_datavase()
 {
@@ -80,7 +205,11 @@ void usergroupManage::init_datavase()
     }
     else
     {
-        QMessageBox::information(this,"Information","open fail");
+        QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("打开失败!")));
+        msgBox.setWindowFlags(Qt::FramelessWindowHint);
+        msgBox.setStandardButtons(QMessageBox::Yes);
+        msgBox.button(QMessageBox::Yes)->setText("OK");
+        msgBox.exec();
     }
     update_database_function();
     db.close();
@@ -158,7 +287,11 @@ void usergroupManage::on_savepushButton_clicked()
 
     if(ui->passwdlineEdit->text().isEmpty() || ui->surelineEdit->text().isEmpty())
     {
-        QMessageBox::information(this ,tr("提示") , tr("密码不能为空!"));
+        QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("密码不能为空!")));
+        msgBox.setWindowFlags(Qt::FramelessWindowHint);
+        msgBox.setStandardButtons(QMessageBox::Yes);
+        msgBox.button(QMessageBox::Yes)->setText("OK");
+        msgBox.exec();
         return;
     }
 
@@ -173,7 +306,11 @@ void usergroupManage::on_savepushButton_clicked()
        QString id1= query.value(1).toString();
        if(ui->usernamelineEdit->text().compare(id1)==0)
         {
-            QMessageBox::information(this ,tr("提示") , tr("该用户已存在不允许再次添加!"));
+            QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("该用户已存在不允许再次添加!")));
+            msgBox.setWindowFlags(Qt::FramelessWindowHint);
+            msgBox.setStandardButtons(QMessageBox::Yes);
+            msgBox.button(QMessageBox::Yes)->setText("OK");
+            msgBox.exec();
             T2=false;
             return;
         }
@@ -185,7 +322,11 @@ void usergroupManage::on_savepushButton_clicked()
 
        if(value_passwd != value_ensure_passwd)
        {
-           QMessageBox::information(this ,tr("提示") , tr("两次密码不一致!"));
+           QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("两次密码不一致!")));
+           msgBox.setWindowFlags(Qt::FramelessWindowHint);
+           msgBox.setStandardButtons(QMessageBox::Yes);
+           msgBox.button(QMessageBox::Yes)->setText("OK");
+           msgBox.exec();
            return;
        }
        QString sql;
@@ -194,12 +335,21 @@ void usergroupManage::on_savepushButton_clicked()
       bool ok = query.exec(sql);
       if(ok)
       {
-        QMessageBox::information(this ,tr("提示") , tr("修改成功!"));
+        QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("修改成功!")));
+        msgBox.setWindowFlags(Qt::FramelessWindowHint);
+        msgBox.setStandardButtons(QMessageBox::Yes);
+        msgBox.button(QMessageBox::Yes)->setText("OK");
+        msgBox.exec();
         g_curTextState = 0;
       }
       else
       {
-        QMessageBox::information(this ,tr("提示") , tr("修改失败!"));
+        QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("修改失败!")));
+        msgBox.setWindowFlags(Qt::FramelessWindowHint);
+        msgBox.setStandardButtons(QMessageBox::Yes);
+        msgBox.button(QMessageBox::Yes)->setText("OK");
+        msgBox.exec();
+
       }
       db.close();
       return;
@@ -209,7 +359,12 @@ void usergroupManage::on_savepushButton_clicked()
          QString sql;
         if(value_passwd != value_ensure_passwd)
         {
-            QMessageBox::information(this ,tr("提示") , tr("两次密码不一致!"));
+            QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("两次密码不一致!")));
+            msgBox.setWindowFlags(Qt::FramelessWindowHint);
+            msgBox.setStandardButtons(QMessageBox::Yes);
+            msgBox.button(QMessageBox::Yes)->setText("OK");
+            msgBox.exec();
+
             return;
         }
 
@@ -227,11 +382,20 @@ void usergroupManage::on_savepushButton_clicked()
         bool ok = query.exec(sql);
       if(ok)
       {
-        QMessageBox::information(this ,tr("提示") , tr("添加成功!"));
+        QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("添加成功!")));
+        msgBox.setWindowFlags(Qt::FramelessWindowHint);
+        msgBox.setStandardButtons(QMessageBox::Yes);
+        msgBox.button(QMessageBox::Yes)->setText("OK");
+        msgBox.exec();
       }
       else
       {
-        QMessageBox::information(this ,tr("提示") , tr("添加失败!"));
+        QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("添加失败!")));
+        msgBox.setWindowFlags(Qt::FramelessWindowHint);
+        msgBox.setStandardButtons(QMessageBox::Yes);
+        msgBox.button(QMessageBox::Yes)->setText("OK");
+        msgBox.exec();
+
       }
    }
 
@@ -277,8 +441,9 @@ void usergroupManage::on_deletepushButton_clicked()
 //                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "userManageWidget this user type has no right to delete user!\n");
                 qDebug()<<"userManageWidget this user type has no right to delete user!"<<__FUNCTION__<<__LINE__<<endl;
                 QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("没有权力删除此类型成员!"));     //新建消息提示框，提示错误信息
+                box.setWindowFlags(Qt::FramelessWindowHint);
                 box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
-                box.setButtonText (QMessageBox::Ok,QString::fromUtf8("确 定"));     //将按钮显示改成"确 定"
+                box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));     //将按钮显示改成"确 定"
                 box.exec();
                 return;
             }
@@ -291,8 +456,9 @@ void usergroupManage::on_deletepushButton_clicked()
 //                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "userManageWidget this user type has no right to delete user!\n");
                 qDebug()<<"userManageWidget this user type has no right to delete user!"<<__FUNCTION__<<__LINE__<<endl;
                 QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("没有权力删除此类型成员!"));     //新建消息提示框，提示错误信息
+                box.setWindowFlags(Qt::FramelessWindowHint);
                 box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
-                box.setButtonText (QMessageBox::Ok,QString::fromUtf8("确 定"));     //将按钮显示改成"确 定"
+                box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));     //将按钮显示改成"确 定"
                 box.exec();
                 return;
             }
@@ -303,8 +469,9 @@ void usergroupManage::on_deletepushButton_clicked()
             qDebug()<<"userManageWidget this user type has no right to delete user!"<<__FUNCTION__<<__LINE__<<endl;
 
             QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("没有权力删除此类型成员!"));
+            box.setWindowFlags(Qt::FramelessWindowHint);
             box.setStandardButtons (QMessageBox::Ok);
-            box.setButtonText (QMessageBox::Ok,QString::fromUtf8("确 定"));
+            box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
             box.exec();
             return;
         }
@@ -313,11 +480,19 @@ void usergroupManage::on_deletepushButton_clicked()
         bool ok = query.exec(sql);
         if(ok)
         {
-            QMessageBox::information(this ,tr("提示") , tr("删除成功!"));
+            QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("删除成功!")));
+            msgBox.setWindowFlags(Qt::FramelessWindowHint);
+            msgBox.setStandardButtons(QMessageBox::Yes);
+            msgBox.button(QMessageBox::Yes)->setText("OK");
+            msgBox.exec();
         }
         else
         {
-            QMessageBox::information(this ,tr("提示") , tr("删除失败!"));
+            QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("删除失败!")));
+            msgBox.setWindowFlags(Qt::FramelessWindowHint);
+            msgBox.setStandardButtons(QMessageBox::Yes);
+            msgBox.button(QMessageBox::Yes)->setText("OK");
+            msgBox.exec();
         }
         update_database_function();
 
@@ -328,8 +503,9 @@ void usergroupManage::on_deletepushButton_clicked()
 //        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "userManageWidget not select the user to delete!\n");
         qDebug()<<"userManageWidget not select the user to delete!"<<__FUNCTION__<<__LINE__<<endl;
         QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("请选择要删除的用户!")));
+        msgBox.setWindowFlags(Qt::FramelessWindowHint);
         msgBox.setStandardButtons(QMessageBox::Yes);
-        msgBox.button(QMessageBox::Yes)->setText("确 定");
+        msgBox.button(QMessageBox::Yes)->setText("OK");
         msgBox.exec();
     }
     db.close();

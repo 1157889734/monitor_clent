@@ -43,6 +43,7 @@ public:
 "#loginWidget * { \n"
 "border-image:url(); \n"
 "}"));
+        loginWidget->setInputMethodHints(Qt::ImhNone);
         username_Edit = new QLineEdit(loginWidget);
         username_Edit->setObjectName(QString::fromUtf8("username_Edit"));
         username_Edit->setGeometry(QRect(630, 210, 161, 41));

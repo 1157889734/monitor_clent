@@ -8,6 +8,7 @@
 #include <QDebug>
 #include <QTabWidget>
 
+static int g_ibShowKeyboard = 0;
 static int g_iDNum = 0;
 #define PVMSPAGETYPE  2    //此页面类型，2表示受电弓监控页面
 
@@ -20,7 +21,7 @@ devManageWidget::devManageWidget(QWidget *parent) :
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->showFullScreen();
 
-
+    ui->TrainNumberLineEdit->installEventFilter(this);
 
     ui->devStorageTableWidget->setFocusPolicy(Qt::NoFocus);
     ui->devStorageTableWidget->setColumnCount(8);
@@ -114,6 +115,76 @@ devManageWidget::~devManageWidget()
 {
     delete ui;
 }
+
+void devManageWidget::ShowKeyboardSlots(int nShow)
+{
+    if(0 == nShow)
+    {
+        emit show_hide_Signal(nShow);
+        g_ibShowKeyboard =0;
+    }
+    else
+    {
+        if(g_ibShowKeyboard ==0)
+        {
+            emit show_hide_Signal(nShow);
+            g_ibShowKeyboard =1;
+        }
+    }
+}
+
+bool devManageWidget::eventFilter(QObject *obj, QEvent *e)
+{
+    if(e->type() == QEvent::MouseButtonPress)
+    {
+        if(obj == ui->TrainNumberLineEdit && ui->TrainNumberLineEdit->isEnabled())         //判断是不是我创建的label触发了事件
+        {
+            ShowKeyboardSlots(1);
+        }
+
+    }
+    else if(e->type() == QEvent::FocusOut)
+    {
+        if(obj == ui->TrainNumberLineEdit)
+        {
+            ShowKeyboardSlots(0);
+        }
+
+    }
+    return QWidget::eventFilter(obj, e);
+
+
+}
+
+void devManageWidget::KeyboardPressKeySlots(char key)
+{
+    if(key==BSPACE)
+     {
+         if(ui->TrainNumberLineEdit->hasFocus())//输入框1焦点
+         {
+             if(!ui->TrainNumberLineEdit->selectedText().isEmpty())
+             {
+                  ui->TrainNumberLineEdit->del();
+             }
+             else
+             {
+                 ui->TrainNumberLineEdit->backspace();
+             }
+         }
+    }
+    else if(key == ENTER)
+    {
+        ShowKeyboardSlots(0);
+    }
+    else
+    {
+        if(ui->TrainNumberLineEdit->hasFocus())//输入框1焦点
+        {
+            ui->TrainNumberLineEdit->insert(QString( key));
+        }
+    }
+}
+
 int devManageWidget::rs485Ctrl(char *pcData, int iDataLen)
 {
 
@@ -558,8 +629,9 @@ void devManageWidget::trainNumberChange(QString TrainNumberStr)
         ui->TrainNumberLineEdit->setText(QString(QLatin1String(acTrainNumber)));
 //        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devManageWidget input train number len can't over 7!\n");
         QMessageBox box(QMessageBox::Warning,QString::fromUtf8("提示"),QString::fromUtf8("输入的车次字符数不能超过7!"));     //提示框
+        box.setWindowFlags(Qt::FramelessWindowHint);
         box.setStandardButtons (QMessageBox::Ok);
-        box.setButtonText (QMessageBox::Ok,QString::fromUtf8("确 定"));
+        box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
         box.exec();
     }
 }

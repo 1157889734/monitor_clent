@@ -298,13 +298,13 @@ int SHM_RkRgaBlit(MppFrame tSrcMppFrame, uint8_t *dstAddr, int w, int h)
     static rga_info_t rgadst;
 
     int ret = 0;
-    int srcWidth,srcHeight,srcFormat, src_h_stride;
+    int srcWidth,srcHeight,srcFormat, src_h_stride,src_v_stride;
     int dstWidth,dstHeight,dstFormat;
 
     RockchipRga &rkRga = RockchipRga::get();
 
     dstWidth  = w;
-    dstHeight = h-6;//-6
+    dstHeight = h;//-6
     dstFormat = RK_FORMAT_YCbCr_420_SP;
 
     MppBuffer buffer  = NULL;
@@ -314,6 +314,7 @@ int SHM_RkRgaBlit(MppFrame tSrcMppFrame, uint8_t *dstAddr, int w, int h)
     srcWidth  =   mpp_frame_get_width(tSrcMppFrame);
     srcHeight =   mpp_frame_get_height(tSrcMppFrame);
     src_h_stride    =   mpp_frame_get_hor_stride(tSrcMppFrame);
+    src_v_stride = mpp_frame_get_ver_stride(tSrcMppFrame);
     buffer = mpp_frame_get_buffer(tSrcMppFrame);
     srcAddr = (RK_U8 *)mpp_buffer_get_ptr(buffer);
 
@@ -334,7 +335,7 @@ int SHM_RkRgaBlit(MppFrame tSrcMppFrame, uint8_t *dstAddr, int w, int h)
     //memset(dstAddr+ w * h, 0x80, w * h * 0.5);
 
     /********** set the rect_info **********/
-    rga_set_rect(&rgasrc.rect, 0, 0, srcWidth, srcHeight, src_h_stride, srcHeight, srcFormat);
+    rga_set_rect(&rgasrc.rect, 0, 0, srcWidth, srcHeight, src_h_stride, src_v_stride, srcFormat);
     rga_set_rect(&rgadst.rect, 0, 0, dstWidth, dstHeight, dstWidth, dstHeight, dstFormat);
 
     /************ set the rga_mod ,rotation\composition\scale\copy .... **********/

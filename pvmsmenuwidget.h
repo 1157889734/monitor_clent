@@ -10,7 +10,7 @@
 #include "alarmwidget.h"
 #include <QTimer>
 #include "rs485serv.h"
-
+#include "ckeyboard.h"
 
 
 namespace Ui {
@@ -44,7 +44,7 @@ public slots:
 
     void blackScreenCtrlSlot();
     void blackScreenExitCtrlSlot();
-
+    void show_hide_Funtion(int value);
 signals:
     void registOutSignal();     //注销信号，iType:表示执行注销的页面类型，这里应该为2，表示受电弓监控页面,
     void reflushAlarmPageSignal(int iAlarmType, int iCarriageNO, int iDevPos);
@@ -70,7 +70,7 @@ private:
 
     QTimer *m_Rs485Timer;
     QTimer *m_PmsgTimer;
-
+    CKeyboard *mCkeybord;
 public slots:
     void showPageSlot();
     void rs485TimerFunc();

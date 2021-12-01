@@ -233,7 +233,7 @@ private:
     QTimer *m_alarmHappenTimer;
     QTimer *m_manualSwitchTimer;
     QTimer *m_temporarySaveTimer;
-    presetPasswdConfirm *m_presetPasswdConfirmPage;    //预置点密码确认界面
+//    presetPasswdConfirm *m_presetPasswdConfirmPage;    //预置点密码确认界面
     QTimer *m_fillLightSwitchTimer;
     QTimer *m_cameraSwitchTimer;
 

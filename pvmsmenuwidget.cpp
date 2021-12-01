@@ -65,6 +65,20 @@ pvmsMenuWidget::pvmsMenuWidget(QWidget *parent) :
     m_devUpdatePage->setGeometry(0, 138, m_devUpdatePage->width(), m_devUpdatePage->height());
 
 
+    mCkeybord = new CKeyboard(this,0);
+    mCkeybord->setGeometry(50,330,924,200);
+    mCkeybord->hide();
+    connect(mCkeybord,SIGNAL(KeyboardPressKeySignal(char)),m_devUpdatePage,SLOT(KeyboardPressKeySlots(char)));
+
+    connect(mCkeybord,SIGNAL(KeyboardPressKeySignal(char)),m_devManagePage,SLOT(KeyboardPressKeySlots(char)));
+
+    connect(m_devUpdatePage,SIGNAL(show_hide_Signal(int)),this,SLOT(show_hide_Funtion(int)));
+
+    connect(m_devManagePage,SIGNAL(show_hide_Signal(int)),this,SLOT(show_hide_Funtion(int)));
+
+
+
+
 
     m_pvmsMonitorPage->hide();
     m_recordPlayPage->hide();
@@ -167,7 +181,8 @@ pvmsMenuWidget::~pvmsMenuWidget()
         delete m_Rs485Timer;
         m_Rs485Timer  = NULL;
     }
-
+    delete mCkeybord;
+    mCkeybord = NULL;
     delete m_pvmsMonitorPage;
     m_pvmsMonitorPage = NULL;
     delete m_recordPlayPage;
@@ -185,6 +200,19 @@ pvmsMenuWidget::~pvmsMenuWidget()
     delete ui;
 
 }
+
+void pvmsMenuWidget::show_hide_Funtion(int value)
+{
+    if(0 == value)
+    {
+        mCkeybord->hide();
+    }
+    else
+    {
+        mCkeybord->show();
+    }
+}
+
 
 void pvmsMenuWidget::recvRs485Ctrl(char *pcData, int iDataLen)
 {
@@ -784,8 +812,9 @@ void pvmsMenuWidget::menuButtonClick()
         {
 //            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "pvmsMenu Widget this user type has not this right!\n");
             QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("该用户没有查看权限!"));
+            box.setWindowFlags(Qt::FramelessWindowHint);
             box.setStandardButtons (QMessageBox::Ok);
-            box.setButtonText (QMessageBox::Ok,QString::fromUtf8("确 定"));
+            box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
             box.exec();
             return;
         }
@@ -841,8 +870,9 @@ void pvmsMenuWidget::menuButtonClick()
         {
 //            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "pvmsMenu Widget this user type has not this right!\n");
             QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("该用户没有查看权限!"));
+            box.setWindowFlags(Qt::FramelessWindowHint);
             box.setStandardButtons (QMessageBox::Ok);
-            box.setButtonText (QMessageBox::Ok,QString::fromUtf8("确 定"));
+            box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
             box.exec();
             return;
         }

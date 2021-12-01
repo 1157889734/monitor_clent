@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_pvmsMenuWidget_t {
-    QByteArrayData data[27];
-    char stringdata0[418];
+    QByteArrayData data[29];
+    char stringdata0[442];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -56,9 +56,11 @@ QT_MOC_LITERAL(20, 292, 19), // "hideAlarmWidgetSlot"
 QT_MOC_LITERAL(21, 312, 19), // "showAlarmWidgetSlot"
 QT_MOC_LITERAL(22, 332, 19), // "blackScreenCtrlSlot"
 QT_MOC_LITERAL(23, 352, 23), // "blackScreenExitCtrlSlot"
-QT_MOC_LITERAL(24, 376, 12), // "showPageSlot"
-QT_MOC_LITERAL(25, 389, 14), // "rs485TimerFunc"
-QT_MOC_LITERAL(26, 404, 13) // "pmsgTimerFunc"
+QT_MOC_LITERAL(24, 376, 17), // "show_hide_Funtion"
+QT_MOC_LITERAL(25, 394, 5), // "value"
+QT_MOC_LITERAL(26, 400, 12), // "showPageSlot"
+QT_MOC_LITERAL(27, 413, 14), // "rs485TimerFunc"
+QT_MOC_LITERAL(28, 428, 13) // "pmsgTimerFunc"
 
     },
     "pvmsMenuWidget\0registOutSignal\0\0"
@@ -71,7 +73,8 @@ QT_MOC_LITERAL(26, 404, 13) // "pmsgTimerFunc"
     "alarmClearSlot\0serverOffLineSlot\0iDex\0"
     "hideAlarmWidgetSlot\0showAlarmWidgetSlot\0"
     "blackScreenCtrlSlot\0blackScreenExitCtrlSlot\0"
-    "showPageSlot\0rs485TimerFunc\0pmsgTimerFunc"
+    "show_hide_Funtion\0value\0showPageSlot\0"
+    "rs485TimerFunc\0pmsgTimerFunc"
 };
 #undef QT_MOC_LITERAL
 
@@ -81,7 +84,7 @@ static const uint qt_meta_data_pvmsMenuWidget[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      20,   14, // methods
+      21,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -89,28 +92,29 @@ static const uint qt_meta_data_pvmsMenuWidget[] = {
        6,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,  114,    2, 0x06 /* Public */,
-       3,    3,  115,    2, 0x06 /* Public */,
-       7,    0,  122,    2, 0x06 /* Public */,
-       8,    0,  123,    2, 0x06 /* Public */,
-       9,    0,  124,    2, 0x06 /* Public */,
-      10,    0,  125,    2, 0x06 /* Public */,
+       1,    0,  119,    2, 0x06 /* Public */,
+       3,    3,  120,    2, 0x06 /* Public */,
+       7,    0,  127,    2, 0x06 /* Public */,
+       8,    0,  128,    2, 0x06 /* Public */,
+       9,    0,  129,    2, 0x06 /* Public */,
+      10,    0,  130,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      11,    1,  126,    2, 0x0a /* Public */,
-      13,    0,  129,    2, 0x0a /* Public */,
-      14,    0,  130,    2, 0x0a /* Public */,
-      15,    0,  131,    2, 0x0a /* Public */,
-      16,    0,  132,    2, 0x0a /* Public */,
-      17,    0,  133,    2, 0x0a /* Public */,
-      18,    1,  134,    2, 0x0a /* Public */,
-      20,    0,  137,    2, 0x0a /* Public */,
-      21,    0,  138,    2, 0x0a /* Public */,
-      22,    0,  139,    2, 0x0a /* Public */,
-      23,    0,  140,    2, 0x0a /* Public */,
-      24,    0,  141,    2, 0x0a /* Public */,
-      25,    0,  142,    2, 0x0a /* Public */,
-      26,    0,  143,    2, 0x0a /* Public */,
+      11,    1,  131,    2, 0x0a /* Public */,
+      13,    0,  134,    2, 0x0a /* Public */,
+      14,    0,  135,    2, 0x0a /* Public */,
+      15,    0,  136,    2, 0x0a /* Public */,
+      16,    0,  137,    2, 0x0a /* Public */,
+      17,    0,  138,    2, 0x0a /* Public */,
+      18,    1,  139,    2, 0x0a /* Public */,
+      20,    0,  142,    2, 0x0a /* Public */,
+      21,    0,  143,    2, 0x0a /* Public */,
+      22,    0,  144,    2, 0x0a /* Public */,
+      23,    0,  145,    2, 0x0a /* Public */,
+      24,    1,  146,    2, 0x0a /* Public */,
+      26,    0,  149,    2, 0x0a /* Public */,
+      27,    0,  150,    2, 0x0a /* Public */,
+      28,    0,  151,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -132,6 +136,7 @@ static const uint qt_meta_data_pvmsMenuWidget[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,   25,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -162,9 +167,10 @@ void pvmsMenuWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         case 14: _t->showAlarmWidgetSlot(); break;
         case 15: _t->blackScreenCtrlSlot(); break;
         case 16: _t->blackScreenExitCtrlSlot(); break;
-        case 17: _t->showPageSlot(); break;
-        case 18: _t->rs485TimerFunc(); break;
-        case 19: _t->pmsgTimerFunc(); break;
+        case 17: _t->show_hide_Funtion((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 18: _t->showPageSlot(); break;
+        case 19: _t->rs485TimerFunc(); break;
+        case 20: _t->pmsgTimerFunc(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -243,13 +249,13 @@ int pvmsMenuWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 20)
+        if (_id < 21)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 20;
+        _id -= 21;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 20)
+        if (_id < 21)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 20;
+        _id -= 21;
     }
     return _id;
 }

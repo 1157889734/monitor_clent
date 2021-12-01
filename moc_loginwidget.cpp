@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_loginWidget_t {
-    QByteArrayData data[8];
-    char stringdata0[107];
+    QByteArrayData data[10];
+    char stringdata0[133];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -39,12 +39,15 @@ QT_MOC_LITERAL(3, 31, 22), // "gotoPvmsMenuPageSignal"
 QT_MOC_LITERAL(4, 54, 12), // "okButtonSlot"
 QT_MOC_LITERAL(5, 67, 16), // "canselButtonSlot"
 QT_MOC_LITERAL(6, 84, 12), // "showPageSlot"
-QT_MOC_LITERAL(7, 97, 9) // "clearSlot"
+QT_MOC_LITERAL(7, 97, 9), // "clearSlot"
+QT_MOC_LITERAL(8, 107, 21), // "KeyboardPressKeySlots"
+QT_MOC_LITERAL(9, 129, 3) // "key"
 
     },
     "loginWidget\0loginCanselSignal\0\0"
     "gotoPvmsMenuPageSignal\0okButtonSlot\0"
-    "canselButtonSlot\0showPageSlot\0clearSlot"
+    "canselButtonSlot\0showPageSlot\0clearSlot\0"
+    "KeyboardPressKeySlots\0key"
 };
 #undef QT_MOC_LITERAL
 
@@ -54,7 +57,7 @@ static const uint qt_meta_data_loginWidget[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       6,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -62,14 +65,15 @@ static const uint qt_meta_data_loginWidget[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   44,    2, 0x06 /* Public */,
-       3,    0,   45,    2, 0x06 /* Public */,
+       1,    0,   49,    2, 0x06 /* Public */,
+       3,    0,   50,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       4,    0,   46,    2, 0x0a /* Public */,
-       5,    0,   47,    2, 0x0a /* Public */,
-       6,    0,   48,    2, 0x0a /* Public */,
-       7,    0,   49,    2, 0x0a /* Public */,
+       4,    0,   51,    2, 0x0a /* Public */,
+       5,    0,   52,    2, 0x0a /* Public */,
+       6,    0,   53,    2, 0x0a /* Public */,
+       7,    0,   54,    2, 0x0a /* Public */,
+       8,    1,   55,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -80,6 +84,7 @@ static const uint qt_meta_data_loginWidget[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::Char,    9,
 
        0        // eod
 };
@@ -96,6 +101,7 @@ void loginWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         case 3: _t->canselButtonSlot(); break;
         case 4: _t->showPageSlot(); break;
         case 5: _t->clearSlot(); break;
+        case 6: _t->KeyboardPressKeySlots((*reinterpret_cast< char(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -115,7 +121,6 @@ void loginWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
             }
         }
     }
-    Q_UNUSED(_a);
 }
 
 QT_INIT_METAOBJECT const QMetaObject loginWidget::staticMetaObject = { {
@@ -147,13 +152,13 @@ int loginWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 6)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 7;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 6)
+        if (_id < 7)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 6;
+        _id -= 7;
     }
     return _id;
 }

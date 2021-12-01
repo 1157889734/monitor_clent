@@ -12,7 +12,7 @@
 #include "pvmsmonitorwidget.h"
 
 #include "usergroupmanage.h"
-
+#include "ckeyboard.h"
 
 
 
@@ -28,7 +28,8 @@ public:
     explicit devUpdateWidget(QWidget *parent = 0);
     ~devUpdateWidget();
     QDateTime timeTd;
-
+    bool eventFilter(QObject *obj, QEvent *e);
+    void ShowKeyboardSlots(int nShow);
 
 public slots:
 
@@ -59,13 +60,13 @@ public slots:
     void setTrainType();
 
     void setTimeSignalCtrl();
-
+    void KeyboardPressKeySlots(char key);
 
 signals:
     void alarmPushButoonClickSignal();
     void registOutSignal(int page);     //注销信号，iType:表示执行注销的页面类型，这里应该为2，表示受电弓监控页面,
     void systimeSetSignal();
-
+    void show_hide_Signal(int value);
 
 private:
     Ui::devUpdateWidget *ui;
@@ -76,6 +77,7 @@ private:
     void setTrainTypeCombox();
     void setPollingTimeRadioButton();	  //设置轮询时间单选按钮组的样式
     void setPresetReturnTimeRadioButton();	   //设置预置点返回时间单选按钮组的样式
+    CKeyboard *mCkeybord;
 
     QString m_TrainType;
     QString m_pollingtTimeText;

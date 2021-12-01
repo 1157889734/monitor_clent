@@ -6,7 +6,7 @@
 #include "state.h"
 #include "pmsgcli.h"
 #include "usergroupmanage.h"
-
+#include "ckeyboard.h"
 namespace Ui {
 class devManageWidget;
 }
@@ -18,6 +18,8 @@ class devManageWidget : public QWidget
 public:
     explicit devManageWidget(QWidget *parent = 0);
     ~devManageWidget();
+    bool eventFilter(QObject *obj, QEvent *e);
+    void ShowKeyboardSlots(int nShow);
     void trainNumberSetSlot_fuction();
     int rs485Ctrl(char *pcData, int iDataLen);
     void pisMsgCtrl(char *pcMsgData);
@@ -39,14 +41,14 @@ public slots:
 
     void trainNumberButtonClickSlot();
     void registOutButtonClick();
-
+    void KeyboardPressKeySlots(char key);
 
 signals:
     void alarmPushButoonClickSignal();
     void systimeSetSignal();
     void serverOffLine(int iDex);
     void registOutSignal(int page);     //注销信号，iType:表示执行注销的页面类型，这里应该为2，表示受电弓监控页面,
-
+    void show_hide_Signal(int value);
 private:
     Ui::devManageWidget *ui;
     QTimer *m_alarmHappenTimer;
