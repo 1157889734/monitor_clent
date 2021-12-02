@@ -712,46 +712,6 @@ void pvmsMenuWidget::menuButtonClick()
     QObject* Sender = sender();     //Sender->objectName(),可区分不同的信号来源，也就是不同的按钮按键
 
 
-    QIcon icon;
-    if (Sender->objectName() == "pvmsMonitorMenuPushButton")     //受电弓监控按钮被按，则切换到受电弓监控页面
-        icon.addFile(QString::fromUtf8(":/monres/PantoMonitor1.bmp"),QSize(),QIcon::Normal,QIcon::Off);
-    else
-        icon.addFile(QString::fromUtf8(":/monres/PantoMonitor.bmp"),QSize(),QIcon::Normal,QIcon::Off);
-    ui->pvmsMonitorMenuPushButton->setIcon(icon);
-    ui->pvmsMonitorMenuPushButton->setIconSize(QSize(203,102));
-
-
-    if (Sender->objectName() == "recordPlayMenuPushButton")     //录像回放按钮被按，则切换到录像回放页面
-        icon.addFile(QString::fromUtf8(":/monres/PantoPlay1.bmp"),QSize(),QIcon::Normal,QIcon::Off);
-    else
-        icon.addFile(QString::fromUtf8(":/monres/PantoPlay.bmp"),QSize(),QIcon::Normal,QIcon::Off);
-    ui->recordPlayMenuPushButton->setIcon(icon);
-    ui->recordPlayMenuPushButton->setIconSize(QSize(203,102));
-
-    if (Sender->objectName() == "devManageMenuPushButton")      //设备管理按钮被按，则切换到设备管理页面
-        icon.addFile(QString::fromUtf8(":/monres/Pantoequip1.bmp"),QSize(),QIcon::Normal,QIcon::Off);
-    else
-        icon.addFile(QString::fromUtf8(":/monres/Pantoequip.bmp"),QSize(),QIcon::Normal,QIcon::Off);
-    ui->devManageMenuPushButton->setIcon(icon);
-    ui->devManageMenuPushButton->setIconSize(QSize(203,102));
-
-
-    if (Sender->objectName() == "devUpdateMenuPushButton")     //设备更新按钮被按，则切换到设备更新页面
-        icon.addFile(QString::fromUtf8(":/monres/PantoMantain1.bmp"),QSize(),QIcon::Normal,QIcon::Off);
-    else
-        icon.addFile(QString::fromUtf8(":/monres/PantoMantain.bmp"),QSize(),QIcon::Normal,QIcon::Off);
-    ui->devUpdateMenuPushButton->setIcon(icon);
-    ui->devUpdateMenuPushButton->setIconSize(QSize(203,102));
-
-
-
-    if (Sender->objectName() == "inteAnalyMenuPushButton")     //设备更新按钮被按，则切换到设备更新页面
-        icon.addFile(QString::fromUtf8(":/monres/PantoIntell1.bmp"),QSize(),QIcon::Normal,QIcon::Off);
-    else
-        icon.addFile(QString::fromUtf8(":/monres/PantoIntell.bmp"),QSize(),QIcon::Normal,QIcon::Off);
-    ui->inteAnalyMenuPushButton->setIcon(icon);
-    ui->inteAnalyMenuPushButton->setIconSize(QSize(203,102));
-
     if(Sender==0)
     {
         return ;
@@ -897,5 +857,46 @@ void pvmsMenuWidget::menuButtonClick()
         ui->devUpdateMenuPushButton->setChecked(true);
 
     }
+
+    QIcon icon;
+    if (Sender->objectName() == "pvmsMonitorMenuPushButton")     //受电弓监控按钮被按，则切换到受电弓监控页面
+        icon.addFile(QString::fromUtf8(":/monres/PantoMonitor1.bmp"),QSize(),QIcon::Normal,QIcon::Off);
+    else
+        icon.addFile(QString::fromUtf8(":/monres/PantoMonitor.bmp"),QSize(),QIcon::Normal,QIcon::Off);
+    ui->pvmsMonitorMenuPushButton->setIcon(icon);
+    ui->pvmsMonitorMenuPushButton->setIconSize(QSize(203,102));
+
+
+    if (Sender->objectName() == "recordPlayMenuPushButton")     //录像回放按钮被按，则切换到录像回放页面
+        icon.addFile(QString::fromUtf8(":/monres/PantoPlay1.bmp"),QSize(),QIcon::Normal,QIcon::Off);
+    else
+        icon.addFile(QString::fromUtf8(":/monres/PantoPlay.bmp"),QSize(),QIcon::Normal,QIcon::Off);
+    ui->recordPlayMenuPushButton->setIcon(icon);
+    ui->recordPlayMenuPushButton->setIconSize(QSize(203,102));
+
+    if (Sender->objectName() == "devManageMenuPushButton")      //设备管理按钮被按，则切换到设备管理页面
+        icon.addFile(QString::fromUtf8(":/monres/Pantoequip1.bmp"),QSize(),QIcon::Normal,QIcon::Off);
+    else
+        icon.addFile(QString::fromUtf8(":/monres/Pantoequip.bmp"),QSize(),QIcon::Normal,QIcon::Off);
+    ui->devManageMenuPushButton->setIcon(icon);
+    ui->devManageMenuPushButton->setIconSize(QSize(203,102));
+
+
+    if (Sender->objectName() == "devUpdateMenuPushButton")     //设备更新按钮被按，则切换到设备更新页面
+        icon.addFile(QString::fromUtf8(":/monres/PantoMantain1.bmp"),QSize(),QIcon::Normal,QIcon::Off);
+    else
+        icon.addFile(QString::fromUtf8(":/monres/PantoMantain.bmp"),QSize(),QIcon::Normal,QIcon::Off);
+    ui->devUpdateMenuPushButton->setIcon(icon);
+    ui->devUpdateMenuPushButton->setIconSize(QSize(203,102));
+
+
+
+    if (Sender->objectName() == "inteAnalyMenuPushButton")     //设备更新按钮被按，则切换到设备更新页面
+        icon.addFile(QString::fromUtf8(":/monres/PantoIntell1.bmp"),QSize(),QIcon::Normal,QIcon::Off);
+    else
+        icon.addFile(QString::fromUtf8(":/monres/PantoIntell.bmp"),QSize(),QIcon::Normal,QIcon::Off);
+    ui->inteAnalyMenuPushButton->setIcon(icon);
+    ui->inteAnalyMenuPushButton->setIconSize(QSize(203,102));
+
 }
 

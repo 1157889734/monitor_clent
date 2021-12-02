@@ -197,7 +197,7 @@ void usergroupManage::init_datavase()
     else
         db=QSqlDatabase::addDatabase("QSQLITE");
 
-    db.setDatabaseName("/home/data/data.db");
+    db.setDatabaseName("/home/data/monitorCfg/data.db");
     query_OK=db.open();
     if(query_OK)
     {
