@@ -330,11 +330,10 @@ void *PisProcessThread(void *arg)
 
 
                     }
-
+                    usleep(500*1000);
 
                 }
 
-                usleep(500*1000);
 
             }
 
@@ -413,11 +412,19 @@ void ParsePisYCInfo(Msg_RecvPISYCInfo  RecvPISInfo)
     {
         ptPisInfo->wSpeed = RecvPISInfo.Speed;
     }
+    BYTE testInfo[2]={0};
+    memcpy(testInfo,&RecvPISInfo.Speed,2);
+    printf("*000000testInfo value 1:0x%x  2:0x%x\n",testInfo[0],testInfo[1]);
 
     strncpy(ptPisInfo->cTrainNum,RecvPISInfo.TrainNumber1,sizeof(RecvPISInfo.TrainNumber1));
     strncpy(ptPisInfo->cTrainNum+4,RecvPISInfo.TrainNumber2,sizeof(RecvPISInfo.TrainNumber2));
 
-    ptPisInfo->wDistance = (INT8)RecvPISInfo.Mileage;
+
+    int uiTmp = RecvPISInfo.Mileage[0] << 24 | RecvPISInfo.Mileage[1] << 16 | RecvPISInfo.Mileage[2] << 8 | RecvPISInfo.Mileage[3];
+    short sDistance = (uiTmp/1000) & 0xffff;            //里程    ？？？？？
+    printf("**1111111111**1111****sDistance=%d\n",sDistance);
+
+    ptPisInfo->wDistance = uiTmp;
 //    ptPisInfo->wDistance = RecvPISInfo.Mileage;
 //    strncpy(ptPisInfo->cTrainNum,(char *)RecvPISInfo.TrainNumber,sizeof (ptPisInfo->cTrainNum));
 
@@ -475,10 +482,15 @@ void ParsePisInfo(Msg_RecvPISInfo  RecvPISInfo)
     ptPisInfo->tTime.i8Min =  RecvPISInfo.dateTime.Minute;
     ptPisInfo->tTime.i8Sec =  RecvPISInfo.dateTime.Second;
 
-    ptPisInfo->wSpeed = htons(RecvPISInfo.Speed);
+    ptPisInfo->wSpeed = RecvPISInfo.Speed;
+    BYTE testInfo[2]={0};
+    memcpy(testInfo,&RecvPISInfo.Speed,2);
+    printf("*testInfo value 1:0x%x  2:0x%x\n",testInfo[0],testInfo[1]);
 
+    short uiTmp = RecvPISInfo.Mileage[0] << 8 | RecvPISInfo.Mileage[1];
+//    short sDistance = (uiTmp/1000) & 0xffff;            //里程
 
-    ptPisInfo->wDistance = htons(RecvPISInfo.Mileage);
+    ptPisInfo->wDistance = uiTmp;
     strncpy(ptPisInfo->cTrainNum,(char *)RecvPISInfo.TrainNumber,sizeof (ptPisInfo->cTrainNum));
 
     snprintf(acTmp, sizeof(acTmp), "%03d", (int)RecvPISInfo.IntervalInfo[2]);
@@ -529,10 +541,14 @@ void ParsePisInfoEx(Msg_RecvPISInfoEx RecvPISInfo)
     ptPisInfo->tTime.i8Min =  RecvPISInfo.dateTime.Minute;
     ptPisInfo->tTime.i8Sec =  RecvPISInfo.dateTime.Second;
 
-    ptPisInfo->wSpeed = htons(RecvPISInfo.Speed);
+    ptPisInfo->wSpeed = RecvPISInfo.Speed;
 
+    short uiTmp = RecvPISInfo.Mileage[0] << 8 | RecvPISInfo.Mileage[1];
+//    printf("****1111****uiTmp=%d\n",uiTmp);
+//    short sDistance = (uiTmp/1000) & 0xffff;            //里程
+//    printf("*****2222***sDistance=%d\n",sDistance);
 
-    ptPisInfo->wDistance = htons(RecvPISInfo.Mileage);
+    ptPisInfo->wDistance = uiTmp;
     strncpy(ptPisInfo->cTrainNum,(char *)RecvPISInfo.TrainNumber,sizeof (ptPisInfo->cTrainNum));
 
 

@@ -82,11 +82,11 @@ int main(int argc, char *argv[])
     STATE_ReadPisConfig();
     memset(&tPisConfigInfo, 0, sizeof(T_PIS_INFO));
     STATE_GetPisConfigInfo(&tPisConfigInfo);
-    snprintf(acNvrServerIp, sizeof(acNvrServerIp), "192.168.104.110");
+//    snprintf(acNvrServerIp, sizeof(acNvrServerIp), "192.168.104.110");
 
 //    iRet = PMSG_CreateConnect(tPisConfigInfo.acIpAddr, tPisConfigInfo.iPort);  ////
 
-    iRet = PIS_CreateConnect(acNvrServerIp, tPisConfigInfo.iPort);
+    iRet = PIS_CreateConnect(tPisConfigInfo.acIpAddr, tPisConfigInfo.iPort);
     if (0 == iRet)
     {
 //        DebugPrint(DEBUG_UI_ERROR_PRINT, "create connection to server:%s error!\n",acNvrServerIp);

@@ -61,7 +61,7 @@ typedef struct _T_PIS_CONN_INFO
     pthread_t ThreadHandle;
     pthread_mutex_t	tPmsgMutex;
 
-} T_PIS_CONN_INFO, *PT_PIS_CONN_INFO;
+} __attribute__((packed))T_PIS_CONN_INFO, *PT_PIS_CONN_INFO;
 
 
 
@@ -73,14 +73,14 @@ typedef struct _TimeInfo
     INT8		Hour;					    // 时
     INT8		Minute;					    // 分
     INT8		Second;					    // 秒
-}TimeInfo;
+}__attribute__((packed))TimeInfo;
 
 
 //校时报文
 typedef struct  _Msg_TimingInfo
 {
     TimeInfo	dateTime;					    //时间
-}Msg_TimingInfo;
+}__attribute__((packed))Msg_TimingInfo;
 
 // 最新标准PIS协议
 typedef struct  _Msg_RecvPISInfoEx
@@ -88,11 +88,11 @@ typedef struct  _Msg_RecvPISInfoEx
     TimeInfo	dateTime;					    //时间
     INT16        Speed;						    // 速度
     INT8        TrainNumber[11];				    // 车次
-    INT16        Mileage;					    // 区间里程数
+    INT8        Mileage[2];					    // 区间里程数
     INT8		BeginStation[3];
     INT8		EndStation[3];
     INT8        IntervalInfo[24];               // 区间信息
-}Msg_RecvPISInfoEx;
+}__attribute__((packed))Msg_RecvPISInfoEx;
 
 
 //动车组受电弓视频监控系统与PIS系统的通信报文
@@ -101,9 +101,9 @@ typedef struct  _Msg_RecvPISInfo
     TimeInfo	dateTime;					    //时间
     INT16        Speed;						    // 速度
     INT8        TrainNumber[7];				    // 车次
-    INT16        Mileage;					    // 区间里程数
+    INT8        Mileage[2];					    // 区间里程数
     INT8        IntervalInfo[30];               // 区间信息
-}Msg_RecvPISInfo;
+}__attribute__((packed))Msg_RecvPISInfo;
 
 //易程特殊类型转发报文
 typedef struct  _Msg_RecvPISYCInfo
@@ -118,7 +118,7 @@ typedef struct  _Msg_RecvPISYCInfo
     INT8        TrainNumber2[3];				    // 车次数字信息	 0x00 0x02 0x11	  表示数字位为211
     INT8        BeginStation[3];                    //开始站点代码 01 01 01 代表111
     INT8        EndStation[3];						//开始站点代码 01 02 02 代表122
-}Msg_RecvPISYCInfo;
+}__attribute__((packed))Msg_RecvPISYCInfo;
 
 
 // 视频字符叠加报文，主要为了获取车次信息
@@ -131,7 +131,7 @@ typedef struct _Video_ADDTextInfo
     INT8		PantoPos;						// 受电弓位置号 20151023
     INT8        Mileage[2];					    // 区间里程数
     INT8        IntervalInfo[30];               // 区间信息
-}Video_ADDTextInfo;
+}__attribute__((packed))Video_ADDTextInfo;
 
 
 
@@ -139,12 +139,12 @@ typedef struct _NCIP_HEADER{
     INT8        HEARD;						// 报文头 ff
     INT8		FrameType;					// 报文类型
     INT8        DataLenth[2];				    // 报文长度
-}TCP_HEADER;
+}__attribute__((packed))TCP_HEADER;
 
 typedef struct _NCIP_PIS_HEADER{
     INT8        HEARD[2];						// 报文头 ff
     INT8        DataLenth;				    // 报文长度
-}TCP_PIS_HEADER;
+}__attribute__((packed))TCP_PIS_HEADER;
 
 
 void ParsePisYCInfo(Msg_RecvPISYCInfo  RecvPISInfo);
