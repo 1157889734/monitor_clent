@@ -7,7 +7,7 @@
 QT       += core gui widgets virtualkeyboard multimedia multimediawidgets sql
 
 
-TARGET = monitor
+TARGET = testmonitor
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -23,8 +23,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 CONFIG += c++11
 
-QMAKE_CFLAGS += strip
-#QMAKE_CXXFLAGS += strip
+#QMAKE_CFLAGS += -strip
+#QMAKE_CXXFLAGS += -strip
 
 #QMAKE_CFLAGS += -g -O0
 #QMAKE_CXXFLAGS += -g -O0
@@ -38,6 +38,7 @@ LIBS += -L$$PWD/lib/  -ldl -lz -lbz2 -lrockchip_mpp -lrga -lpthread -lwayland-cl
 SOURCES += \
     ckeyboard.cpp \
     cmplayer.cpp \
+    ctcppisclient.c \
     debugout/debug.c \
     led.c \
     main.cpp \
@@ -85,6 +86,7 @@ HEADERS += \
     choicelogindevwidget.h \
     ckeyboard.h \
     cmplayer.h \
+    ctcppisclient.h \
     debugout/debug.h \
     define.h \
     led.h \

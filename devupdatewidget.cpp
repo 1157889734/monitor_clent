@@ -1,4 +1,5 @@
 #include "devupdatewidget.h"
+#include "ctcppisclient.h"
 #include "ui_devupdatewidget.h"
 #include <QButtonGroup>
 #include <QDebug>
@@ -16,6 +17,7 @@
 #include <QProcess>
 #include <QLabel>
 
+//extern int g_iIsPBD;
 static int g_ibShowKeyboard = 0;
 static int g_ichagepage = 0;
 static int g_iVNum = 0;
@@ -23,7 +25,6 @@ static int g_iVNum = 0;
 
 #define NVR_RESTART_PORT 11001
 QButtonGroup *g_buttonGroup1 = NULL, *g_buttonGroup2 = NULL;
-devUpdateWidget *g_devUpdateThis = NULL;
 
 char* parseFileNameFromPath(char *pcSrcStr)     //根据导入文件路径全名解析得到单纯的导入文件名
 {
@@ -121,6 +122,7 @@ devUpdateWidget::devUpdateWidget(QWidget *parent) :
     ui->contrastLineEdit->setValidator(new QIntValidator(0,255,this));
 
     connect(ui->trainTypeSetPushButton, SIGNAL(clicked(bool)), this, SLOT(setTrainType()));
+    connect(ui->PISSetPushButton,SIGNAL(clicked(bool)),this,SLOT(setPisSetting()));
 
 
     ui->dateEdit->setCalendarPopup(true);
@@ -497,6 +499,8 @@ void devUpdateWidget::getTrainConfig()
         }
     }
 
+
+    g_iIsPBD = ui->PISSetcomboBox->currentIndex();
 }
 
 void devUpdateWidget::setPollingTimeRadioButton()     //获取轮询时间，设置轮询时间单选按钮组的样式
@@ -570,6 +574,28 @@ void devUpdateWidget::setTimeSignalCtrl()
     return;
 }
 
+void devUpdateWidget::setPisSetting()
+{
+    char acUserType[16] = {0};
+
+
+    STATE_GetCurrentUserType(acUserType, sizeof(acUserType));
+    if (!strcmp(acUserType, "operator"))   //操作员不能设置车型
+    {
+        QMessageBox box(QMessageBox::Warning,QString::fromUtf8("提示"),QString::fromUtf8("无权限设置!"));     //新建消息提示框，提示错误信息
+        box.setWindowFlags(Qt::FramelessWindowHint);
+        box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
+        box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));     //将按钮显示改成"确 定"
+        box.exec();
+    }
+    else
+    {
+        g_iIsPBD = ui->PISSetcomboBox->currentIndex();
+
+    }
+
+}
+
 void devUpdateWidget::setTrainType()
 {
     char acUserType[16] = {0}, acTrainType[128] = {0};
@@ -612,8 +638,6 @@ void devUpdateWidget::setTrainType()
             snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "change traintype to %s and monitor Client reboot!", acTrainType);
             LOG_WriteLog(&tLogInfo);
 
-//            QApplication *app;
-//            app->exit();
             QString program = QApplication::applicationFilePath();
             QStringList arguments = QApplication::arguments();
             QString workingDirectory = QDir::currentPath();
@@ -902,9 +926,9 @@ void devUpdateWidget::devUpdateSlot()
             system("mkdir /home/data/backup");
         }
 
-        system("cp /home/data/moittor /home/data/backup/");
-        system("rm /home/data/moittor");
-        system("cp /media/usb0/moittor /home/data/moittor");
+        system("cp /home/user/bin/monitor /home/data/backup/");
+        system("rm /home/user/bin/monitor");
+        system("cp /media/usb0/monitor /home/user/bin/monitor");
         system("sync");
 
         ui->updateStatueTextEdit->append(tr("复制文件完成"));
@@ -941,10 +965,10 @@ void devUpdateWidget::devRebootSlot()
         QString program = QApplication::applicationFilePath();
         QStringList arguments = QApplication::arguments();
         QString workingDirectory = QDir::currentPath();
-        if("/home/data/moittor" != program)
+        if("/home/user/bin/monitor" != program)
         {
-            system("cp /home/data/backup/moittor /home/data/ ");
-            program = "/home/data/moittor";
+            system("cp /home/data/backup/monitor /home/user/bin/ ");
+            program = "/home/user/bin/monitor";
         }
 
         QProcess::startDetached(program, arguments, workingDirectory);
@@ -1004,7 +1028,7 @@ void devUpdateWidget::downLoadLogSlot()
 
 
 //        system("cp /mnt/usb/u/Station.ini /home/data/emuVideoMornitorClient/Station.ini");
-        system("cp /home/data/sys.log /media/usb0/");
+        system("cp /home/data/monitorCfg/sys.log /media/usb0/");
 
         system("sync");
 
@@ -1066,10 +1090,7 @@ void devUpdateWidget::configFileImportSlot()
             return;
         }
 
-
-//        system("cp /mnt/usb/u/Station.ini /home/data/emuVideoMornitorClient/Station.ini");
-        system("cp /media/usb0/Station.ini /home/data/Station.ini");
-
+        system("cp /media/usb0/Station.ini /home/data/monitorCfg/Station.ini");
         system("sync");
 
         QMessageBox msgBox2(QMessageBox::Information,QString(tr("注意")),QString(tr("导入成功，请拔出U盘!")));

@@ -1,4 +1,5 @@
 #include "MyApplication.h"
+#include "ctcppisclient.h"
 #include <QApplication>
 #include "choicelogindevwidget.h"
 #include "waitloginwidget.h"
@@ -81,11 +82,15 @@ int main(int argc, char *argv[])
     STATE_ReadPisConfig();
     memset(&tPisConfigInfo, 0, sizeof(T_PIS_INFO));
     STATE_GetPisConfigInfo(&tPisConfigInfo);
-    iRet = PMSG_CreateConnect(tPisConfigInfo.acIpAddr, tPisConfigInfo.iPort);
+    snprintf(acNvrServerIp, sizeof(acNvrServerIp), "192.168.104.110");
+
+//    iRet = PMSG_CreateConnect(tPisConfigInfo.acIpAddr, tPisConfigInfo.iPort);  ////
+
+    iRet = PIS_CreateConnect(acNvrServerIp, tPisConfigInfo.iPort);
     if (0 == iRet)
     {
 //        DebugPrint(DEBUG_UI_ERROR_PRINT, "create connection to server:%s error!\n",acNvrServerIp);
-//        qDebug()<<"create connection to server:%s error"<<__FUNCTION__<<__LINE__<<acNvrServerIp<<endl;
+        qDebug()<<"create connection to server:%s error"<<__FUNCTION__<<__LINE__<<acNvrServerIp<<endl;
     }
     if (STATE_SetPisPmsgHandle((PMSG_HANDLE)iRet) < 0)
     {

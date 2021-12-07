@@ -47,6 +47,7 @@ public:
         if (usergroupManage->objectName().isEmpty())
             usergroupManage->setObjectName(QString::fromUtf8("usergroupManage"));
         usergroupManage->resize(944, 401);
+        usergroupManage->setFocusPolicy(Qt::StrongFocus);
         label_2 = new QLabel(usergroupManage);
         label_2->setObjectName(QString::fromUtf8("label_2"));
         label_2->setGeometry(QRect(470, 25, 67, 17));

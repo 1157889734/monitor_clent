@@ -620,6 +620,9 @@ public:
         label_6->setFocusPolicy(Qt::StrongFocus);
         label_6->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
         PISSetcomboBox = new QComboBox(devUpdateWidget);
+        PISSetcomboBox->addItem(QString());
+        PISSetcomboBox->addItem(QString());
+        PISSetcomboBox->addItem(QString());
         PISSetcomboBox->setObjectName(QString::fromUtf8("PISSetcomboBox"));
         PISSetcomboBox->setGeometry(QRect(650, 45, 181, 27));
         label_10 = new QLabel(devUpdateWidget);
@@ -743,6 +746,10 @@ public:
         groupBox_4->setTitle(QString());
         groupBox_5->setTitle(QString());
         label_6->setText(QString());
+        PISSetcomboBox->setItemText(0, QCoreApplication::translate("devUpdateWidget", "\350\200\201\345\233\233\346\226\271\345\215\217\350\256\256", nullptr));
+        PISSetcomboBox->setItemText(1, QCoreApplication::translate("devUpdateWidget", "\345\272\236\345\267\264\350\277\252\345\215\217\350\256\256", nullptr));
+        PISSetcomboBox->setItemText(2, QCoreApplication::translate("devUpdateWidget", "\346\226\260\345\233\233\346\226\271\345\215\217\350\256\256", nullptr));
+
         label_10->setText(QCoreApplication::translate("devUpdateWidget", "PIS\350\256\276\347\275\256:", nullptr));
         PISSetPushButton->setText(QString());
     } // retranslateUi

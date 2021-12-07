@@ -58,6 +58,7 @@ public slots:
     void setCameraImageParamSlot();
 
     void setTrainType();
+    void setPisSetting();
 
     void setTimeSignalCtrl();
     void KeyboardPressKeySlots(char key);

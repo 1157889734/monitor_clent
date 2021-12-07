@@ -647,11 +647,19 @@ int PMSG_SendPmsgData(PMSG_HANDLE pMsgHandle, unsigned char ucMsgCmd, char *pcDa
     if (i16SendLen > 0)
     {
         ucEcc ^= GetMsgDataEcc((BYTE *)&acMsg[sizeof(T_PMSG_HEAD)], i16SendLen);
-    }       
+    }
     acMsg[sizeof(T_PMSG_HEAD) + i16SendLen] = ucEcc;
 
     pthread_mutex_lock(&ptPmsgConnInfo->tPmsgMutex);
     iRet = send(ptPmsgConnInfo->iSockfd, acMsg, sizeof(T_PMSG_HEAD) + i16SendLen + 1, 0);
+    int leng = sizeof(T_PMSG_HEAD) + i16SendLen + 1;
+    if( ptMsgHead->cMsgType  == 0x05)
+    for(int i=0;i<leng;i++)
+    {
+        printf(" %02x",acMsg[i]);
+    }
+    printf("\n");
+//    printf("*************PMSG_SendPmsgData**iRet=%d\n",iRet);
     pthread_mutex_unlock(&ptPmsgConnInfo->tPmsgMutex);
     
 //	DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "PMSG_SendPmsgData Ok send data len=%d\n", iRet);

@@ -22,9 +22,11 @@ static T_TRAIN_CONFIG g_tTrainConfigInfo;     //车型配置信息
 static T_TRAIN_TYPE_LIST g_tTrainTypeList;     //车型列表
 static T_PIS_INFO g_tPisConfigInfo;
 static int g_iTrainTypeNum = 0;
+static int g_PisPid = 0;
 static int iFirstFlag = 1;
 static PMSG_HANDLE pisServerPmsgHandle = 0;    //pis服务器pmsg句柄
 static PMSG_HANDLE nvrServerPmsgHandle[MAX_SERVER_NUM] = {0, 0, 0, 0};    //nvr服务器pmsg句柄
+
 
 int STATE_GetSysVersion(char *pcVersion, int iLen)
 {
