@@ -31,7 +31,6 @@ public:
     QPushButton *permissonManagePushButton;
     QLabel *presetReturnTimeSetLabel;
     QLineEdit *pollingTimeSetLineEdit;
-    QLabel *label_3;
     QPushButton *trainTypeSetPushButton;
     QRadioButton *pollingTimeSetRadioButton_3;
     QLabel *label_2;
@@ -103,6 +102,7 @@ public:
         if (devUpdateWidget->objectName().isEmpty())
             devUpdateWidget->setObjectName(QString::fromUtf8("devUpdateWidget"));
         devUpdateWidget->resize(1024, 630);
+        devUpdateWidget->setMinimumSize(QSize(20, 20));
         devUpdateWidget->setFocusPolicy(Qt::StrongFocus);
         devUpdateWidget->setStyleSheet(QString::fromUtf8(""));
         permissonManagePushButton = new QPushButton(devUpdateWidget);
@@ -130,16 +130,6 @@ public:
         pollingTimeSetLineEdit->setGeometry(QRect(780, 10, 151, 31));
         pollingTimeSetLineEdit->setFont(font);
         pollingTimeSetLineEdit->setReadOnly(false);
-        label_3 = new QLabel(devUpdateWidget);
-        label_3->setObjectName(QString::fromUtf8("label_3"));
-        label_3->setGeometry(QRect(40, 90, 944, 31));
-        label_3->setFont(font);
-        label_3->setStyleSheet(QString::fromUtf8(" #label_3 { \n"
-"    background-color: rgb(255, 255, 255);\n"
-"  } \n"
-" #label_3 * { \n"
-"     background-color:; \n"
-" }"));
         trainTypeSetPushButton = new QPushButton(devUpdateWidget);
         trainTypeSetPushButton->setObjectName(QString::fromUtf8("trainTypeSetPushButton"));
         trainTypeSetPushButton->setGeometry(QRect(340, 45, 112, 32));
@@ -157,10 +147,11 @@ public:
         pollingTimeSetRadioButton_3->setGeometry(QRect(440, 13, 61, 22));
         pollingTimeSetRadioButton_3->setFont(font);
         pollingTimeSetRadioButton_3->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
+        pollingTimeSetRadioButton_3->setIconSize(QSize(20, 20));
         pollingTimeSetRadioButton_3->setChecked(false);
         label_2 = new QLabel(devUpdateWidget);
         label_2->setObjectName(QString::fromUtf8("label_2"));
-        label_2->setGeometry(QRect(40, 8, 944, 31));
+        label_2->setGeometry(QRect(40, 8, 221, 31));
         label_2->setFont(font);
         label_2->setStyleSheet(QString::fromUtf8(" #label_2 { \n"
 "    background-color: rgb(255, 255, 255);\n"
@@ -174,12 +165,13 @@ public:
         pollingTimeSetRadioButton->setFont(font);
         pollingTimeSetRadioButton->setAutoFillBackground(false);
         pollingTimeSetRadioButton->setStyleSheet(QString::fromUtf8(""));
-        pollingTimeSetRadioButton->setIconSize(QSize(16, 16));
+        pollingTimeSetRadioButton->setIconSize(QSize(20, 20));
         presetReturnTimeSetRadioButton_2 = new QRadioButton(devUpdateWidget);
         presetReturnTimeSetRadioButton_2->setObjectName(QString::fromUtf8("presetReturnTimeSetRadioButton_2"));
         presetReturnTimeSetRadioButton_2->setGeometry(QRect(350, 80, 81, 22));
         presetReturnTimeSetRadioButton_2->setFont(font);
         presetReturnTimeSetRadioButton_2->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
+        presetReturnTimeSetRadioButton_2->setIconSize(QSize(20, 20));
         pollingTimeSetRadioButton_4 = new QRadioButton(devUpdateWidget);
         pollingTimeSetRadioButton_4->setObjectName(QString::fromUtf8("pollingTimeSetRadioButton_4"));
         pollingTimeSetRadioButton_4->setGeometry(QRect(700, 13, 81, 22));
@@ -191,6 +183,7 @@ public:
         presetReturnTimeSetRadioButton_3->setGeometry(QRect(440, 80, 81, 22));
         presetReturnTimeSetRadioButton_3->setFont(font);
         presetReturnTimeSetRadioButton_3->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
+        presetReturnTimeSetRadioButton_3->setIconSize(QSize(20, 20));
         presetReturnTimeSetRadioButton_3->setChecked(false);
         pollingTimeSetLabel = new QLabel(devUpdateWidget);
         pollingTimeSetLabel->setObjectName(QString::fromUtf8("pollingTimeSetLabel"));
@@ -203,6 +196,7 @@ public:
         presetReturnTimeSetRadioButton->setGeometry(QRect(270, 80, 71, 22));
         presetReturnTimeSetRadioButton->setFont(font);
         presetReturnTimeSetRadioButton->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
+        presetReturnTimeSetRadioButton->setIconSize(QSize(20, 20));
         presetReturnTimeSetRadioButton_4 = new QRadioButton(devUpdateWidget);
         presetReturnTimeSetRadioButton_4->setObjectName(QString::fromUtf8("presetReturnTimeSetRadioButton_4"));
         presetReturnTimeSetRadioButton_4->setGeometry(QRect(700, 80, 81, 22));
@@ -218,6 +212,7 @@ public:
         pollingTimeSetRadioButton_2->setGeometry(QRect(350, 13, 61, 22));
         pollingTimeSetRadioButton_2->setFont(font);
         pollingTimeSetRadioButton_2->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
+        pollingTimeSetRadioButton_2->setIconSize(QSize(20, 20));
         label = new QLabel(devUpdateWidget);
         label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(40, 40, 91, 31));
@@ -410,7 +405,8 @@ public:
 "{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}"));
         sysDataAdjustLabel = new QLabel(deviceManagewidget);
         sysDataAdjustLabel->setObjectName(QString::fromUtf8("sysDataAdjustLabel"));
-        sysDataAdjustLabel->setGeometry(QRect(110, 125, 131, 21));
+        sysDataAdjustLabel->setGeometry(QRect(110, 125, 131, 33));
+        sysDataAdjustLabel->setMinimumSize(QSize(0, 0));
         QFont font1;
         font1.setPointSize(10);
         sysDataAdjustLabel->setFont(font1);
@@ -642,7 +638,6 @@ public:
 "{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}"));
         label_6->raise();
         label_2->raise();
-        label_3->raise();
         pollingTimeSetRadioButton->raise();
         presetReturnTimeSetRadioButton_2->raise();
         pollingTimeSetRadioButton_4->raise();
@@ -683,7 +678,6 @@ public:
         permissonManagePushButton->setText(QString());
         presetReturnTimeSetLabel->setText(QCoreApplication::translate("devUpdateWidget", "\350\247\206\351\242\221\347\224\273\351\235\242\350\277\224\345\233\236\351\242\204\347\275\256\347\202\271\346\227\266\351\227\264\350\256\276\347\275\256", nullptr));
         pollingTimeSetLineEdit->setText(QCoreApplication::translate("devUpdateWidget", "30", nullptr));
-        label_3->setText(QString());
         trainTypeSetPushButton->setText(QString());
         pollingTimeSetRadioButton_3->setText(QCoreApplication::translate("devUpdateWidget", "30\347\247\222", nullptr));
         label_2->setText(QString());

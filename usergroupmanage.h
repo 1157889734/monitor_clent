@@ -24,6 +24,7 @@ public:
     QString gtype_text;
     void init_datavase();
     void ShowKeyboardSlots(int nShow);
+    int addFlag;
 
 
 signals:

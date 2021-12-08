@@ -223,6 +223,7 @@ void usergroupManage::on_addpushButton_clicked()
     ui->usernamelineEdit->clear();
     ui->surelineEdit->clear();
     ui->usernamelineEdit->setFocus();
+    addFlag = 1;
 }
 
 void usergroupManage::update_database_function()
@@ -297,106 +298,115 @@ void usergroupManage::on_savepushButton_clicked()
 
 
     QSqlQuery query;
-    query.exec("select username from tab");
+    query.exec("select * from tab");
     query.isActive();
     bool T2=true;
-    while(query.next())
-   {
+    QStringList nameList;
 
-       QString id1= query.value(1).toString();
-       if(ui->usernamelineEdit->text().compare(id1)==0)
-        {
-            QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("该用户已存在不允许再次添加!")));
-            msgBox.setWindowFlags(Qt::FramelessWindowHint);
-            msgBox.setStandardButtons(QMessageBox::Yes);
-            msgBox.button(QMessageBox::Yes)->setText("OK");
-            msgBox.exec();
-            T2=false;
-            return;
-        }
-   }
-
-
-    if(1 == g_curTextState)
-    {
-
-       if(value_passwd != value_ensure_passwd)
+        while(query.next())
        {
-           QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("两次密码不一致!")));
-           msgBox.setWindowFlags(Qt::FramelessWindowHint);
-           msgBox.setStandardButtons(QMessageBox::Yes);
-           msgBox.button(QMessageBox::Yes)->setText("OK");
-           msgBox.exec();
-           return;
-       }
-       QString sql;
-       sql = QString("update tab set passwd = ('%1') where username = ('%2')")
-          .arg(value_passwd).arg(value_name);
-      bool ok = query.exec(sql);
-      if(ok)
-      {
-        QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("修改成功!")));
-        msgBox.setWindowFlags(Qt::FramelessWindowHint);
-        msgBox.setStandardButtons(QMessageBox::Yes);
-        msgBox.button(QMessageBox::Yes)->setText("OK");
-        msgBox.exec();
-        g_curTextState = 0;
-      }
-      else
-      {
-        QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("修改失败!")));
-        msgBox.setWindowFlags(Qt::FramelessWindowHint);
-        msgBox.setStandardButtons(QMessageBox::Yes);
-        msgBox.button(QMessageBox::Yes)->setText("OK");
-        msgBox.exec();
+           QString id1= query.value(0).toString();
+            if(addFlag == 1)
+            {
+               if(ui->usernamelineEdit->text().compare(id1)==0)
+                {
+                    QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("该用户已存在不允许再次添加!")));
+                    msgBox.setWindowFlags(Qt::FramelessWindowHint);
+                    msgBox.setStandardButtons(QMessageBox::Yes);
+                    msgBox.button(QMessageBox::Yes)->setText("OK");
+                    msgBox.exec();
+                    T2=false;
+                    return;
+                }
+            }
 
-      }
-      db.close();
-      return;
-    }
-    if(T2==true)
-    {
-         QString sql;
-        if(value_passwd != value_ensure_passwd)
-        {
-            QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("两次密码不一致!")));
-            msgBox.setWindowFlags(Qt::FramelessWindowHint);
-            msgBox.setStandardButtons(QMessageBox::Yes);
-            msgBox.button(QMessageBox::Yes)->setText("OK");
-            msgBox.exec();
-
-            return;
         }
-
-         QString value_type;
-         if(!gtype_text.isEmpty())
+        if(addFlag != 1)
         {
-            value_type = gtype_text;
+            if(1 == g_curTextState)
+            {
+
+               if(value_passwd != value_ensure_passwd)
+               {
+                   QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("两次密码不一致!")));
+                   msgBox.setWindowFlags(Qt::FramelessWindowHint);
+                   msgBox.setStandardButtons(QMessageBox::Yes);
+                   msgBox.button(QMessageBox::Yes)->setText("OK");
+                   msgBox.exec();
+                   return;
+               }
+               QString sql;
+               sql = QString("update tab set passwd = ('%1') where username = ('%2')")
+                  .arg(value_passwd).arg(value_name);
+              bool ok = query.exec(sql);
+              if(ok)
+              {
+                QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("修改成功!")));
+                msgBox.setWindowFlags(Qt::FramelessWindowHint);
+                msgBox.setStandardButtons(QMessageBox::Yes);
+                msgBox.button(QMessageBox::Yes)->setText("OK");
+                msgBox.exec();
+                g_curTextState = 0;
+              }
+              else
+              {
+                QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("修改失败!")));
+                msgBox.setWindowFlags(Qt::FramelessWindowHint);
+                msgBox.setStandardButtons(QMessageBox::Yes);
+                msgBox.button(QMessageBox::Yes)->setText("OK");
+                msgBox.exec();
+
+              }
+              db.close();
+              return;
+            }
         }
         else
         {
-            value_type = "operator";
-        }
-         sql = QString("insert into tab values ('%1', '%2', '%3' )")
-            .arg(value_name).arg(value_passwd).arg(value_type);
-        bool ok = query.exec(sql);
-      if(ok)
-      {
-        QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("添加成功!")));
-        msgBox.setWindowFlags(Qt::FramelessWindowHint);
-        msgBox.setStandardButtons(QMessageBox::Yes);
-        msgBox.button(QMessageBox::Yes)->setText("OK");
-        msgBox.exec();
-      }
-      else
-      {
-        QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("添加失败!")));
-        msgBox.setWindowFlags(Qt::FramelessWindowHint);
-        msgBox.setStandardButtons(QMessageBox::Yes);
-        msgBox.button(QMessageBox::Yes)->setText("OK");
-        msgBox.exec();
+            addFlag = 0;
 
-      }
+             QString sql;
+            if(value_passwd != value_ensure_passwd)
+            {
+                QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("两次密码不一致!")));
+                msgBox.setWindowFlags(Qt::FramelessWindowHint);
+                msgBox.setStandardButtons(QMessageBox::Yes);
+                msgBox.button(QMessageBox::Yes)->setText("OK");
+                msgBox.exec();
+
+                return;
+            }
+
+            QString value_type;
+            if(!gtype_text.isEmpty())
+            {
+                value_type = gtype_text;
+            }
+            else
+            {
+                value_type = "operator";
+            }
+            sql = QString("insert into tab values ('%1', '%2', '%3' )")
+            .arg(value_name).arg(value_passwd).arg(value_type);
+            bool ok = query.exec(sql);
+            if(ok)
+            {
+                QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("添加成功!")));
+                msgBox.setWindowFlags(Qt::FramelessWindowHint);
+                msgBox.setStandardButtons(QMessageBox::Yes);
+                msgBox.button(QMessageBox::Yes)->setText("OK");
+                msgBox.exec();
+            }
+            else
+            {
+                QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("添加失败!")));
+                msgBox.setWindowFlags(Qt::FramelessWindowHint);
+                msgBox.setStandardButtons(QMessageBox::Yes);
+                msgBox.button(QMessageBox::Yes)->setText("OK");
+                msgBox.exec();
+
+            }
+
    }
 
     update_database_function();

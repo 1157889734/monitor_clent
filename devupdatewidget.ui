@@ -10,6 +10,12 @@
     <height>630</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>20</width>
+    <height>20</height>
+   </size>
+  </property>
   <property name="focusPolicy">
    <enum>Qt::StrongFocus</enum>
   </property>
@@ -90,32 +96,6 @@ background-color: rgb(255, 255, 255);</string>
     <bool>false</bool>
    </property>
   </widget>
-  <widget class="QLabel" name="label_3">
-   <property name="geometry">
-    <rect>
-     <x>40</x>
-     <y>90</y>
-     <width>944</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true"> #label_3 { 
-    background-color: rgb(255, 255, 255);
-  } 
- #label_3 * { 
-     background-color:; 
- }</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
   <widget class="QPushButton" name="trainTypeSetPushButton">
    <property name="geometry">
     <rect>
@@ -164,6 +144,12 @@ QPushButton:pressed
    <property name="text">
     <string>30秒</string>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>20</width>
+     <height>20</height>
+    </size>
+   </property>
    <property name="checked">
     <bool>false</bool>
    </property>
@@ -173,7 +159,7 @@ QPushButton:pressed
     <rect>
      <x>40</x>
      <y>8</y>
-     <width>944</width>
+     <width>221</width>
      <height>31</height>
     </rect>
    </property>
@@ -219,8 +205,8 @@ QPushButton:pressed
    </property>
    <property name="iconSize">
     <size>
-     <width>16</width>
-     <height>16</height>
+     <width>20</width>
+     <height>20</height>
     </size>
    </property>
   </widget>
@@ -243,6 +229,12 @@ QPushButton:pressed
    </property>
    <property name="text">
     <string>10分钟</string>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>20</width>
+     <height>20</height>
+    </size>
    </property>
   </widget>
   <widget class="QRadioButton" name="pollingTimeSetRadioButton_4">
@@ -289,6 +281,12 @@ QPushButton:pressed
    <property name="text">
     <string>15分钟</string>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>20</width>
+     <height>20</height>
+    </size>
+   </property>
    <property name="checked">
     <bool>false</bool>
    </property>
@@ -334,6 +332,12 @@ background-color: rgb(255, 255, 255);</string>
    </property>
    <property name="text">
     <string>5分钟</string>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>20</width>
+     <height>20</height>
+    </size>
    </property>
   </widget>
   <widget class="QRadioButton" name="presetReturnTimeSetRadioButton_4">
@@ -397,6 +401,12 @@ background-color: rgb(255, 255, 255);</string>
    </property>
    <property name="text">
     <string>20秒</string>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>20</width>
+     <height>20</height>
+    </size>
    </property>
   </widget>
   <widget class="QLabel" name="label">
@@ -1026,8 +1036,14 @@ QPushButton:pressed
       <x>110</x>
       <y>125</y>
       <width>131</width>
-      <height>21</height>
+      <height>33</height>
      </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>0</width>
+      <height>0</height>
+     </size>
     </property>
     <property name="font">
      <font>
@@ -1625,7 +1641,6 @@ QPushButton:pressed
   </widget>
   <zorder>label_6</zorder>
   <zorder>label_2</zorder>
-  <zorder>label_3</zorder>
   <zorder>pollingTimeSetRadioButton</zorder>
   <zorder>presetReturnTimeSetRadioButton_2</zorder>
   <zorder>pollingTimeSetRadioButton_4</zorder>

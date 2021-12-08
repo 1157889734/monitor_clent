@@ -16,6 +16,7 @@
 #include <netinet/in.h>
 #include <QProcess>
 #include <QLabel>
+#include <QList>
 
 //extern int g_iIsPBD;
 static int g_ibShowKeyboard = 0;
@@ -333,12 +334,16 @@ void devUpdateWidget::monitorSysTime()
     int year = time.date().year(); // 年
     int month = time.date().month(); // 月
     int day = time.date().day(); // 日
-    int hour = time.time().hour(); // 时
-    int sec = time.time().second(); // 分
-    int msec = time.time().msec(); // 秒
+//    int hour = time.time().hour(); // 时
+//    int sec = time.time().second(); // 分
+//    int msec = time.time().msec(); // 秒
+
+    int h=ui->timeEdit->time().hour();
+    int m =ui->timeEdit->time().minute();
+    int s =ui->timeEdit->time().second();
 
 
-    snprintf(acTimeStr, sizeof(acTimeStr), "date %02d%02d%02d%02d%4d.%02d", month, day, hour, sec,year, msec);
+    snprintf(acTimeStr, sizeof(acTimeStr), "date %02d%02d%02d%02d%4d.%02d", month, day, h, m,year, s);
     system(acTimeStr);
     system("hwclock -w");
 
@@ -393,7 +398,7 @@ void devUpdateWidget::systimeSlot()
         snprintf(acTimeStr, sizeof(acTimeStr), "date %02d%02d%02d%02d%4d.%02d", month, day, hour, second,year, minute);
         system(acTimeStr);
         system("hwclock -w");
-
+        qDebug()<<"*******systimeSlot***"<<acTimeStr<<__LINE__<<"hour="<<hour<<"minute="<<minute<<"second="<<second;
         /*系统校时记录日志*/
         memset(&tLogInfo, 0, sizeof(T_LOG_INFO));
         tLogInfo.iLogType = 0;
@@ -767,16 +772,45 @@ void devUpdateWidget::configFileSelectionSlot()
                     return;
                 }
             }
+            char *pcfileName = NULL;
 
-            filename = QFileDialog::getOpenFileName(this, "打开文件", "/media/usb0/", "ini文件(*.ini)");
+            QFileDialog *dialog = new QFileDialog;
+            dialog->setAttribute(Qt::WA_DeleteOnClose);
+            dialog->setWindowFlag(Qt::FramelessWindowHint);
+            dialog->setFixedSize(800,600);
+            dialog->show();
+
+            QDir file = dialog->directory();
+            QDir *dir = NULL;
+            if(dir ==NULL)
+            {
+                dir = new QDir(file);
+            }
+            QStringList filter;
+            QList<QFileInfo> *fileInfo=new QList<QFileInfo>(dir->entryInfoList(filter));
+           for(int i = 0;i<fileInfo->count(); i++)
+           {
+//               qDebug()<<fileInfo->at(i).filePath();
+//               qDebug()<<fileInfo->at(i).fileName();
+               if(fileInfo->at(i).fileName() == "Station.ini")
+               {
+                    filename =fileInfo->at(i).filePath();
+
+               }
+           }
+//            filename = QFileDialog::getOpenFileName(this, "打开文件", "/media/usb0/", "ini文件(*.ini)");
             if (!filename.isNull())
             {
                 ui->configFileDisplayLineEdit->setText(filename);
             }
+            pcfileName = parseFileNameFromPath(ui->configFileDisplayLineEdit->text().toLatin1().data());
+            if (NULL == pcfileName)
+            {
+                return;
+            }
         }
 
 }
-
 
 void devUpdateWidget::configUpdateFileSLOT()
 {
@@ -826,12 +860,37 @@ void devUpdateWidget::configUpdateFileSLOT()
                 }
             }
 
-            filename = QFileDialog::getOpenFileName(this, "打开文件", "/media/usb0/", "文件(*)");
+            QFileDialog *dialog = new QFileDialog;
+            dialog->setAttribute(Qt::WA_DeleteOnClose);
+            dialog->setWindowFlag(Qt::FramelessWindowHint);
+            dialog->setFixedSize(800,600);
+            dialog->show();
+
+            QDir file = dialog->directory();
+            QDir *dir = NULL;
+            if(dir ==NULL)
+            {
+                dir = new QDir(file);
+            }
+            QStringList filter;
+            QList<QFileInfo> *fileInfo=new QList<QFileInfo>(dir->entryInfoList(filter));
+           for(int i = 0;i<fileInfo->count(); i++)
+           {
+//               qDebug()<<fileInfo->at(i).filePath();
+//               qDebug()<<fileInfo->at(i).fileName();
+               if(fileInfo->at(i).fileName() == "monitor")
+               {
+                    filename =fileInfo->at(i).filePath();
+//                    qDebug()<<"*************filename="<<filename<<__LINE__;
+
+               }
+           }
+
+//            filename = QFileDialog::getOpenFileName(this, "打开文件", "/media/usb0/", "文件(*)");
             if (!filename.isNull())
             {
                 ui->configFileDisplayLineEdit_2->setText(filename);
             }
-
 
             pcfileName = parseFileNameFromPath(ui->configFileDisplayLineEdit_2->text().toLatin1().data());
             if (NULL == pcfileName)
@@ -839,9 +898,8 @@ void devUpdateWidget::configUpdateFileSLOT()
                 return;
             }
 
-            if (strncmp(pcfileName, "moittor", strlen(pcfileName)) != 0)
+            if (strncmp(pcfileName, "monitor", strlen(pcfileName)) != 0)
             {
-    //            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget select error config file!\n");
                 QMessageBox msgBox(QMessageBox::Question,QString(tr("注意")),QString(tr("升级文件选择错误")));
                 msgBox.setWindowFlags(Qt::FramelessWindowHint);
                 msgBox.setStandardButtons(QMessageBox::Yes);

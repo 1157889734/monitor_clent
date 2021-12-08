@@ -143,13 +143,16 @@ void loginWidget::okButtonSlot()
     {
         database = QSqlDatabase::addDatabase("QSQLITE");
     }
-    database.setDatabaseName("data.db");   //设置连接的数据库名称
+    database.setDatabaseName("/home/data/monitorCfg/data.db");   //设置连接的数据库名称
 
     //打开数据库
     if(!database.open())
     {
+        qDebug()<<"********database.ope---fail**********"<<__LINE__;
 //        DebugPrint(DEBUG_UI_ERROR_PRINT, "loginWidget database open error!\n");
     }
+    qDebug()<<"********database.ope---ok**********"<<__LINE__;
+
 
     //QSqlQuery类提供执行和操作的SQL语句的方法。
     //可以用来执行DML（数据操作语言）语句，如SELECT、INSERT、UPDATE、DELETE
@@ -227,6 +230,8 @@ void loginWidget::okButtonSlot()
                 urname = sql_query.value(0).toString();
                 pwd = sql_query.value(1).toString();
                 type = sql_query.value(2).toString();
+
+                qDebug()<<"*****urname="<<urname<<"*******pwd="<<pwd<<"*******type"<<type<<__LINE__;
                 if ((ui->username_Edit->text() == urname) && (ui->Passwd_Edit->text() == pwd))    //用户名、密码匹配成功
                 {
                     this->hide();
@@ -239,7 +244,7 @@ void loginWidget::okButtonSlot()
         }
 
 //        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "loginWidget username or passwd input not match!\n");
-        QMessageBox box(QMessageBox::Warning,tr("信息有误"),tr("用户名或密码错误!33"));     //新建消息提示框，提示错误信息
+        QMessageBox box(QMessageBox::Warning,tr("信息有误"),tr("用户名或密码错误!"));     //新建消息提示框，提示错误信息
         box.setWindowFlags(Qt::FramelessWindowHint);
         box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
         box.setButtonText (QMessageBox::Ok,tr("OK"));     //将按钮显示改成"确 定"

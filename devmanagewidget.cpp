@@ -24,12 +24,12 @@ devManageWidget::devManageWidget(QWidget *parent) :
     ui->TrainNumberLineEdit->installEventFilter(this);
 
     ui->devStorageTableWidget->setFocusPolicy(Qt::NoFocus);
-    ui->devStorageTableWidget->setColumnCount(8);
+    ui->devStorageTableWidget->setColumnCount(7);
     ui->devStorageTableWidget->setRowCount(7);
     ui->devStorageTableWidget->setShowGrid(true);
 //    ui->devStorageTableWidget->setStyleSheet("QTableWidget{ gridline-color : rgb(255, 255, 255)}");
     QStringList header;
-    header<<tr("序号")<<tr("设备名称")<<tr("设备位置")<<tr("设备IP")<<tr("硬盘容量")<<tr("硬盘使用量")<<tr("硬盘状态")<<tr("");
+    header<<tr("序号")<<tr("设备名称")<<tr("设备位置")<<tr("设备IP")<<tr("硬盘容量")<<tr("硬盘使用量")<<tr("硬盘状态");
     ui->devStorageTableWidget->horizontalHeader()->setStyleSheet("background-color:white");
     ui->devStorageTableWidget->setHorizontalHeaderLabels(header);
     ui->devStorageTableWidget->horizontalHeader()->setVisible(true);//temp
@@ -49,13 +49,13 @@ devManageWidget::devManageWidget(QWidget *parent) :
 
 
     ui->devStatusTableWidget->setFocusPolicy(Qt::NoFocus);
-    ui->devStatusTableWidget->setColumnCount(8);
+    ui->devStatusTableWidget->setColumnCount(7);
     ui->devStatusTableWidget->setRowCount(7);
 
     ui->devStatusTableWidget->setShowGrid(true);
 
     QStringList header_2;
-    header_2<<tr("序号")<<tr("设备名称")<<tr("设备位置")<<tr("设备IP")<<tr("设备版本")<<tr("设备状态")<<tr("设备供应商")<<tr("");
+    header_2<<tr("序号")<<tr("设备名称")<<tr("设备位置")<<tr("设备IP")<<tr("设备版本")<<tr("设备状态")<<tr("设备供应商");
     ui->devStatusTableWidget->setHorizontalHeaderLabels(header_2);
     ui->devStatusTableWidget->horizontalHeader()->setStyleSheet("background-color:white");
 
