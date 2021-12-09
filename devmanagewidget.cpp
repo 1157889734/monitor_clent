@@ -775,6 +775,8 @@ void devManageWidget::getTrainConfig()   //获取车型配置信息，填充页�
     QString item = "";
     QString devStatus = tr("离线");     //设备状态初始默认值为离线
     T_TRAIN_CONFIG tTrainConfigInfo;
+    char tranNum[32] = {0};
+
 
     /*设备状态和设备存储列表清空*/
     row = ui->devStorageTableWidget->rowCount();
@@ -794,6 +796,15 @@ void devManageWidget::getTrainConfig()   //获取车型配置信息，填充页�
 
     memset(&tTrainConfigInfo, 0, sizeof(T_TRAIN_CONFIG));
     STATE_GetCurrentTrainConfigInfo(&tTrainConfigInfo);
+
+
+    STATE_GetTrainNumber(tranNum, sizeof(tranNum));
+    if (strlen(tranNum) != 0)
+    {
+
+        ui->TrainNumberLineEdit->setText(QString(QLatin1String(tranNum)));
+//        DebugPrint(DEBUG_UI_NOMAL_PRINT, "ui app version:%s!\n",acVersion);
+    }
 
 //    /*获取编组信息，再填充编组设置单选框*/
 //    if (1 == tTrainConfigInfo.iFormationType)

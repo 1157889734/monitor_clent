@@ -759,136 +759,144 @@ compiler_rcc_clean:
 	-$(DEL_FILE) qrc_res.cpp
 qrc_res.cpp: res.qrc \
 		../../toolchain/host/bin/rcc \
-		monres/4.bmp \
+		monres/background.bmp \
+		monres/yj1.bmp \
+		monres/bitmap17.bmp \
+		monres/carriagemaintain.bmp \
+		monres/5.bmp \
+		monres/substruct.bmp \
+		monres/ledoff.bmp \
+		monres/erroconfig.bmp \
+		monres/carriageequip.bmp \
+		monres/cameractrloff.bmp \
+		monres/3.bmp \
+		monres/pause.bmp \
+		monres/settingconfig.bmp \
+		monres/up.bmp \
+		monres/savevedio.bmp \
+		monres/PantoMantain1.bmp \
+		monres/cameractrl.bmp \
+		monres/gzpz.bmp \
+		monres/gj1.bmp \
+		monres/LoginOK.bmp \
+		monres/1.bmp \
+		monres/28.bmp \
+		monres/ligtoff.jpg \
+		monres/Pantoequip.bmp \
+		monres/apply.bmp \
+		monres/yj.bmp \
+		monres/PantoMantain.bmp \
+		monres/fare.bmp \
+		monres/back.bmp \
+		monres/26.bmp \
+		monres/putin.bmp \
+		monres/LoginCancel.bmp \
+		monres/gengxin.bmp \
+		monres/1受电弓监控_63.png \
+		monres/usepreset.bmp \
+		monres/Rights\ management.bmp \
+		monres/slow.bmp \
+		monres/search.bmp \
+		monres/15.bmp \
+		monres/next.bmp \
+		monres/bj.bmp \
+		monres/24.bmp \
+		monres/close.bmp \
+		monres/start.bmp \
+		monres/videodownload\ -\ 副本.bmp \
+		monres/cancel.bmp \
+		monres/13.bmp \
+		monres/22.bmp \
+		monres/cameractrl\ -\ 副本.bmp \
+		monres/cameraoff.bmp \
+		monres/restat.bmp \
+		monres/left.bmp \
+		monres/11.bmp \
+		monres/8.bmp \
+		monres/PantoIntell.bmp \
+		monres/qxdd.bmp \
+		monres/ccsz.bmp \
+		monres/near.bmp \
+		monres/mslow.bmp \
+		monres/alertoff.bmp \
 		monres/lighton.bmp \
-		monres/carriagemonitor.bmp \
-		monres/right.bmp \
+		monres/down.bmp \
+		monres/savevedio_ing\ -\ 副本.bmp \
+		monres/bitmap18.bmp \
+		monres/in.bmp \
+		monres/6.bmp \
+		monres/preview.bmp \
 		monres/before.bmp \
-		monres/Pantoequip1.bmp \
+		monres/alerton1.bmp \
+		monres/cameractrloff\ -\ 副本.bmp \
+		monres/faultmapdownload.bmp \
+		monres/open.bmp \
+		monres/PantoPlay.bmp \
+		monres/start1.bmp \
+		monres/4.bmp \
+		monres/return.bmp \
+		monres/bj1.bmp \
+		monres/cameraon.bmp \
+		monres/browse.bmp \
+		monres/pause1.bmp \
+		monres/carriageset.bmp \
+		monres/useradd.bmp \
+		monres/putout.bmp \
+		monres/bitmap14.bmp \
+		monres/2.bmp \
+		monres/cameraoff.jpg \
+		monres/alerton.bmp \
+		monres/gj.bmp \
+		monres/timing.bmp \
+		monres/27.bmp \
+		monres/carriageequip1.bmp \
+		monres/fast.bmp \
+		monres/saveing.bmp \
+		monres/lighton.jpg \
+		monres/PantoIntell1.bmp \
+		monres/stop.bmp \
+		monres/carriagemonitor1.bmp \
+		monres/sure.bmp \
+		monres/right.bmp \
+		monres/plus.bmp \
+		monres/usersave.bmp \
+		monres/16.bmp \
+		monres/leftup.bmp \
+		monres/Pantobg\ -\ 副本.bmp \
+		monres/25.bmp \
+		monres/downlog.bmp \
+		monres/PantoPlay1.bmp \
 		monres/C3UnifiedClient.rc2 \
 		monres/return1.bmp \
-		monres/8.bmp \
-		monres/background.bmp \
-		monres/alerton2.bmp \
-		monres/Pantobg.bmp \
-		monres/next.bmp \
-		monres/12.bmp \
-		monres/bitmap19.bmp \
-		monres/savevedio_ing\ -\ 副本.bmp \
-		monres/gj.bmp \
-		monres/faultmapdownload.bmp \
-		monres/left.bmp \
-		monres/apply.bmp \
-		monres/3.bmp \
-		monres/replacevideo.bmp \
-		monres/ligtoff.jpg \
-		monres/putout.bmp \
-		monres/cameraon.jpg \
-		monres/browse.bmp \
-		monres/bitmap14.bmp \
-		monres/carriageequip1.bmp \
-		monres/downlog.bmp \
-		monres/16.bmp \
-		monres/timing.bmp \
-		monres/yj1.bmp \
-		monres/gj1.bmp \
-		monres/PantoMantain1.bmp \
-		monres/lighton.jpg \
-		monres/7.bmp \
-		monres/cameractrl.bmp \
-		monres/back.bmp \
-		monres/PantoPlay1.bmp \
-		monres/alerton1.bmp \
-		monres/erroconfig.bmp \
-		monres/plus.bmp \
-		monres/LoginCancel.bmp \
-		monres/11.bmp \
-		monres/leftup.bmp \
-		monres/return.bmp \
-		monres/bitmap18.bmp \
-		monres/start.bmp \
-		monres/carriageplay.bmp \
-		monres/PantoIntell.bmp \
-		monres/gengxin.bmp \
-		monres/setuse.bmp \
-		monres/2.bmp \
-		monres/carriagemaintain1.bmp \
-		monres/near.bmp \
-		monres/substruct.bmp \
-		monres/cancel.bmp \
-		monres/cameraoff.bmp \
-		monres/gzpz.bmp \
-		monres/qxdd.bmp \
-		monres/mfast.bmp \
-		monres/C3UnifiedClient1.ico \
-		monres/savevedio.bmp \
-		monres/LoginOK.bmp \
-		monres/15.bmp \
-		monres/fast.bmp \
-		monres/bj.bmp \
-		monres/useradd.bmp \
-		monres/alertoff.bmp \
-		monres/ccsz.bmp \
-		monres/PantoMonitor1.bmp \
-		monres/6.bmp \
-		monres/videodownload.bmp \
-		monres/1受电弓监控_63.png \
-		monres/PantoIntell1.bmp \
-		monres/Pantobg\ -\ 副本.bmp \
-		monres/Rights\ management.bmp \
-		monres/in.bmp \
-		monres/alerton.bmp \
-		monres/carriageplay1.bmp \
-		monres/10.bmp \
-		monres/cameractrl\ -\ 副本.bmp \
-		monres/bitmap17.bmp \
-		monres/preview.bmp \
-		monres/saveing.bmp \
-		monres/open.bmp \
-		monres/close.bmp \
-		monres/userdel.bmp \
-		monres/1.bmp \
-		monres/ledon.bmp \
-		monres/ledoff.bmp \
-		monres/stop.bmp \
-		monres/yj.bmp \
-		monres/restat.bmp \
-		monres/fare.bmp \
-		monres/carriagemaintain.bmp \
-		monres/putin.bmp \
-		monres/carriageequip.bmp \
-		monres/PantoPlay.bmp \
-		monres/pause.bmp \
 		monres/14.bmp \
-		monres/cameractrloff\ -\ 副本.bmp \
-		monres/5.bmp \
-		monres/search.bmp \
-		monres/sure.bmp \
-		monres/up.bmp \
-		monres/bj1.bmp \
-		monres/cameraoff.jpg \
-		monres/mslow.bmp \
-		monres/carriagemonitor1.bmp \
-		monres/usersave.bmp \
-		monres/pause1.bmp \
-		monres/slow.bmp \
-		monres/videodownload\ -\ 副本.bmp \
 		monres/PantoMonitor.bmp \
-		monres/down.bmp \
+		monres/cameraon.jpg \
+		monres/carriageplay.bmp \
+		monres/23.bmp \
+		monres/C3UnifiedClient1.ico \
+		monres/PantoMonitor1.bmp \
+		monres/videodownload.bmp \
+		monres/setuse.bmp \
+		monres/mfast.bmp \
+		monres/12.bmp \
+		monres/21.bmp \
+		monres/ledon.bmp \
 		monres/9.bmp \
-		monres/cameractrloff.bmp \
-		monres/carriageset.bmp \
-		monres/ligtoff.bmp \
 		monres/playback.bmp \
-		monres/cameraon.bmp \
-		monres/nextpage.bmp \
-		monres/PantoMantain.bmp \
+		monres/Pantoequip1.bmp \
+		monres/Pantobg.bmp \
+		monres/replacevideo.bmp \
+		monres/ligtoff.bmp \
 		monres/kaishigegnxin.bmp \
-		monres/usepreset.bmp \
-		monres/Pantoequip.bmp \
-		monres/13.bmp \
-		monres/start1.bmp \
-		monres/settingconfig.bmp \
+		monres/carriageplay1.bmp \
+		monres/bitmap19.bmp \
+		monres/10.bmp \
+		monres/userdel.bmp \
+		monres/7.bmp \
+		monres/carriagemaintain1.bmp \
+		monres/alerton2.bmp \
+		monres/carriagemonitor.bmp \
+		monres/nextpage.bmp \
 		res/background.png \
 		res/ptz_right.png \
 		res/4.bmp \
@@ -5386,7 +5394,9 @@ recordplaywidget.o: recordplaywidget.cpp recordplaywidget.h \
 		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtextformat.h \
 		vdec.h \
 		mutex.h \
-		debugout/debug.h
+		debugout/debug.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QCheckBox \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qcheckbox.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o recordplaywidget.o recordplaywidget.cpp
 
 inteanalywidget.o: inteanalywidget.cpp inteanalywidget.h \

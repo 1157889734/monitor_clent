@@ -55,11 +55,14 @@ int main(int argc, char *argv[])
     snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "Startup %s!", acClientVersion);
     LOG_WriteLog(&tLogInfo);
 
+
     PMSG_Init();    //协议通信模块初始化
 
     STATE_ReadTrainConfigFile();	//程序运行起来读取一次车型配置文件
     memset(&tTrainConfigInfo, 0, sizeof(T_TRAIN_CONFIG));
     STATE_GetCurrentTrainConfigInfo(&tTrainConfigInfo);
+
+
     for (i = 0; i < tTrainConfigInfo.iNvrServerCount; i++)
     {
         memset(acNvrServerIp, 0, sizeof(acNvrServerIp));
@@ -78,7 +81,6 @@ int main(int argc, char *argv[])
             qDebug()<<"DEBUG_UI_ERROR_PRINT,save server pmsg handle error"<<__FUNCTION__<<__LINE__<<acNvrServerIp<<endl;
         }
     }
-
     STATE_ReadPisConfig();
     memset(&tPisConfigInfo, 0, sizeof(T_PIS_INFO));
     STATE_GetPisConfigInfo(&tPisConfigInfo);
@@ -91,6 +93,7 @@ int main(int argc, char *argv[])
     {
 //        DebugPrint(DEBUG_UI_ERROR_PRINT, "create connection to server:%s error!\n",acNvrServerIp);
         qDebug()<<"create connection to server:%s error"<<__FUNCTION__<<__LINE__<<acNvrServerIp<<endl;
+
     }
     if (STATE_SetPisPmsgHandle((PMSG_HANDLE)iRet) < 0)
     {
@@ -99,13 +102,13 @@ int main(int argc, char *argv[])
 
     }
 
-    pRs485Handle = RS485_CreateConnect();
-    if (0 == pRs485Handle)
-    {
-//        DebugPrint(DEBUG_UI_ERROR_PRINT, "rs485 connection error!\n");
-        qDebug()<<"rs485 connection error!"<<__FUNCTION__<<__LINE__<<endl;
+//    pRs485Handle = RS485_CreateConnect();
+//    if (0 == pRs485Handle)
+//    {
+////        DebugPrint(DEBUG_UI_ERROR_PRINT, "rs485 connection error!\n");
+//        qDebug()<<"rs485 connection error!"<<__FUNCTION__<<__LINE__<<endl;
 
-    }
+//    }
 
     usleep(1*1000*1000);
 
@@ -163,7 +166,7 @@ int main(int argc, char *argv[])
     g_loginPage->hide();
     g_pvmsMenuPage->hide();
 
-    g_pvmsMenuPage->m_pRs485Handle = pRs485Handle;
+//    g_pvmsMenuPage->m_pRs485Handle = pRs485Handle;
 
 
 //    MyApplication app;

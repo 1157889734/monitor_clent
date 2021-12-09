@@ -148,9 +148,9 @@ pvmsMenuWidget::pvmsMenuWidget(QWidget *parent) :
     ui->devManageMenuPushButton->setChecked(false);
     ui->devUpdateMenuPushButton->setChecked(false);
 
-    m_Rs485Timer = new QTimer(this);
-    m_Rs485Timer->start(100);
-    connect(m_Rs485Timer, SIGNAL(timeout()), this, SLOT(rs485TimerFunc()));
+//    m_Rs485Timer = new QTimer(this);
+//    m_Rs485Timer->start(100);
+//    connect(m_Rs485Timer, SIGNAL(timeout()), this, SLOT(rs485TimerFunc()));
 
 
     m_PmsgTimer = new QTimer(this);
