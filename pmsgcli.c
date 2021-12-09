@@ -330,6 +330,7 @@ void *CliProcessThread(void *arg)
                 iHearCount = 0;
 				memset(&pcRecvBuf[iPreLeaveLen], 0, iBufLen - iPreLeaveLen);
                 iRecvLen = recv(iSocket, &pcRecvBuf[iPreLeaveLen], iBufLen - iPreLeaveLen - 1, 0);
+
                 if (iRecvLen <= 0)
                 {
                     perror("recv:");
@@ -652,13 +653,14 @@ int PMSG_SendPmsgData(PMSG_HANDLE pMsgHandle, unsigned char ucMsgCmd, char *pcDa
 
     pthread_mutex_lock(&ptPmsgConnInfo->tPmsgMutex);
     iRet = send(ptPmsgConnInfo->iSockfd, acMsg, sizeof(T_PMSG_HEAD) + i16SendLen + 1, 0);
-    int leng = sizeof(T_PMSG_HEAD) + i16SendLen + 1;
-    if( ptMsgHead->cMsgType  == 0x05)
-    for(int i=0;i<leng;i++)
-    {
-        printf(" %02x",acMsg[i]);
-    }
-    printf("\n");
+
+//    int leng = sizeof(T_PMSG_HEAD) + i16SendLen + 1;
+//    if( ptMsgHead->cMsgType  == 0x05)
+//    for(int i=0;i<leng;i++)
+//    {
+//        printf(" %02x",acMsg[i]);
+//    }
+//    printf("\n");
 //    printf("*************PMSG_SendPmsgData**iRet=%d\n",iRet);
     pthread_mutex_unlock(&ptPmsgConnInfo->tPmsgMutex);
     

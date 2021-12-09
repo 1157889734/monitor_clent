@@ -24,12 +24,12 @@ devManageWidget::devManageWidget(QWidget *parent) :
     ui->TrainNumberLineEdit->installEventFilter(this);
 
     ui->devStorageTableWidget->setFocusPolicy(Qt::NoFocus);
-    ui->devStorageTableWidget->setColumnCount(7);
+    ui->devStorageTableWidget->setColumnCount(8);
     ui->devStorageTableWidget->setRowCount(7);
     ui->devStorageTableWidget->setShowGrid(true);
 //    ui->devStorageTableWidget->setStyleSheet("QTableWidget{ gridline-color : rgb(255, 255, 255)}");
     QStringList header;
-    header<<tr("序号")<<tr("设备名称")<<tr("设备位置")<<tr("设备IP")<<tr("硬盘容量")<<tr("硬盘使用量")<<tr("硬盘状态");
+    header<<tr("序号")<<tr("设备名称")<<tr("设备位置")<<tr("设备IP")<<tr("硬盘容量")<<tr("硬盘使用量")<<tr("硬盘状态")<<tr("");
     ui->devStorageTableWidget->horizontalHeader()->setStyleSheet("background-color:white");
     ui->devStorageTableWidget->setHorizontalHeaderLabels(header);
     ui->devStorageTableWidget->horizontalHeader()->setVisible(true);//temp
@@ -49,13 +49,13 @@ devManageWidget::devManageWidget(QWidget *parent) :
 
 
     ui->devStatusTableWidget->setFocusPolicy(Qt::NoFocus);
-    ui->devStatusTableWidget->setColumnCount(7);
+    ui->devStatusTableWidget->setColumnCount(8);
     ui->devStatusTableWidget->setRowCount(7);
 
     ui->devStatusTableWidget->setShowGrid(true);
 
     QStringList header_2;
-    header_2<<tr("序号")<<tr("设备名称")<<tr("设备位置")<<tr("设备IP")<<tr("设备版本")<<tr("设备状态")<<tr("设备供应商");
+    header_2<<tr("序号")<<tr("设备名称")<<tr("设备位置")<<tr("设备IP")<<tr("设备版本")<<tr("设备状态")<<tr("设备供应商")<<tr("");
     ui->devStatusTableWidget->setHorizontalHeaderLabels(header_2);
     ui->devStatusTableWidget->horizontalHeader()->setStyleSheet("background-color:white");
 
@@ -343,15 +343,15 @@ void devManageWidget::getIpcStatusCtrl(PMSG_HANDLE pHandle, char *pcMsgData)
             if(8 == ptIpcstaus->i8DevPos)
             {
                 ui->devStatusTableWidget->setItem(m_aiCameraIdex[i][0]-1, 5, new QTableWidgetItem(devStatus));
-                ui->devStatusTableWidget->item(m_aiCameraIdex[i][0]-1, 5)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+                ui->devStatusTableWidget->item(m_aiCameraIdex[i][0]-1, 5)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
 
                 if (1 == ptIpcstaus->i8OnLine)
                 {
 //                    DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] server %d camera %d status is online\n", __FUNCTION__, i+1, 1);
                     ui->devStatusTableWidget->setItem(m_aiCameraIdex[i][0]-1, 4, new QTableWidgetItem(QString(QLatin1String(acVersion))));
-                    ui->devStatusTableWidget->item(m_aiCameraIdex[i][0]-1, 4)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+                    ui->devStatusTableWidget->item(m_aiCameraIdex[i][0]-1, 4)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
                     ui->devStatusTableWidget->setItem(m_aiCameraIdex[i][0]-1, 6, new QTableWidgetItem(QString(QLatin1String(ptIpcstaus->acFactory))));
-                    ui->devStatusTableWidget->item(m_aiCameraIdex[i][0]-1, 6)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+                    ui->devStatusTableWidget->item(m_aiCameraIdex[i][0]-1, 6)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
                     if (0 == m_aiCameraOnlineFlag[i][0])    //相机从离线到在线，记录日志
                     {
                         memset(&tLogInfo, 0, sizeof(T_LOG_INFO));
@@ -381,15 +381,15 @@ void devManageWidget::getIpcStatusCtrl(PMSG_HANDLE pHandle, char *pcMsgData)
             else if ((9 == ptIpcstaus->i8DevPos) && (m_aiCameraIdex[i][1] > 0))
             {
                 ui->devStatusTableWidget->setItem(m_aiCameraIdex[i][1]-1, 5, new QTableWidgetItem(devStatus));
-                ui->devStatusTableWidget->item(m_aiCameraIdex[i][1]-1, 5)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+                ui->devStatusTableWidget->item(m_aiCameraIdex[i][1]-1, 5)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
 
                 if (1 == ptIpcstaus->i8OnLine)
                 {
 //                    DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] server %d camera %d status is online\n", __FUNCTION__, i+1, 2);
                     ui->devStatusTableWidget->setItem(m_aiCameraIdex[i][1]-1, 4, new QTableWidgetItem(QString(QLatin1String(acVersion))));
-                    ui->devStatusTableWidget->item(m_aiCameraIdex[i][1]-1, 4)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+                    ui->devStatusTableWidget->item(m_aiCameraIdex[i][1]-1, 4)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
                     ui->devStatusTableWidget->setItem(m_aiCameraIdex[i][1]-1, 6, new QTableWidgetItem(QString(QLatin1String(ptIpcstaus->acFactory))));
-                    ui->devStatusTableWidget->item(m_aiCameraIdex[i][1]-1, 6)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+                    ui->devStatusTableWidget->item(m_aiCameraIdex[i][1]-1, 6)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
 
                     if (0 == m_aiCameraOnlineFlag[i][1])    //相机从离线到在线，记录日志
                     {
@@ -441,10 +441,10 @@ void devManageWidget::getNvrStatusCtrl(PMSG_HANDLE pHandle, char *pcMsgData)
         if ((pHandle == m_NvrServerPhandle[i]) && (m_aiServerIdex[i] >= 1))
         {
             ui->devStatusTableWidget->setItem(m_aiServerIdex[i]-1, 4, new QTableWidgetItem(QString(QLatin1String(acVersion))));
-            ui->devStatusTableWidget->item(m_aiServerIdex[i]-1, 4)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+            ui->devStatusTableWidget->item(m_aiServerIdex[i]-1, 4)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
 
             ui->devStatusTableWidget->setItem(m_aiServerIdex[i]-1, 6, new QTableWidgetItem(QString(QLatin1String(ptNvrstaus->acFactory))));
-            ui->devStatusTableWidget->item(m_aiServerIdex[i]-1, 6)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+            ui->devStatusTableWidget->item(m_aiServerIdex[i]-1, 6)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
 
             /*第一次连上服务器的3分钟之内不检测硬盘是否异常*/
             if (0 == m_iCheckDiskErrFlag[i])
@@ -462,23 +462,23 @@ void devManageWidget::getNvrStatusCtrl(PMSG_HANDLE pHandle, char *pcMsgData)
                 if (1 == m_iCheckDiskErrFlag[i])
                 {
                     ui->devStorageTableWidget->setItem(i, 4, new QTableWidgetItem("0G"));
-                    ui->devStorageTableWidget->item(i, 4)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+                    ui->devStorageTableWidget->item(i, 4)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
                     ui->devStorageTableWidget->setItem(i, 5, new QTableWidgetItem("0G"));
-                    ui->devStorageTableWidget->item(i, 5)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+                    ui->devStorageTableWidget->item(i, 5)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
                     ui->devStorageTableWidget->setItem(i, 6, new QTableWidgetItem(QString(tr("硬盘异常"))));
-                    ui->devStorageTableWidget->item(i, 6)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+                    ui->devStorageTableWidget->item(i, 6)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
                 }
             }
             else
             {
                 ui->devStorageTableWidget->setItem(i, 4, new QTableWidgetItem(QString(QLatin1String(acDiskFull))));
-                ui->devStorageTableWidget->item(i, 4)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+                ui->devStorageTableWidget->item(i, 4)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
 
                 ui->devStorageTableWidget->setItem(i, 5, new QTableWidgetItem(QString(QLatin1String(acDiskUsed))));
-                ui->devStorageTableWidget->item(i, 5)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+                ui->devStorageTableWidget->item(i, 5)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
 
                 ui->devStorageTableWidget->setItem(i, 6, new QTableWidgetItem(QString(tr("正常"))));
-                ui->devStorageTableWidget->item(i, 6)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+                ui->devStorageTableWidget->item(i, 6)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
             }
             break;
         }
@@ -519,7 +519,7 @@ void devManageWidget::videoAlarmCtrl(PMSG_HANDLE pHandle, char *pcMsgData)
                 {
 //                    DebugPrint(DEBUG_UI_NOMAL_PRINT, "devManageWidget [%s] add camera video alarm info to devStatusTableWidget row:%d, column:%d\n", __FUNCTION__, i+1, 1);
                     ui->devStatusTableWidget->setItem(m_aiCameraIdex[i][0]-1, 7, new QTableWidgetItem(devStatus));
-                    ui->devStatusTableWidget->item(m_aiCameraIdex[i][0]-1, 7)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+                    ui->devStatusTableWidget->item(m_aiCameraIdex[i][0]-1, 7)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
                 }
                 else  //相机为离线状态时不显示报警信息
                 {
@@ -533,7 +533,7 @@ void devManageWidget::videoAlarmCtrl(PMSG_HANDLE pHandle, char *pcMsgData)
                 {
 //                    DebugPrint(DEBUG_UI_NOMAL_PRINT, "devManageWidget [%s] add camera video alarm info to devStatusTableWidget row:%d, column:%d\n", __FUNCTION__, i+1, 1);
                     ui->devStatusTableWidget->setItem(m_aiCameraIdex[i][1]-1, 7, new QTableWidgetItem(devStatus));
-                    ui->devStatusTableWidget->item(m_aiCameraIdex[i][1]-1, 7)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+                    ui->devStatusTableWidget->item(m_aiCameraIdex[i][1]-1, 7)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
                 }
                 else  //相机为离线状态时不显示报警信息
                 {
@@ -652,7 +652,7 @@ void devManageWidget::getDevStateSignalCtrl()
             {
 //                DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] server %d status is online\n", __FUNCTION__, i+1);
                 ui->devStatusTableWidget->setItem(m_aiServerIdex[i]-1, 5, new QTableWidgetItem(tr("在线")));
-                ui->devStatusTableWidget->item(m_aiServerIdex[i]-1, 5)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+                ui->devStatusTableWidget->item(m_aiServerIdex[i]-1, 5)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
                 iRet = PMSG_SendPmsgData(m_NvrServerPhandle[i], CLI_SERV_MSG_TYPE_GET_NVR_STATUS, NULL, 0);
                 if (iRet < 0)
                 {
@@ -671,7 +671,7 @@ void devManageWidget::getDevStateSignalCtrl()
             {
 //                DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] server %d status is offline\n", __FUNCTION__, i+1);
                 ui->devStatusTableWidget->setItem(m_aiServerIdex[i]-1, 5, new QTableWidgetItem(tr("离线")));
-                ui->devStatusTableWidget->item(m_aiServerIdex[i]-1, 5)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+                ui->devStatusTableWidget->item(m_aiServerIdex[i]-1, 5)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
                 ui->devStatusTableWidget->setItem(m_aiServerIdex[i]-1, 4, new QTableWidgetItem(""));
                 ui->devStatusTableWidget->setItem(m_aiServerIdex[i]-1, 6, new QTableWidgetItem(""));
 //                ui->devStatusTableWidget->setItem(m_aiServerIdex[i]-1, 7, new QTableWidgetItem(""));
@@ -688,7 +688,7 @@ void devManageWidget::getDevStateSignalCtrl()
                 for (j = 1; j <= tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum; j++)
                 {
                     ui->devStatusTableWidget->setItem(m_aiServerIdex[i]-1+j, 5, new QTableWidgetItem(tr("离线")));
-                    ui->devStatusTableWidget->item(m_aiServerIdex[i]-1+j, 5)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+                    ui->devStatusTableWidget->item(m_aiServerIdex[i]-1+j, 5)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
                     ui->devStatusTableWidget->setItem(m_aiServerIdex[i]-1+j, 4, new QTableWidgetItem(""));
                     ui->devStatusTableWidget->setItem(m_aiServerIdex[i]-1+j, 6, new QTableWidgetItem(""));
 //                    ui->devStatusTableWidget->setItem(m_aiServerIdex[i]-1+j, 7, new QTableWidgetItem(""));
@@ -817,22 +817,22 @@ void devManageWidget::getTrainConfig()   //获取车型配置信息，填充页�
         item = "";
         item = QString::number(row+1);
         ui->devStatusTableWidget->setItem(row, 0, new QTableWidgetItem(item));  //新建一个文本列并插入到列表中
-        ui->devStatusTableWidget->item(row, 0)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);    //设置列文件对齐方式为居中对齐
+        ui->devStatusTableWidget->item(row, 0)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);    //设置列文件对齐方式为居中对齐
         ui->devStatusTableWidget->setItem(row, 1, new QTableWidgetItem(tr("受电弓监控服务器")));
-        ui->devStatusTableWidget->item(row, 1)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+        ui->devStatusTableWidget->item(row, 1)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
         item = "";
         item = QString::number(tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO);
         item += tr("车视频监控服务器");
         ui->devStatusTableWidget->setItem(row, 2, new QTableWidgetItem(item));
-        ui->devStatusTableWidget->item(row, 2)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+        ui->devStatusTableWidget->item(row, 2)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
         item = "";
         item = "192.168.";
         item += QString::number(100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO);
         item += ".81";
         ui->devStatusTableWidget->setItem(row, 3, new QTableWidgetItem(item));
-        ui->devStatusTableWidget->item(row, 3)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+        ui->devStatusTableWidget->item(row, 3)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
         ui->devStatusTableWidget->setItem(row, 5, new QTableWidgetItem(devStatus));
-        ui->devStatusTableWidget->item(row, 5)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+        ui->devStatusTableWidget->item(row, 5)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
         for (j = 0; j < tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum; j++)
         {
             row = ui->devStatusTableWidget->rowCount();//获取表格中当前总行数
@@ -841,25 +841,25 @@ void devManageWidget::getTrainConfig()   //获取车型配置信息，填充页�
             item = "";
             item = QString::number(row+1);
             ui->devStatusTableWidget->setItem(row, 0, new QTableWidgetItem(item));
-            ui->devStatusTableWidget->item(row, 0)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+            ui->devStatusTableWidget->item(row, 0)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
             ui->devStatusTableWidget->setItem(row, 1, new QTableWidgetItem(tr("受电弓摄像机")));
-            ui->devStatusTableWidget->item(row, 1)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+            ui->devStatusTableWidget->item(row, 1)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
             item = "";
             item = QString::number(tTrainConfigInfo.tNvrServerInfo[i].iPvmsCarriageNO);
             item += tr("车");
             item += QString::number(j+1);
             item += "号相机";
             ui->devStatusTableWidget->setItem(row, 2, new QTableWidgetItem(item));
-            ui->devStatusTableWidget->item(row, 2)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+            ui->devStatusTableWidget->item(row, 2)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
             item = "";
             item = "192.168.";
             item += QString::number(100+tTrainConfigInfo.tNvrServerInfo[i].iPvmsCarriageNO);
             item += ".";
             item += QString::number(200+j);
             ui->devStatusTableWidget->setItem(row, 3, new QTableWidgetItem(item));
-            ui->devStatusTableWidget->item(row, 3)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+            ui->devStatusTableWidget->item(row, 3)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
             ui->devStatusTableWidget->setItem(row, 5, new QTableWidgetItem(devStatus));
-            ui->devStatusTableWidget->item(row, 5)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+            ui->devStatusTableWidget->item(row, 5)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
         }
 
 
@@ -868,20 +868,20 @@ void devManageWidget::getTrainConfig()   //获取车型配置信息，填充页�
         item = "";
         item = QString::number(row+1);
         ui->devStorageTableWidget->setItem(row, 0, new QTableWidgetItem(item));
-        ui->devStorageTableWidget->item(row, 0)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+        ui->devStorageTableWidget->item(row, 0)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
         ui->devStorageTableWidget->setItem(row, 1, new QTableWidgetItem(tr("受电弓监控服务器")));
-        ui->devStorageTableWidget->item(row, 1)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+        ui->devStorageTableWidget->item(row, 1)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
         item = "";
         item = QString::number(tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO);
         item += tr("车视频监控服务器");
         ui->devStorageTableWidget->setItem(row, 2, new QTableWidgetItem(item));
-        ui->devStorageTableWidget->item(row, 2)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+        ui->devStorageTableWidget->item(row, 2)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
         item = "";
         item = "192.168.";
         item += QString::number(100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO);
         item += ".81";
         ui->devStorageTableWidget->setItem(row, 3, new QTableWidgetItem(item));
-        ui->devStorageTableWidget->item(row, 3)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+        ui->devStorageTableWidget->item(row, 3)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
     }
 }
 

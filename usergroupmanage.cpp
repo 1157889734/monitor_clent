@@ -301,7 +301,7 @@ void usergroupManage::on_savepushButton_clicked()
     query.exec("select * from tab");
     query.isActive();
     bool T2=true;
-    QStringList nameList;
+
 
         while(query.next())
        {
@@ -363,8 +363,6 @@ void usergroupManage::on_savepushButton_clicked()
         }
         else
         {
-            addFlag = 0;
-
              QString sql;
             if(value_passwd != value_ensure_passwd)
             {
@@ -377,6 +375,10 @@ void usergroupManage::on_savepushButton_clicked()
                 return;
             }
 
+            char acUserType[16] = {0};
+            STATE_GetCurrentUserType(acUserType, sizeof(acUserType));
+
+
             QString value_type;
             if(!gtype_text.isEmpty())
             {
@@ -386,6 +388,47 @@ void usergroupManage::on_savepushButton_clicked()
             {
                 value_type = "operator";
             }
+
+            if (!strcmp(acUserType, "supperManager"))
+            {
+                if (0 == QString::compare(value_type, tr("supperManager")))
+                {
+    //                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "userManageWidget this user type has no right to delete user!\n");
+                    qDebug()<<"userManageWidget this user type has no right to delete user!"<<__FUNCTION__<<__LINE__<<endl;
+                    QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("没有权限添加此类型成员!"));     //新建消息提示框，提示错误信息
+                    box.setWindowFlags(Qt::FramelessWindowHint);
+                    box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
+                    box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));     //将按钮显示改成"确 定"
+                    box.exec();
+                    return;
+                }
+            }
+            else if (!strcmp(acUserType, "manager"))
+            {
+                if (0 == QString::compare(value_type, tr("supperManager")) || (0 == QString::compare(value_type, tr("manager"))))
+                {
+    //                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "userManageWidget this user type has no right to delete user!\n");
+                    qDebug()<<"userManageWidget this user type has no right to delete user!"<<__FUNCTION__<<__LINE__<<endl;
+                    QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("没有权限添加此类型成员!"));     //新建消息提示框，提示错误信息
+                    box.setWindowFlags(Qt::FramelessWindowHint);
+                    box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
+                    box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));     //将按钮显示改成"确 定"
+                    box.exec();
+                    return;
+                }
+            }
+            else if (!strcmp(acUserType, "operator"))
+            {
+                qDebug()<<"userManageWidget this user type has no right to delete user!"<<__FUNCTION__<<__LINE__<<endl;
+                QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("没有权力添加成员!"));     //新建消息提示框，提示错误信息
+                box.setWindowFlags(Qt::FramelessWindowHint);
+                box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
+                box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));     //将按钮显示改成"确 定"
+                box.exec();
+                return;
+            }
+
+
             sql = QString("insert into tab values ('%1', '%2', '%3' )")
             .arg(value_name).arg(value_passwd).arg(value_type);
             bool ok = query.exec(sql);
@@ -406,6 +449,8 @@ void usergroupManage::on_savepushButton_clicked()
                 msgBox.exec();
 
             }
+            addFlag = 0;
+
 
    }
 
@@ -549,17 +594,18 @@ void usergroupManage::choose_type_function(int type)
         {
             case 1:
             {
-                gtype_text = "超级管理员";
+
+                gtype_text = "supperManager";
                 break;
             }
             case 2:
             {
-                gtype_text = "管理员";
+                gtype_text = "manager";
                 break;
             }
             case 3:
             {
-                gtype_text = "操作员";
+                gtype_text = "operator";
                 break;
             }
             default:

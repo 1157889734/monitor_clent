@@ -136,29 +136,49 @@ int PIS_DestroyConnect(PIS_HANDLE pMsgHandle)
 
 void *PisProcessThread(void *arg)
 {
-    unsigned char ucEcc = 0;
     const int c_iBufLen =1024;
+    unsigned char *pcRecvBuf = NULL;
+    unsigned char *pcLeaveBuf = NULL;
+    unsigned char *pcMsgBuf = NULL;
+    int iBufLen = RECV_BUF_LEN;
+    int iPreLeaveLen = 0, iLeaveLen = 0, iRecvLen = 0;
 
-    unsigned char pcRecvBuf[RECV_BUF_LEN];
-    unsigned char pcRcvTstBuf[64];
+//    unsigned char pcRecvBuf[RECV_BUF_LEN];
     int iSocket = 0;
     int iOffset = 0;
     fd_set	tAllSet, tTmpSet;
     T_LOG_INFO tLogInfo;
-    struct timeval tv_out;
     struct timeval tv;
     int iHearCount = 0;
-    int iRecvLen = 0;
+//    int iRecvLen = 0;
 
 
 
     T_PIS_CONN_INFO *ptPmsgConnInfo = (T_PIS_CONN_INFO *)arg;
-    PIS_HANDLE pMsgHandle = (PIS_HANDLE)arg;
+//    PIS_HANDLE pMsgHandle = (PIS_HANDLE)arg;
 
     if (NULL == ptPmsgConnInfo)
     {
         return NULL;
     }
+
+
+    pcRecvBuf = (unsigned char *)malloc(iBufLen);
+    if (NULL == pcRecvBuf)
+    {
+        return NULL;
+    }
+    memset(pcRecvBuf, 0, iBufLen);
+
+    pcLeaveBuf = (unsigned char *)malloc(iBufLen);
+    if (NULL == pcLeaveBuf)
+    {
+        free(pcRecvBuf);
+        pcRecvBuf = NULL;
+        return NULL;
+    }
+    memset(pcLeaveBuf, 0, iBufLen);
+
 
     while (ptPmsgConnInfo->iThreadRunFlag == 1)
     {
@@ -197,11 +217,12 @@ void *PisProcessThread(void *arg)
             {
 
                 iHearCount = 0;
-                memset(pcRecvBuf, 0, RECV_BUF_LEN);
+//                memset(pcRecvBuf, 0, RECV_BUF_LEN);
 
-                memset(pcRcvTstBuf, 0, sizeof(pcRcvTstBuf));
+                memset(&pcRecvBuf[iPreLeaveLen], 0, iBufLen - iPreLeaveLen);
+                iRecvLen = recv(iSocket, &pcRecvBuf[iPreLeaveLen], iBufLen - iPreLeaveLen - 1, 0);
 
-                iRecvLen = recv(iSocket, pcRecvBuf, c_iBufLen, 0);
+//                iRecvLen = recv(iSocket, pcRecvBuf, c_iBufLen, 0);
                 if (iRecvLen <= 0)
                 {
                     perror("recv:");
@@ -217,9 +238,23 @@ void *PisProcessThread(void *arg)
                     LOG_WriteLog(&tLogInfo);
                     continue;
                 }
+                if (iPreLeaveLen > 0)
+                {
+                    memcpy(pcRecvBuf, pcLeaveBuf, iPreLeaveLen);
+                }
+
+                iLeaveLen = iRecvLen + iPreLeaveLen;
+                iOffset = 0;
+
 
                 while (iRecvLen > 0)
                 {
+                    if (iLeaveLen < 5)
+                    {
+                        memcpy(pcLeaveBuf, &pcRecvBuf[iOffset], iLeaveLen);
+                        iPreLeaveLen = iLeaveLen;
+                        break;
+                    }
 
                     // 验证消息头的正确性
                     if (MSG_START_FLAG != pcRecvBuf[iOffset])
@@ -330,6 +365,7 @@ void *PisProcessThread(void *arg)
 
 
                     }
+                    memset(&pcRecvBuf[iPreLeaveLen], 0, iBufLen - iPreLeaveLen);
                     usleep(500*1000);
 
                 }
@@ -337,6 +373,22 @@ void *PisProcessThread(void *arg)
 
             }
 
+
+        }
+
+        iHearCount ++;
+        if (iHearCount > 1000)
+        {
+            DestroyPisTcpSocket(iSocket);
+            iSocket = -1;
+            ptPmsgConnInfo->iSockfd = -1;
+            ptPmsgConnInfo->iConnectStatus = E_SERV_STATUS_UNCONNECT;
+            memset(&tLogInfo, 0, sizeof(T_LOG_INFO));
+            tLogInfo.iLogType = 0;
+            snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "server %s disconnected", ptPmsgConnInfo->acIpAddr);
+            LOG_WriteLog(&tLogInfo);
+            iHearCount = 0;
+            printf("*************DestroyPisTcpSocket***********\n");
 
         }
 
@@ -348,6 +400,7 @@ void *PisProcessThread(void *arg)
         DestroyPisTcpSocket(iSocket);
         ptPmsgConnInfo->iSockfd = -1;
     }
+
     return NULL;
 
 }
@@ -414,7 +467,7 @@ void ParsePisYCInfo(Msg_RecvPISYCInfo  RecvPISInfo)
     }
     BYTE testInfo[2]={0};
     memcpy(testInfo,&RecvPISInfo.Speed,2);
-    printf("*000000testInfo value 1:0x%x  2:0x%x\n",testInfo[0],testInfo[1]);
+//    printf("*000000testInfo value 1:0x%x  2:0x%x\n",testInfo[0],testInfo[1]);
 
     strncpy(ptPisInfo->cTrainNum,RecvPISInfo.TrainNumber1,sizeof(RecvPISInfo.TrainNumber1));
     strncpy(ptPisInfo->cTrainNum+4,RecvPISInfo.TrainNumber2,sizeof(RecvPISInfo.TrainNumber2));
@@ -422,7 +475,7 @@ void ParsePisYCInfo(Msg_RecvPISYCInfo  RecvPISInfo)
 
     int uiTmp = RecvPISInfo.Mileage[0] << 24 | RecvPISInfo.Mileage[1] << 16 | RecvPISInfo.Mileage[2] << 8 | RecvPISInfo.Mileage[3];
     short sDistance = (uiTmp/1000) & 0xffff;            //里程    ？？？？？
-    printf("**1111111111**1111****sDistance=%d\n",sDistance);
+//    printf("**1111111111**1111****sDistance=%d\n",sDistance);
 
     ptPisInfo->wDistance = uiTmp;
 //    ptPisInfo->wDistance = RecvPISInfo.Mileage;
@@ -483,9 +536,9 @@ void ParsePisInfo(Msg_RecvPISInfo  RecvPISInfo)
     ptPisInfo->tTime.i8Sec =  RecvPISInfo.dateTime.Second;
 
     ptPisInfo->wSpeed = RecvPISInfo.Speed;
-    BYTE testInfo[2]={0};
-    memcpy(testInfo,&RecvPISInfo.Speed,2);
-    printf("*testInfo value 1:0x%x  2:0x%x\n",testInfo[0],testInfo[1]);
+//    BYTE testInfo[2]={0};
+//    memcpy(testInfo,&RecvPISInfo.Speed,2);
+//    printf("*testInfo value 1:0x%x  2:0x%x\n",testInfo[0],testInfo[1]);
 
     short uiTmp = RecvPISInfo.Mileage[0] << 8 | RecvPISInfo.Mileage[1];
 //    short sDistance = (uiTmp/1000) & 0xffff;            //里程

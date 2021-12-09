@@ -5386,9 +5386,7 @@ recordplaywidget.o: recordplaywidget.cpp recordplaywidget.h \
 		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtextformat.h \
 		vdec.h \
 		mutex.h \
-		debugout/debug.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QCheckBox \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qcheckbox.h
+		debugout/debug.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o recordplaywidget.o recordplaywidget.cpp
 
 inteanalywidget.o: inteanalywidget.cpp inteanalywidget.h \
