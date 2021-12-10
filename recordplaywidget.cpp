@@ -17,6 +17,7 @@
 #include "types.h"
 #include "cmplayer.h"
 #include "vdec.h"
+#include <QCheckBox>
 
 int g_iDateEditNo = 0;      //要显示时间的不同控件的编号
 static int g_iRNum = 0;
@@ -90,7 +91,6 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
     ui->recordFileTableWidget->setShowGrid(true);
 
 
-
     ui->recordFileTableWidget->horizontalHeader()->setSectionsClickable(false); //设置表头不可点击
     ui->recordFileTableWidget->horizontalHeader()->setStretchLastSection(true); //设置充满表宽度
     ui->recordFileTableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers); //设置不可编辑
@@ -102,7 +102,6 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
     ui->recordFileTableWidget->horizontalHeader()->resizeSection(2,280);
 //    ui->recordFileTableWidget->resizeColumnToContents(2);
     ui->recordFileTableWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-
 
     ui->playPushButton->setFocusPolicy(Qt::NoFocus);
     ui->stopPushButton->setFocusPolicy(Qt::NoFocus);
@@ -511,6 +510,20 @@ void recordPlayWidget::recordTableWidgetFillFunc()
         QTableWidgetItem *checkBox = new QTableWidgetItem();
         checkBox->setCheckState(Qt::Unchecked);
         ui->recordFileTableWidget->setItem(iParseIdex-1, 0, checkBox);
+        ui->recordFileTableWidget->item(iParseIdex-1, 0)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+
+//        QCheckBox *checkBox = new QCheckBox();
+//        checkBox->setChecked(Qt::Unchecked);
+//        QWidget *checkWidget= new QWidget(this); //创建一个widget
+//        QHBoxLayout *hLayout = new QHBoxLayout(); //创建布局
+//        hLayout->addWidget(checkBox); //添加checkbox
+//        hLayout->setMargin(0); //设置边缘距离 否则会很难看
+//        hLayout->setAlignment(checkBox, Qt::AlignCenter); //居中
+//        checkWidget->setLayout(hLayout); //设置widget的布局
+
+//         checkBox->setStyleSheet(QString(".QCheckBox {margin:3px;border:0px;}QCheckBox::indicator {width: %1px; height: %1px; }").arg(30));
+//        ui->recordFileTableWidget->setCellWidget(iParseIdex-1, 0, checkWidget);
+
 
         item = QString::number(iParseIdex);
         ui->recordFileTableWidget->setItem(iParseIdex-1, 1, new QTableWidgetItem(item));

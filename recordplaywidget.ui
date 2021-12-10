@@ -235,6 +235,18 @@ gridline-color: rgb(130, 135, 144);
 border-color: rgb(130, 135, 144);
 border-width: 1px;border-style: solid;</string>
    </property>
+   <property name="horizontalScrollBarPolicy">
+    <enum>Qt::ScrollBarAlwaysOff</enum>
+   </property>
+   <property name="sizeAdjustPolicy">
+    <enum>QAbstractScrollArea::AdjustToContents</enum>
+   </property>
+   <property name="verticalScrollMode">
+    <enum>QAbstractItemView::ScrollPerPixel</enum>
+   </property>
+   <property name="horizontalScrollMode">
+    <enum>QAbstractItemView::ScrollPerPixel</enum>
+   </property>
    <property name="showGrid">
     <bool>false</bool>
    </property>

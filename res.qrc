@@ -239,5 +239,14 @@
         <file>res/pressed.bmp</file>
         <file>res/preesd_user.bmp</file>
         <file>res/pressed_alarm.bmp</file>
+        <file>monres/21.bmp</file>
+        <file>monres/22.bmp</file>
+        <file>monres/23.bmp</file>
+        <file>monres/24.bmp</file>
+        <file>monres/25.bmp</file>
+        <file>monres/26.bmp</file>
+        <file>monres/27.bmp</file>
+        <file>monres/28.bmp</file>
+        <file>monres/35.bmp</file>
     </qresource>
 </RCC>

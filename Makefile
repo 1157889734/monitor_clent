@@ -791,6 +791,7 @@ qrc_res.cpp: res.qrc \
 		monres/26.bmp \
 		monres/putin.bmp \
 		monres/LoginCancel.bmp \
+		monres/35.bmp \
 		monres/gengxin.bmp \
 		monres/1受电弓监控_63.png \
 		monres/usepreset.bmp \

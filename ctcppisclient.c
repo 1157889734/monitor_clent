@@ -388,7 +388,7 @@ void *PisProcessThread(void *arg)
             snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "server %s disconnected", ptPmsgConnInfo->acIpAddr);
             LOG_WriteLog(&tLogInfo);
             iHearCount = 0;
-            printf("*************DestroyPisTcpSocket***********\n");
+//            printf("*************DestroyPisTcpSocket***********\n");
 
         }
 
