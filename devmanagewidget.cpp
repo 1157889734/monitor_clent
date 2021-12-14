@@ -22,6 +22,7 @@ devManageWidget::devManageWidget(QWidget *parent) :
     this->showFullScreen();
 
     ui->TrainNumberLineEdit->installEventFilter(this);
+    ui->TrainNumberLineEdit->setValidator(new QRegExpValidator(QRegExp("[a-zA-Z0-9]+$")));
 
     ui->devStorageTableWidget->setFocusPolicy(Qt::NoFocus);
     ui->devStorageTableWidget->setColumnCount(8);

@@ -509,6 +509,7 @@ void recordPlayWidget::recordTableWidgetFillFunc()
 
         QTableWidgetItem *checkBox = new QTableWidgetItem();
         checkBox->setCheckState(Qt::Unchecked);
+
         ui->recordFileTableWidget->setItem(iParseIdex-1, 0, checkBox);
         ui->recordFileTableWidget->item(iParseIdex-1, 0)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
 
@@ -861,11 +862,16 @@ void recordPlayWidget::setPlayButtonStyleSheet()
 {
     if (0 == m_iPlayFlag)
     {
-        ui->pushButton->setStyleSheet("QPushButton{border-image: url(:/monres/pause.bmp);background-color: rgb(255, 255, 255);}");
+        ui->pushButton->setStyleSheet("QPushButton{border-image: url(:/monres/pause1.bmp);background-color: rgb(255, 255, 255);}");
+        ui->playPushButton->setStyleSheet("QPushButton{border-image: url(:/monres/start.bmp);background-color: rgb(255, 255, 255);}");
+
     }
     else
     {
-        ui->pushButton->setStyleSheet("QPushButton{border-image: url(:/monres/pause1.bmp);background-color: rgb(255, 255, 255);}");
+        ui->pushButton->setStyleSheet("QPushButton{border-image: url(:/monres/pause.bmp);background-color: rgb(255, 255, 255);}");
+        ui->playPushButton->setStyleSheet("QPushButton{border-image: url(:/monres/start1.bmp);background-color: rgb(255, 255, 255);}");
+
+
     }
 }
 
@@ -919,11 +925,11 @@ void recordPlayWidget::recordPlayStartSlot()
             CMP_PlayMedia(m_cmpHandle);
 //            CMP_SetPlayRate(m_cmpHandle,m_dPlaySpeed);
         }
-        else
-        {
-            m_iPlayFlag = 0;
-            CMP_PauseMedia(m_cmpHandle);
-        }
+//        else
+//        {
+//            m_iPlayFlag = 0;
+//            CMP_PauseMedia(m_cmpHandle);
+//        }
         setPlayButtonStyleSheet();
     }
     else
@@ -938,11 +944,21 @@ void recordPlayWidget::recordPlayStartSlot()
 
 void recordPlayWidget::recordPauseSlot()
 {
-    m_iPlayFlag = 0;
-    if (m_cmpHandle != NULL)    //如果播放窗口已经有打开了码流播放，关闭码流播放
+    if (m_cmpHandle != NULL)
     {
-        CMP_PauseMedia(m_cmpHandle);
+        if(m_iPlayFlag == 1)
+        {
+            m_iPlayFlag = 0;
+            CMP_PauseMedia(m_cmpHandle);
+        }
     }
+    setPlayButtonStyleSheet();
+
+//    m_iPlayFlag = 0;
+//    if (m_cmpHandle != NULL)    //如果播放窗口已经有打开了码流播放，关闭码流播放
+//    {
+//        CMP_PauseMedia(m_cmpHandle);
+//    }
 }
 
 void recordPlayWidget::recordPlayStopSlot()

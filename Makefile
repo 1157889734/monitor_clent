@@ -839,6 +839,7 @@ qrc_res.cpp: res.qrc \
 		monres/bj1.bmp \
 		monres/cameraon.bmp \
 		monres/browse.bmp \
+		monres/unchecked.bmp \
 		monres/pause1.bmp \
 		monres/carriageset.bmp \
 		monres/useradd.bmp \
@@ -888,6 +889,7 @@ qrc_res.cpp: res.qrc \
 		monres/Pantobg.bmp \
 		monres/replacevideo.bmp \
 		monres/ligtoff.bmp \
+		monres/checked.bmp \
 		monres/kaishigegnxin.bmp \
 		monres/carriageplay1.bmp \
 		monres/bitmap19.bmp \

@@ -185,7 +185,9 @@ public:
 "background-color: rgb(255, 255, 255);\n"
 "gridline-color: rgb(130, 135, 144);\n"
 "border-color: rgb(130, 135, 144);\n"
-"border-width: 1px;border-style: solid;"));
+"border-width: 1px;border-style: solid;\n"
+"\n"
+""));
         recordFileTableWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         recordFileTableWidget->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
         recordFileTableWidget->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
