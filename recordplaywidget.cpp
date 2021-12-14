@@ -157,16 +157,16 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
     ui->EnddateEdit->setCalendarPopup(true);
     ui->EnddateEdit->setDate(QDate::currentDate());
 
-    ui->StartdateEdit->dumpObjectTree();
-    QLineEdit* lEdit = ui->StartdateEdit->findChild<QLineEdit*>();
-    if(lEdit)
-        lEdit->setReadOnly(true);
+//    ui->StartdateEdit->dumpObjectTree();
+//    QLineEdit* lEdit = ui->StartdateEdit->findChild<QLineEdit*>();
+//    if(lEdit)
+//        lEdit->setReadOnly(true);
 
 
-    ui->EnddateEdit->dumpObjectTree();
-    QLineEdit* lEdit2 = ui->EnddateEdit->findChild<QLineEdit*>();
-    if(lEdit2)
-        lEdit2->setReadOnly(true);
+//    ui->EnddateEdit->dumpObjectTree();
+//    QLineEdit* lEdit2 = ui->EnddateEdit->findChild<QLineEdit*>();
+//    if(lEdit2)
+//        lEdit2->setReadOnly(true);
 
 
     int value = QTime::currentTime().hour();

@@ -129,17 +129,17 @@ devUpdateWidget::devUpdateWidget(QWidget *parent) :
     ui->dateEdit->setCalendarPopup(true);
     ui->dateEdit->setDate(QDate::currentDate());
 
-    ui->dateEdit->dumpObjectTree();
-    QLineEdit* lEdit = ui->dateEdit->findChild<QLineEdit*>();
-    if(lEdit)
-        lEdit->setReadOnly(true);
+//    ui->dateEdit->dumpObjectTree();
+//    QLineEdit* lEdit = ui->dateEdit->findChild<QLineEdit*>();
+//    if(lEdit)
+//        lEdit->setReadOnly(true);
 
     ui->dateEdit->setLocale(QLocale::Chinese);
 
-    ui->timeEdit->dumpObjectTree();
-    lEdit = ui->timeEdit->findChild<QLineEdit*>();
-    if(lEdit)
-        lEdit->setReadOnly(true);
+//    ui->timeEdit->dumpObjectTree();
+//    lEdit = ui->timeEdit->findChild<QLineEdit*>();
+//    if(lEdit)
+//        lEdit->setReadOnly(true);
 
 
     m_sys_timer = new QTimer(this);
@@ -675,6 +675,17 @@ void devUpdateWidget::setCameraImageParamSlot()
         if (idex < 0)
         {
             return;
+        }
+
+        if(ui->brightnessLineEdit->text().toInt() > 255 || ui->saturationLineEdit->text().toInt() > 255 || ui->contrastLineEdit->text().toInt() > 255)
+        {
+            QMessageBox box(QMessageBox::Warning,tr("提示"),tr("输入数字不能超过255!"));	  //新建消息提示框，提示错误信息
+            box.setWindowFlags(Qt::FramelessWindowHint);
+            box.setStandardButtons (QMessageBox::Ok);	//设置提示框只有一个标准按钮
+            box.setButtonText (QMessageBox::Ok,tr("OK")); 	//将按钮显示改成"确 定"
+            box.exec();
+            return;
+
         }
 
         memset(&picParam, 0, sizeof(T_PIC_ATTRIBUTE));

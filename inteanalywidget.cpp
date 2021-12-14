@@ -42,29 +42,29 @@ inteAnalyWidget::inteAnalyWidget(QWidget *parent) :
 
 
     ui->StartdateEdit->setCalendarPopup(true);
-    ui->EnddateEdit->setCalendarPopup(true);
+    ui->StartdateEdit->setLocale(QLocale::Chinese);
+    ui->StartdateEdit->setDateTime(QDateTime::currentDateTime());
 
+
+    ui->EnddateEdit->setCalendarPopup(true);
+    ui->EnddateEdit->setLocale(QLocale::Chinese);
     ui->EnddateEdit->setDateTime(QDateTime::currentDateTime());
+
 //    ui->EndtimeEdit->setDateTime(QDateTime::currentDateTime());
 
-    ui->StartdateEdit->setDateTime(QDateTime::currentDateTime());
 //    ui->StarttimeEdit->setDateTime(QDateTime::currentDateTime());
 
-    ui->StartdateEdit->dumpObjectTree();
-    QLineEdit* lEdit = ui->StartdateEdit->findChild<QLineEdit*>();
-    if(lEdit)
-        lEdit->setReadOnly(true);
+//    ui->StartdateEdit->dumpObjectTree();
+//    QLineEdit* lEdit = ui->StartdateEdit->findChild<QLineEdit*>();
+//    if(lEdit)
+//        lEdit->setReadOnly(true);
 
 
-    ui->StartdateEdit->setLocale(QLocale::Chinese);
 
-    ui->EnddateEdit->dumpObjectTree();
-    QLineEdit* lEdit2 = ui->EnddateEdit->findChild<QLineEdit*>();
-    if(lEdit2)
-        lEdit2->setReadOnly(true);
-    ui->EnddateEdit->setLocale(QLocale::Chinese);
-
-
+//    ui->EnddateEdit->dumpObjectTree();
+//    QLineEdit* lEdit2 = ui->EnddateEdit->findChild<QLineEdit*>();
+//    if(lEdit2)
+//        lEdit2->setReadOnly(true);
 
     int value = QTime::currentTime().hour();
     ui->EndcomboBox->setCurrentIndex(value);
