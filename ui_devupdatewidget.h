@@ -460,7 +460,9 @@ public:
         updateStatueTextEdit->setObjectName(QString::fromUtf8("updateStatueTextEdit"));
         updateStatueTextEdit->setEnabled(false);
         updateStatueTextEdit->setGeometry(QRect(510, 30, 421, 111));
-        updateStatueTextEdit->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
+        updateStatueTextEdit->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);\n"
+"color: rgb(0, 0, 0);\n"
+""));
         configFileDisplayLineEdit_2 = new QLineEdit(deviceManagewidget);
         configFileDisplayLineEdit_2->setObjectName(QString::fromUtf8("configFileDisplayLineEdit_2"));
         configFileDisplayLineEdit_2->setGeometry(QRect(250, 310, 121, 27));

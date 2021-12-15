@@ -134,6 +134,10 @@ int STATE_FindUsbDev()
     {
         return 0;
     }
+    if(access("/proc/scsi/usb-storage",F_OK) < 0)
+    {
+        return 0;
+    }
 
     while (fgets(acBuf, sizeof(acBuf), pFile))
     {

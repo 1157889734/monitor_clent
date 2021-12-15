@@ -32,8 +32,8 @@
   <widget class="QFrame" name="frame">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>0</y>
+     <x>-20</x>
+     <y>10</y>
      <width>635</width>
      <height>401</height>
     </rect>
@@ -173,7 +173,7 @@ border-width: 1px;
 border-style: solid;</string>
     </property>
     <property name="text">
-     <string>关闭</string>
+     <string>返回</string>
     </property>
    </widget>
   </widget>

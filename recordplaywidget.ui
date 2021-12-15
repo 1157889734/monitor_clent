@@ -794,7 +794,7 @@ QPushButton:pressed
     <bool>false</bool>
    </property>
    <property name="displayFormat">
-    <string>yyyy/M/dd </string>
+    <string>yyyy/MM/dd </string>
    </property>
    <property name="calendarPopup">
     <bool>false</bool>

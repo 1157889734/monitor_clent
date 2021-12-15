@@ -585,7 +585,7 @@ public:
         slowForwardPushButton->setText(QString());
         label_3->setText(QCoreApplication::translate("recordPlayWidget", " \350\265\267\345\247\213\346\227\266\351\227\264", nullptr));
         plusStepPushButton->setText(QString());
-        StartdateEdit->setDisplayFormat(QCoreApplication::translate("recordPlayWidget", "yyyy/M/dd ", nullptr));
+        StartdateEdit->setDisplayFormat(QCoreApplication::translate("recordPlayWidget", "yyyy/MM/dd ", nullptr));
         EnddateEdit->setDisplayFormat(QCoreApplication::translate("recordPlayWidget", "yyyy/MM/dd", nullptr));
         label->setText(QCoreApplication::translate("recordPlayWidget", "\346\227\266\351\227\264", nullptr));
         label_14->setText(QCoreApplication::translate("recordPlayWidget", "\346\227\266\351\227\264", nullptr));

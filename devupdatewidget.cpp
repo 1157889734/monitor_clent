@@ -788,6 +788,8 @@ void devUpdateWidget::configFileSelectionSlot()
             QFileDialog *dialog = new QFileDialog;
             dialog->setAttribute(Qt::WA_DeleteOnClose);
             dialog->setWindowFlag(Qt::FramelessWindowHint);
+            dialog->setDirectory("/media/usb0/");
+            dialog->setFilter(QDir::Files);
             dialog->setFixedSize(800,600);
             dialog->show();
 
@@ -874,6 +876,8 @@ void devUpdateWidget::configUpdateFileSLOT()
             QFileDialog *dialog = new QFileDialog;
             dialog->setAttribute(Qt::WA_DeleteOnClose);
             dialog->setWindowFlag(Qt::FramelessWindowHint);
+            dialog->setDirectory("/media/usb0/");
+            dialog->setFilter(QDir::Files);
             dialog->setFixedSize(800,600);
             dialog->show();
 
@@ -1030,18 +1034,7 @@ void devUpdateWidget::devRebootSlot()
         snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "monitor Client reboot!");
         LOG_WriteLog(&tLogInfo);
 
-
-        QString program = QApplication::applicationFilePath();
-        QStringList arguments = QApplication::arguments();
-        QString workingDirectory = QDir::currentPath();
-        if("/home/user/bin/monitor" != program)
-        {
-            system("cp /home/data/backup/monitor /home/user/bin/ ");
-            program = "/home/user/bin/monitor";
-        }
-
-        QProcess::startDetached(program, arguments, workingDirectory);
-        QApplication::exit();
+        system("reboot");
 
     }
 
@@ -1096,9 +1089,7 @@ void devUpdateWidget::downLoadLogSlot()
         }
 
 
-//        system("cp /mnt/usb/u/Station.ini /home/data/emuVideoMornitorClient/Station.ini");
-        system("cp /home/data/monitorCfg/sys.log /media/usb0/");
-
+        system("cp /home/data/sys.log /media/usb0/");
         system("sync");
 
         QMessageBox msgBox2(QMessageBox::Information,QString(tr("注意")),QString(tr("导入成功，请拔出U盘!")));
