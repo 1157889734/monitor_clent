@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_devUpdateWidget_t {
-    QByteArrayData data[35];
-    char stringdata0[593];
+    QByteArrayData data[36];
+    char stringdata0[609];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -62,11 +62,12 @@ QT_MOC_LITERAL(26, 443, 11), // "systimeSlot"
 QT_MOC_LITERAL(27, 455, 20), // "registOutButtonClick"
 QT_MOC_LITERAL(28, 476, 21), // "closeUserManageWidget"
 QT_MOC_LITERAL(29, 498, 23), // "setCameraImageParamSlot"
-QT_MOC_LITERAL(30, 522, 12), // "setTrainType"
-QT_MOC_LITERAL(31, 535, 13), // "setPisSetting"
-QT_MOC_LITERAL(32, 549, 17), // "setTimeSignalCtrl"
-QT_MOC_LITERAL(33, 567, 21), // "KeyboardPressKeySlots"
-QT_MOC_LITERAL(34, 589, 3) // "key"
+QT_MOC_LITERAL(30, 522, 15), // "carNoChangeSlot"
+QT_MOC_LITERAL(31, 538, 12), // "setTrainType"
+QT_MOC_LITERAL(32, 551, 13), // "setPisSetting"
+QT_MOC_LITERAL(33, 565, 17), // "setTimeSignalCtrl"
+QT_MOC_LITERAL(34, 583, 21), // "KeyboardPressKeySlots"
+QT_MOC_LITERAL(35, 605, 3) // "key"
 
     },
     "devUpdateWidget\0alarmPushButoonClickSignal\0"
@@ -82,8 +83,8 @@ QT_MOC_LITERAL(34, 589, 3) // "key"
     "pollingTimeChange\0lineEditpollingTimeChange\0"
     "showSysTime\0monitorSysTime\0systimeSlot\0"
     "registOutButtonClick\0closeUserManageWidget\0"
-    "setCameraImageParamSlot\0setTrainType\0"
-    "setPisSetting\0setTimeSignalCtrl\0"
+    "setCameraImageParamSlot\0carNoChangeSlot\0"
+    "setTrainType\0setPisSetting\0setTimeSignalCtrl\0"
     "KeyboardPressKeySlots\0key"
 };
 #undef QT_MOC_LITERAL
@@ -94,7 +95,7 @@ static const uint qt_meta_data_devUpdateWidget[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      29,   14, // methods
+      30,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -102,37 +103,38 @@ static const uint qt_meta_data_devUpdateWidget[] = {
        4,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,  159,    2, 0x06 /* Public */,
-       3,    1,  160,    2, 0x06 /* Public */,
-       5,    0,  163,    2, 0x06 /* Public */,
-       6,    1,  164,    2, 0x06 /* Public */,
+       1,    0,  164,    2, 0x06 /* Public */,
+       3,    1,  165,    2, 0x06 /* Public */,
+       5,    0,  168,    2, 0x06 /* Public */,
+       6,    1,  169,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       8,    0,  167,    2, 0x0a /* Public */,
-       9,    0,  168,    2, 0x0a /* Public */,
-      10,    0,  169,    2, 0x0a /* Public */,
-      11,    0,  170,    2, 0x0a /* Public */,
-      12,    0,  171,    2, 0x0a /* Public */,
-      13,    0,  172,    2, 0x0a /* Public */,
-      14,    0,  173,    2, 0x0a /* Public */,
-      15,    0,  174,    2, 0x0a /* Public */,
-      16,    0,  175,    2, 0x0a /* Public */,
-      17,    0,  176,    2, 0x0a /* Public */,
-      18,    0,  177,    2, 0x0a /* Public */,
-      19,    1,  178,    2, 0x0a /* Public */,
-      21,    1,  181,    2, 0x0a /* Public */,
-      22,    1,  184,    2, 0x0a /* Public */,
-      23,    1,  187,    2, 0x0a /* Public */,
-      24,    0,  190,    2, 0x0a /* Public */,
-      25,    0,  191,    2, 0x0a /* Public */,
-      26,    0,  192,    2, 0x0a /* Public */,
-      27,    0,  193,    2, 0x0a /* Public */,
-      28,    0,  194,    2, 0x0a /* Public */,
-      29,    0,  195,    2, 0x0a /* Public */,
-      30,    0,  196,    2, 0x0a /* Public */,
-      31,    0,  197,    2, 0x0a /* Public */,
-      32,    0,  198,    2, 0x0a /* Public */,
-      33,    1,  199,    2, 0x0a /* Public */,
+       8,    0,  172,    2, 0x0a /* Public */,
+       9,    0,  173,    2, 0x0a /* Public */,
+      10,    0,  174,    2, 0x0a /* Public */,
+      11,    0,  175,    2, 0x0a /* Public */,
+      12,    0,  176,    2, 0x0a /* Public */,
+      13,    0,  177,    2, 0x0a /* Public */,
+      14,    0,  178,    2, 0x0a /* Public */,
+      15,    0,  179,    2, 0x0a /* Public */,
+      16,    0,  180,    2, 0x0a /* Public */,
+      17,    0,  181,    2, 0x0a /* Public */,
+      18,    0,  182,    2, 0x0a /* Public */,
+      19,    1,  183,    2, 0x0a /* Public */,
+      21,    1,  186,    2, 0x0a /* Public */,
+      22,    1,  189,    2, 0x0a /* Public */,
+      23,    1,  192,    2, 0x0a /* Public */,
+      24,    0,  195,    2, 0x0a /* Public */,
+      25,    0,  196,    2, 0x0a /* Public */,
+      26,    0,  197,    2, 0x0a /* Public */,
+      27,    0,  198,    2, 0x0a /* Public */,
+      28,    0,  199,    2, 0x0a /* Public */,
+      29,    0,  200,    2, 0x0a /* Public */,
+      30,    0,  201,    2, 0x0a /* Public */,
+      31,    0,  202,    2, 0x0a /* Public */,
+      32,    0,  203,    2, 0x0a /* Public */,
+      33,    0,  204,    2, 0x0a /* Public */,
+      34,    1,  205,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -165,7 +167,8 @@ static const uint qt_meta_data_devUpdateWidget[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Char,   34,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Char,   35,
 
        0        // eod
 };
@@ -201,10 +204,11 @@ void devUpdateWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 22: _t->registOutButtonClick(); break;
         case 23: _t->closeUserManageWidget(); break;
         case 24: _t->setCameraImageParamSlot(); break;
-        case 25: _t->setTrainType(); break;
-        case 26: _t->setPisSetting(); break;
-        case 27: _t->setTimeSignalCtrl(); break;
-        case 28: _t->KeyboardPressKeySlots((*reinterpret_cast< char(*)>(_a[1]))); break;
+        case 25: _t->carNoChangeSlot(); break;
+        case 26: _t->setTrainType(); break;
+        case 27: _t->setPisSetting(); break;
+        case 28: _t->setTimeSignalCtrl(); break;
+        case 29: _t->KeyboardPressKeySlots((*reinterpret_cast< char(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -269,13 +273,13 @@ int devUpdateWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 29)
+        if (_id < 30)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 29;
+        _id -= 30;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 29)
+        if (_id < 30)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 29;
+        _id -= 30;
     }
     return _id;
 }

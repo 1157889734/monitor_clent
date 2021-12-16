@@ -97,8 +97,8 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
     ui->recordFileTableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);  //设置整行选中方式
     ui->recordFileTableWidget->setSelectionMode(QAbstractItemView::NoSelection); //设置只能选择一行，不能多行选中
 //    ui->recordFileTableWidget->setAlternatingRowColors(true);                        //设置隔一行变一颜色，即：一灰一白
-    ui->recordFileTableWidget->horizontalHeader()->resizeSection(0,46); //设置表头第一列的宽度为46
-    ui->recordFileTableWidget->horizontalHeader()->resizeSection(1,46);
+    ui->recordFileTableWidget->horizontalHeader()->resizeSection(0,40); //设置表头第一列的宽度为46
+    ui->recordFileTableWidget->horizontalHeader()->resizeSection(1,40);
     ui->recordFileTableWidget->horizontalHeader()->resizeSection(2,280);
 //    ui->recordFileTableWidget->resizeColumnToContents(2);
     ui->recordFileTableWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
@@ -507,23 +507,23 @@ void recordPlayWidget::recordTableWidgetFillFunc()
 
         ui->recordFileTableWidget->insertRow(iParseIdex-1);//添加新的一行
 
-        QTableWidgetItem *checkBox = new QTableWidgetItem();
-        checkBox->setCheckState(Qt::Unchecked);
+//        QTableWidgetItem *checkBox = new QTableWidgetItem();
+//        checkBox->setCheckState(Qt::Unchecked);
 
-        ui->recordFileTableWidget->setItem(iParseIdex-1, 0, checkBox);
-        ui->recordFileTableWidget->item(iParseIdex-1, 0)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+//        ui->recordFileTableWidget->setItem(iParseIdex-1, 0, checkBox);
+//        ui->recordFileTableWidget->item(iParseIdex-1, 0)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+        QWidget *checkWidget= new QWidget(this); //创建一个widget
 
-//        QCheckBox *checkBox = new QCheckBox();
-//        checkBox->setChecked(Qt::Unchecked);
-//        QWidget *checkWidget= new QWidget(this); //创建一个widget
-//        QHBoxLayout *hLayout = new QHBoxLayout(); //创建布局
-//        hLayout->addWidget(checkBox); //添加checkbox
-//        hLayout->setMargin(0); //设置边缘距离 否则会很难看
-//        hLayout->setAlignment(checkBox, Qt::AlignCenter); //居中
-//        checkWidget->setLayout(hLayout); //设置widget的布局
+        QCheckBox *checkBox = new QCheckBox(checkWidget);
+        checkBox->setChecked(Qt::Unchecked);
+        QHBoxLayout *hLayout = new QHBoxLayout(); //创建布局
+        hLayout->addWidget(checkBox); //添加checkbox
+        hLayout->setMargin(0); //设置边缘距离 否则会很难看
+        hLayout->setAlignment(checkBox, Qt::AlignCenter); //居中
+        checkWidget->setLayout(hLayout); //设置widget的布局
 
-//         checkBox->setStyleSheet(QString(".QCheckBox {margin:3px;border:0px;}QCheckBox::indicator {width: %1px; height: %1px; }").arg(30));
-//        ui->recordFileTableWidget->setCellWidget(iParseIdex-1, 0, checkWidget);
+        checkBox->setStyleSheet(QString(".QCheckBox {margin:3px;border:3px;}QCheckBox::indicator {width: %1px; height: %1px; }").arg(30));
+        ui->recordFileTableWidget->setCellWidget(iParseIdex-1, 0, checkWidget);
 
 
         item = QString::number(iParseIdex);
@@ -752,9 +752,18 @@ void recordPlayWidget::recordDownloadSlot()
     {
         for (row = 0; row < ui->recordFileTableWidget->rowCount(); row++)    //先判断一次是否没有录像文件被选中，没有则弹框提示
         {
-            if (ui->recordFileTableWidget->item(row, 0)->checkState() == Qt::Checked)
+//            if (ui->recordFileTableWidget->item(row, 0)->checkState() == Qt::Checked)
+//            {
+//                break;
+//            }
+            if(QWidget *w = ui->recordFileTableWidget->cellWidget(row,0))
             {
-                break;
+                QCheckBox *checkBox = (QCheckBox*)(w->children().at(0));
+
+                if(checkBox->checkState() == Qt::Checked)
+                {
+                   break;
+                }
             }
         }
 
@@ -818,6 +827,7 @@ void recordPlayWidget::recordDownloadSlot()
 
         for (row = 0; row < ui->recordFileTableWidget->rowCount(); row++)
         {
+#if 0
             if (ui->recordFileTableWidget->item(row, 0)->checkState() == Qt::Checked)
             {
                 if (parseFileName(m_acFilePath[row]) != NULL)
@@ -838,6 +848,34 @@ void recordPlayWidget::recordDownloadSlot()
                     msgBox.exec();
                     return;
                 }
+            }
+#endif
+            if(QWidget *w = ui->recordFileTableWidget->cellWidget(row,0))
+            {
+                QCheckBox *checkBox = (QCheckBox*)(w->children().at(0));
+                if(checkBox->checkState() == Qt::Checked)
+                {
+                    if (parseFileName(m_acFilePath[row]) != NULL)
+                    {
+                        snprintf(acSaveFileName, sizeof(acSaveFileName), "%s%s", "/media/usb0/", parseFileName(m_acFilePath[row]));
+                    }
+    //                DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] add download file:%s!\n", __FUNCTION__, m_acFilePath[row]);
+                    iRet = FTP_AddDownLoadFile(m_tFtpHandle[idex], m_acFilePath[row], acSaveFileName);
+                    if (iRet < 0)
+                    {
+                        FTP_DestoryConnect(m_tFtpHandle[m_iFtpServerIdex]);
+                        m_tFtpHandle[m_iFtpServerIdex] = 0;
+    //                    DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget not get USB device!\n");
+                        QMessageBox msgBox(QMessageBox::Warning,QString(tr("提示")),QString(tr("文件下载失败")));
+                        msgBox.setWindowFlags(Qt::FramelessWindowHint);
+                        msgBox.setStandardButtons(QMessageBox::Yes);
+                        msgBox.button(QMessageBox::Yes)->setText("OK");
+                        msgBox.exec();
+                        return;
+                    }
+
+                }
+
             }
         }
 
@@ -902,7 +940,7 @@ void recordPlayWidget::getTrainConfig()    	//获取车型配置文件，初始�
             for (j = 0; j < tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum; j++)
             {
                 item = "";
-                item = QString::number(8+j);
+                item = QString::number(1+j);
                 item += tr("摄像机");
                 ui->cameraSelectionComboBox->addItem(item);
 //                qDebug()<<"DEBUG_UI_NOMAL_PRINT tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum ="<<i<<"=:"<<tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum<<__FUNCTION__<<__LINE__<<endl;
@@ -1208,7 +1246,7 @@ void recordPlayWidget::carNoChangeSlot()   //车厢号切换信号响应槽函�
     for (i = 0; i < tTrainConfigInfo.tNvrServerInfo[idex].iPvmsCameraNum; i++)        //根据不同车厢位置的NVR服务器的摄像机数量个数跟新摄像机选择下拉框
     {
         item = "";
-        item = QString::number(8+i);
+        item = QString::number(1+i);
         item += tr("号摄像机");
         ui->cameraSelectionComboBox->addItem(item);
     }

@@ -32,8 +32,8 @@
   <widget class="QFrame" name="frame">
    <property name="geometry">
     <rect>
-     <x>-20</x>
-     <y>10</y>
+     <x>0</x>
+     <y>0</y>
      <width>635</width>
      <height>401</height>
     </rect>
@@ -74,7 +74,7 @@ color: rgb(255, 255, 255);</string>
      <string>报警信息</string>
     </property>
     <property name="alignment">
-     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
    <widget class="QTableWidget" name="tableWidget">

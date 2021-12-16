@@ -41,7 +41,7 @@ public:
         closePushButton->setStyleSheet(QString::fromUtf8("border-image: url(:/res/close.png);"));
         frame = new QFrame(alarmWidget);
         frame->setObjectName(QString::fromUtf8("frame"));
-        frame->setGeometry(QRect(-20, 10, 635, 401));
+        frame->setGeometry(QRect(0, 0, 635, 401));
         frame->setStyleSheet(QString::fromUtf8("#frame{\n"
 "background-color: rgb(217, 221, 223);\n"
 "border-color: rgb(184, 180, 176);\n"
@@ -58,7 +58,7 @@ public:
         label_2->setFont(font);
         label_2->setStyleSheet(QString::fromUtf8("background-color: rgb(88, 124, 224);\n"
 "color: rgb(255, 255, 255);"));
-        label_2->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+        label_2->setAlignment(Qt::AlignCenter);
         tableWidget = new QTableWidget(frame);
         if (tableWidget->columnCount() < 3)
             tableWidget->setColumnCount(3);

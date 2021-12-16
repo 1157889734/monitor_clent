@@ -115,6 +115,9 @@ devUpdateWidget::devUpdateWidget(QWidget *parent) :
     connect(ui->timeAdjustPushButton,SIGNAL(clicked()),this,SLOT(systimeSlot()));
     connect(ui->imageParamSetPushButton, SIGNAL(clicked(bool)), this, SLOT(setCameraImageParamSlot()));     //图像参数设置
 
+    connect(ui->carriageSelectionComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(carNoChangeSlot()));  //车厢选择下拉框当前索引改变信号响应
+
+
     ui->pollingTimeSetLineEdit->setValidator(new QIntValidator(1,24*3600,this));   //只能输入1-24*3600的整数，不能输入字母或其他数字
     ui->presetReturnTimeSetLineEdit->setValidator(new QIntValidator(1,24*60,this));
 
@@ -395,10 +398,6 @@ void devUpdateWidget::systimeSlot()
             sscanf(ui->timeEdit->text().toLatin1().data(), "%2d:%02d:%02d", &hour, &minute, &second);
         }
 
-//        snprintf(acTimeStr, sizeof(acTimeStr), "date %02d%02d%02d%02d%4d.%02d", month, day, hour, second,year, minute);
-//        system(acTimeStr);
-//        system("hwclock -w");
-//        qDebug()<<"*******systimeSlot***"<<acTimeStr<<__LINE__<<"hour="<<hour<<"minute="<<minute<<"second="<<second;
         /*系统校时记录日志*/
         memset(&tLogInfo, 0, sizeof(T_LOG_INFO));
         tLogInfo.iLogType = 0;
@@ -470,14 +469,17 @@ void devUpdateWidget::setTrainTypeCombox()     //读取系统配置文件，获�
 }
 
 void devUpdateWidget::getTrainConfig()
-{
+{   
 
-
-    int i = 0;
+    int i = 0,j = 0;
     QString item = "";
 
     ui->carriageSelectionComboBox->setCurrentIndex(-1);
     ui->carriageSelectionComboBox->clear();
+
+    ui->cameraSelectionComboBox->setCurrentIndex(-1);
+    ui->cameraSelectionComboBox->clear();
+
 
     char acTrainType[16] = {0};
     T_TRAIN_CONFIG tTrainConfigInfo;
@@ -491,7 +493,25 @@ void devUpdateWidget::getTrainConfig()
         item = QString::number(tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO);
         item += tr("号车厢");
         ui->carriageSelectionComboBox->addItem(item);
+
+
         m_Phandle[i] = STATE_GetNvrServerPmsgHandle(i);
+        if(i == 0)
+        {
+            for (j = 0; j < tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum; j++)
+            {
+
+
+                item = "";
+                item = QString::number(1+j);
+                item += tr("号摄像机");
+                ui->cameraSelectionComboBox->addItem(item);
+//                qDebug()<<"DEBUG_UI_NOMAL_PRINT tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum ="<<i<<"=:"<<tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum<<__FUNCTION__<<__LINE__<<endl;
+
+            }
+
+        }
+
     }
 
     for (i = 0; i < ui->trainTypeSetComboBox->count(); i++)
@@ -643,14 +663,33 @@ void devUpdateWidget::setTrainType()
             snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "change traintype to %s and monitor Client reboot!", acTrainType);
             LOG_WriteLog(&tLogInfo);
 
-            QString program = QApplication::applicationFilePath();
-            QStringList arguments = QApplication::arguments();
-            QString workingDirectory = QDir::currentPath();
-
-            QProcess::startDetached(program, arguments, workingDirectory);
-            QApplication::exit();
+            system("reboot");
+            system("sync");
         }
     }
+}
+
+void devUpdateWidget::carNoChangeSlot()   //车厢号切换信号响应槽函数
+{
+    int i = 0, idex = ui->carriageSelectionComboBox->currentIndex();    //获取当前车厢选择下拉框的索引
+    QString item = "";
+    T_TRAIN_CONFIG tTrainConfigInfo;
+//    DebugPrint(DEBUG_UI_OPTION_PRINT, "recordPlayWidget change server carriage No!\n");
+
+    memset(&tTrainConfigInfo, 0, sizeof(T_TRAIN_CONFIG));
+    STATE_GetCurrentTrainConfigInfo(&tTrainConfigInfo);
+    ui->cameraSelectionComboBox->setCurrentIndex(-1);
+    ui->cameraSelectionComboBox->clear();
+
+    qDebug()<<"*****---carNoChangeSlot--=:"<<idex<<tTrainConfigInfo.tNvrServerInfo[idex].iPvmsCameraNum<<__FUNCTION__<<__LINE__<<endl;
+    for (i = 0; i < tTrainConfigInfo.tNvrServerInfo[idex].iPvmsCameraNum; i++)        //根据不同车厢位置的NVR服务器的摄像机数量个数跟新摄像机选择下拉框
+    {
+        item = "";
+        item = QString::number(1+i);
+        item += tr("号摄像机");
+        ui->cameraSelectionComboBox->addItem(item);
+    }
+
 }
 
 void devUpdateWidget::setCameraImageParamSlot()
@@ -766,7 +805,6 @@ void devUpdateWidget::configFileSelectionSlot()
                 msgBox.setStandardButtons(QMessageBox::Yes);
                 msgBox.button(QMessageBox::Yes)->setText("OK");
                 msgBox.exec();
-                ui->clientRebootPushButton->setEnabled(true);
                 return;
             }
             else
@@ -779,7 +817,6 @@ void devUpdateWidget::configFileSelectionSlot()
                     msgBox.setStandardButtons(QMessageBox::Yes);
                     msgBox.button(QMessageBox::Yes)->setText("OK");
                     msgBox.exec();
-                    ui->clientRebootPushButton->setEnabled(true);
                     return;
                 }
             }
@@ -855,7 +892,6 @@ void devUpdateWidget::configUpdateFileSLOT()
                 msgBox.setStandardButtons(QMessageBox::Yes);
                 msgBox.button(QMessageBox::Yes)->setText("OK");
                 msgBox.exec();
-                ui->clientRebootPushButton->setEnabled(true);
                 return;
             }
             else
@@ -868,7 +904,6 @@ void devUpdateWidget::configUpdateFileSLOT()
                     msgBox.setStandardButtons(QMessageBox::Yes);
                     msgBox.button(QMessageBox::Yes)->setText("OK");
                     msgBox.exec();
-                    ui->clientRebootPushButton->setEnabled(true);
                     return;
                 }
             }
@@ -945,7 +980,6 @@ void devUpdateWidget::devUpdateSlot()
     else
     {
         ui->updateStatueTextEdit->clear();
-        ui->clientRebootPushButton->setEnabled(false);    //更新开始，设置重启按钮不可操作
 
         if (access("/media/usb0/", F_OK) < 0)
         {
@@ -967,7 +1001,7 @@ void devUpdateWidget::devUpdateSlot()
             }
         }
         ui->updateStatueTextEdit->append(tr("发现USB，已准备好"));
-
+#if 0
         if (0 == strlen(ui->configFileDisplayLineEdit_2->text().toLatin1().data()))
         {
 //            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget not select any config file!\n");
@@ -978,9 +1012,9 @@ void devUpdateWidget::devUpdateSlot()
             msgBox.exec();
             return;
         }
+#endif
 
-
-        if (access("/media/usb0/moittor", F_OK) < 0)
+        if (access("/media/usb0/monitor", F_OK) < 0)
         {
 //            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget not find update file in USB device!\n");
             QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("U盘中未检测更新文件!")));
@@ -992,6 +1026,7 @@ void devUpdateWidget::devUpdateSlot()
             return;
         }
 
+        ui->clientRebootPushButton->setEnabled(false);    //更新开始，设置重启按钮不可操作
 
         ui->updateStatueTextEdit->append(tr("正在复制文件..."));
         if (access("/home/data/backup",F_OK) < 0)
@@ -1035,6 +1070,7 @@ void devUpdateWidget::devRebootSlot()
         LOG_WriteLog(&tLogInfo);
 
         system("reboot");
+        system("sync");
 
     }
 
@@ -1070,7 +1106,6 @@ void devUpdateWidget::downLoadLogSlot()
             msgBox.setStandardButtons(QMessageBox::Yes);
             msgBox.button(QMessageBox::Yes)->setText("OK");
             msgBox.exec();
-            ui->clientRebootPushButton->setEnabled(true);
             return;
         }
         else
@@ -1083,7 +1118,6 @@ void devUpdateWidget::downLoadLogSlot()
                 msgBox.setStandardButtons(QMessageBox::Yes);
                 msgBox.button(QMessageBox::Yes)->setText("OK");
                 msgBox.exec();
-                ui->clientRebootPushButton->setEnabled(true);
                 return;
             }
         }

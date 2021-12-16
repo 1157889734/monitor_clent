@@ -412,10 +412,11 @@ public:
         label_14->setGeometry(QRect(180, 85, 31, 21));
         canselPushButton = new QPushButton(recordPlayWidget);
         canselPushButton->setObjectName(QString::fromUtf8("canselPushButton"));
-        canselPushButton->setGeometry(QRect(800, 575, 82, 36));
+        canselPushButton->setGeometry(QRect(798, 575, 84, 38));
         canselPushButton->setFont(font);
         canselPushButton->setStyleSheet(QString::fromUtf8("QPushButton{\n"
 "background-image: url(:/monres/cancel.bmp);\n"
+"background-repeat: no-repeat;\n"
 "border-color: rgb(255, 255, 255);\n"
 "border-width: 1px;\n"
 "border-style: solid;}\n"

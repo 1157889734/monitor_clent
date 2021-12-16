@@ -56,6 +56,7 @@ public slots:
     void closeUserManageWidget();
 
     void setCameraImageParamSlot();
+    void carNoChangeSlot();
 
     void setTrainType();
     void setPisSetting();
