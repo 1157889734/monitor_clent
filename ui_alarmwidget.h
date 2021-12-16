@@ -41,7 +41,7 @@ public:
         closePushButton->setStyleSheet(QString::fromUtf8("border-image: url(:/res/close.png);"));
         frame = new QFrame(alarmWidget);
         frame->setObjectName(QString::fromUtf8("frame"));
-        frame->setGeometry(QRect(0, 0, 635, 401));
+        frame->setGeometry(QRect(-20, 10, 635, 401));
         frame->setStyleSheet(QString::fromUtf8("#frame{\n"
 "background-color: rgb(217, 221, 223);\n"
 "border-color: rgb(184, 180, 176);\n"
@@ -118,7 +118,7 @@ public:
         QTableWidgetItem *___qtablewidgetitem2 = tableWidget->horizontalHeaderItem(2);
         ___qtablewidgetitem2->setText(QCoreApplication::translate("alarmWidget", "\346\212\245\350\255\246\350\257\246\346\203\205", nullptr));
         clearPushButton->setText(QCoreApplication::translate("alarmWidget", "\346\270\205\351\231\244", nullptr));
-        closeRPushButton->setText(QCoreApplication::translate("alarmWidget", "\345\205\263\351\227\255", nullptr));
+        closeRPushButton->setText(QCoreApplication::translate("alarmWidget", "\350\277\224\345\233\236", nullptr));
     } // retranslateUi
 
 };

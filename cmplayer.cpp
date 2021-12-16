@@ -453,7 +453,7 @@ void* MonitorPlayThread(void *arg)
         }
         else
         {
-            printf("--rtsp_login error--%s!\n", ptCmpPlayer->acUrl);
+//            printf("--rtsp_login error--%s!\n", ptCmpPlayer->acUrl);
             DebugPrint(DEBUG_CMPLAYER_ERROR_PRINT, "rtsp_login %s error!\n", ptCmpPlayer->acUrl);
             if (PLAY_STREAM_TYPE_PLAYBACK == ptCmpPlayer->iPlayStreamType)
             {

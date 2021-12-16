@@ -395,10 +395,10 @@ void devUpdateWidget::systimeSlot()
             sscanf(ui->timeEdit->text().toLatin1().data(), "%2d:%02d:%02d", &hour, &minute, &second);
         }
 
-        snprintf(acTimeStr, sizeof(acTimeStr), "date %02d%02d%02d%02d%4d.%02d", month, day, hour, second,year, minute);
-        system(acTimeStr);
-        system("hwclock -w");
-        qDebug()<<"*******systimeSlot***"<<acTimeStr<<__LINE__<<"hour="<<hour<<"minute="<<minute<<"second="<<second;
+//        snprintf(acTimeStr, sizeof(acTimeStr), "date %02d%02d%02d%02d%4d.%02d", month, day, hour, second,year, minute);
+//        system(acTimeStr);
+//        system("hwclock -w");
+//        qDebug()<<"*******systimeSlot***"<<acTimeStr<<__LINE__<<"hour="<<hour<<"minute="<<minute<<"second="<<second;
         /*系统校时记录日志*/
         memset(&tLogInfo, 0, sizeof(T_LOG_INFO));
         tLogInfo.iLogType = 0;

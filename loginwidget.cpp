@@ -45,6 +45,8 @@ loginWidget::loginWidget(QWidget *parent) :
     ui->username_Edit->setFont(QFont("宋体",20));
     ui->username_Edit->setAlignment(Qt::AlignCenter);
     ui->Passwd_Edit->setEchoMode(QLineEdit::Password);
+    ui->Passwd_Edit->setFocus();
+
 
 }
 
