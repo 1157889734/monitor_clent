@@ -47,8 +47,15 @@ alarmWidget::alarmWidget(QWidget *parent) :
     ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);  //整行选中的方式
     ui->tableWidget->setSelectionMode(QAbstractItemView::SingleSelection); //设置只能选择一行，不能多行选中
     ui->tableWidget->setAlternatingRowColors(true);                        //设置隔一行变一颜色，即：一灰一白
-    ui->tableWidget->horizontalHeader()->resizeSection(0,95); //设置表头第一列的宽度为95
+    ui->tableWidget->horizontalHeader()->resizeSection(0,30); //设置表头第一列的宽度为95
     ui->tableWidget->horizontalHeader()->resizeSection(1,145); //设置表头第二列的宽度为145
+
+
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);    //x先自适应宽度
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);     //然后设置要根据内容使用宽度的列
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);     //然后设置要根据内容使用宽度的列
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(2, QHeaderView::ResizeToContents);     //然后设置要根据内容使用宽度的列
+
 
     connect(ui->closePushButton, SIGNAL(clicked(bool)), this, SLOT(closeButtonClick()));
     connect(ui->closeRPushButton, SIGNAL(clicked(bool)), this, SLOT(closeButtonClick()));

@@ -496,23 +496,22 @@ void devUpdateWidget::getTrainConfig()
 
 
         m_Phandle[i] = STATE_GetNvrServerPmsgHandle(i);
-        if(i == 0)
-        {
-            for (j = 0; j < tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum; j++)
-            {
+//        if(i == 0)
+//        {
+//            for (j = 0; j < tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum; j++)
+//            {
+//                item = "";
+//                item = QString::number(1+j);
+//                item += tr("号摄像机");
+//                ui->cameraSelectionComboBox->addItem(item);
+////                qDebug()<<"DEBUG_UI_NOMAL_PRINT tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum ="<<i<<"=:"<<tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum<<__FUNCTION__<<__LINE__<<endl;
 
+//            }
 
-                item = "";
-                item = QString::number(1+j);
-                item += tr("号摄像机");
-                ui->cameraSelectionComboBox->addItem(item);
-//                qDebug()<<"DEBUG_UI_NOMAL_PRINT tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum ="<<i<<"=:"<<tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum<<__FUNCTION__<<__LINE__<<endl;
-
-            }
-
-        }
+//        }
 
     }
+
 
     for (i = 0; i < ui->trainTypeSetComboBox->count(); i++)
     {
