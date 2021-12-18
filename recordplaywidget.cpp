@@ -117,6 +117,13 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
     m_RealMonitorVideos.pRenderHandle = NULL;
 
 
+    box = new MsgBox(this);
+    box->setWindowModality(Qt::ApplicationModal);
+    box->setStyleSheet("background-color: rgb(51, 153, 223);");
+    box->move(350,300);
+    box->hide();
+
+
     //参数初始化
     m_alarmHappenTimer = NULL;
     m_recorQueryTimer = NULL;
@@ -156,17 +163,6 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
 
     ui->EnddateEdit->setCalendarPopup(true);
     ui->EnddateEdit->setDate(QDate::currentDate());
-
-//    ui->StartdateEdit->dumpObjectTree();
-//    QLineEdit* lEdit = ui->StartdateEdit->findChild<QLineEdit*>();
-//    if(lEdit)
-//        lEdit->setReadOnly(true);
-
-
-//    ui->EnddateEdit->dumpObjectTree();
-//    QLineEdit* lEdit2 = ui->EnddateEdit->findChild<QLineEdit*>();
-//    if(lEdit2)
-//        lEdit2->setReadOnly(true);
 
 
     int value = QTime::currentTime().hour();
@@ -238,6 +234,10 @@ recordPlayWidget::~recordPlayWidget()
 
     free(m_pcRecordFileBuf);
     m_pcRecordFileBuf = NULL;
+
+    delete  box;
+    box = NULL;
+
 
     delete ui;
 }
@@ -434,11 +434,13 @@ void recordPlayWidget::setDownloadProcessBarValueSlot(int iValue)   //设置文�
     {
         FTP_DestoryConnect(m_tFtpHandle[m_iFtpServerIdex]);
         m_tFtpHandle[m_iFtpServerIdex] = 0;
-        QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("下载失败，U盘已被拔出!"));
-        box.setWindowFlags(Qt::FramelessWindowHint);
-        box.setStandardButtons (QMessageBox::Ok);
-        box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
-        box.exec();
+        box->setInfo(QString("提示："),QString("下载失败，U盘已被拔出!"),true);
+        box->show();
+//        QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("下载失败，U盘已被拔出!"));
+//        box.setWindowFlags(Qt::FramelessWindowHint);
+//        box.setStandardButtons (QMessageBox::Ok);
+//        box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
+//        box.exec();
         return;
     }
 
@@ -447,11 +449,14 @@ void recordPlayWidget::setDownloadProcessBarValueSlot(int iValue)   //设置文�
         FTP_DestoryConnect(m_tFtpHandle[m_iFtpServerIdex]);
         m_tFtpHandle[m_iFtpServerIdex] = 0;
 
-        QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("下载失败，U盘写入失败!"));
-        box.setWindowFlags(Qt::FramelessWindowHint);
-        box.setStandardButtons (QMessageBox::Ok);
-        box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
-        box.exec();
+        box->setInfo(QString("提示："),QString("下载失败，U盘写入失败!"),true);
+        box->show();
+
+//        QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("下载失败，U盘写入失败!"));
+//        box.setWindowFlags(Qt::FramelessWindowHint);
+//        box.setStandardButtons (QMessageBox::Ok);
+//        box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
+//        box.exec();
         return;
     }
 
@@ -460,11 +465,14 @@ void recordPlayWidget::setDownloadProcessBarValueSlot(int iValue)   //设置文�
         FTP_DestoryConnect2(m_tFtpHandle[m_iFtpServerIdex]);
         m_tFtpHandle[m_iFtpServerIdex] = 0;
 
-        QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("下载失败，数据接收失败!"));
-        box.setWindowFlags(Qt::FramelessWindowHint);
-        box.setStandardButtons (QMessageBox::Ok);
-        box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
-        box.exec();
+        box->setInfo(QString("提示："),QString("下载失败，数据接收失败!"),true);
+        box->show();
+
+//        QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("下载失败，数据接收失败!"));
+//        box.setWindowFlags(Qt::FramelessWindowHint);
+//        box.setStandardButtons (QMessageBox::Ok);
+//        box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
+//        box.exec();
         return;
     }
 
@@ -522,7 +530,7 @@ void recordPlayWidget::recordTableWidgetFillFunc()
         hLayout->setAlignment(checkBox, Qt::AlignCenter); //居中
         checkWidget->setLayout(hLayout); //设置widget的布局
 
-        checkBox->setStyleSheet(QString(".QCheckBox {margin:3px;border:3px;}QCheckBox::indicator {width: %1px; height: %1px; }").arg(30));
+        checkBox->setStyleSheet(QString("QCheckBox {margin:3px;border:3px; border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid}QCheckBox::indicator {width: %1px; height: %1px;}").arg(30));
         ui->recordFileTableWidget->setCellWidget(iParseIdex-1, 0, checkWidget);
 
 
@@ -712,12 +720,15 @@ void recordPlayWidget::recordQueryEndSlot()
                 m_recorQueryTimer = NULL;
             }
 
+            box->setInfo(QString("提示："),QString("未查询到录像数据!"),true);
+            box->show();
+
 //            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "[%s-%d] recordQuery fail!\n",__FUNCTION__, __LINE__);
-            QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("未查询到录像数据!"));
-            box.setWindowFlags(Qt::FramelessWindowHint);
-            box.setStandardButtons (QMessageBox::Ok);
-            box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
-            box.exec();
+//            QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("未查询到录像数据!"));
+//            box.setWindowFlags(Qt::FramelessWindowHint);
+//            box.setStandardButtons (QMessageBox::Ok);
+//            box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
+//            box.exec();
         }
     }
 
@@ -740,11 +751,14 @@ void recordPlayWidget::recordDownloadSlot()
     if (!strcmp(acUserType, "operator"))   //操作员不能下载
     {
 //        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget this user type has no right to download record file!\n");
-        QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("该用户没有下载权限!"));
-        box.setWindowFlags(Qt::FramelessWindowHint);
-        box.setStandardButtons (QMessageBox::Ok);
-        box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
-        box.exec();
+//        QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("该用户没有下载权限!"));
+//        box.setWindowFlags(Qt::FramelessWindowHint);
+//        box.setStandardButtons (QMessageBox::Ok);
+//        box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
+//        box.exec();
+        box->setInfo(QString("提示："),QString("该用户没有下载权限!"),true);
+        box->show();
+
         return;
     }
 
@@ -770,22 +784,26 @@ void recordPlayWidget::recordDownloadSlot()
         if (row == ui->recordFileTableWidget->rowCount())
         {
 //            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget not select record file to download!\n");
-            QMessageBox msgBox(QMessageBox::Question,QString(tr("注意")),QString(tr("请选择您要下载的录像文件")));
-            msgBox.setWindowFlags(Qt::FramelessWindowHint);
-            msgBox.setStandardButtons(QMessageBox::Yes);
-            msgBox.button(QMessageBox::Yes)->setText("OK");
-            msgBox.exec();
+//            QMessageBox msgBox(QMessageBox::Question,QString(tr("注意")),QString(tr("请选择您要下载的录像文件")));
+//            msgBox.setWindowFlags(Qt::FramelessWindowHint);
+//            msgBox.setStandardButtons(QMessageBox::Yes);
+//            msgBox.button(QMessageBox::Yes)->setText("OK");
+//            msgBox.exec();
+            box->setInfo(QString("提示："),QString("请选择您要下载的录像文件!"),true);
+            box->show();
             return;
         }
 
         if (access("/media/usb0/", F_OK) < 0)
         {
 //            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget not get USB device!\n");
-            QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
-            msgBox.setWindowFlags(Qt::FramelessWindowHint);
-            msgBox.setStandardButtons(QMessageBox::Yes);
-            msgBox.button(QMessageBox::Yes)->setText("OK");
-            msgBox.exec();
+//            QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
+//            msgBox.setWindowFlags(Qt::FramelessWindowHint);
+//            msgBox.setStandardButtons(QMessageBox::Yes);
+//            msgBox.button(QMessageBox::Yes)->setText("OK");
+//            msgBox.exec();
+            box->setInfo(QString("提示："),QString("未检测到U盘,请插入!"),true);
+            box->show();
             return;
         }
         else
@@ -793,11 +811,13 @@ void recordPlayWidget::recordDownloadSlot()
             if (0 == STATE_FindUsbDev())   //这里处理一个特殊情况:U盘拔掉是umount失败，/mnt/usb/u/路径还存在，但是实际U盘是没有再插上的
             {
 //                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget not get USB device!\n");
-                QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
-                msgBox.setWindowFlags(Qt::FramelessWindowHint);
-                msgBox.setStandardButtons(QMessageBox::Yes);
-                msgBox.button(QMessageBox::Yes)->setText("OK");
-                msgBox.exec();
+//                QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
+//                msgBox.setWindowFlags(Qt::FramelessWindowHint);
+//                msgBox.setStandardButtons(QMessageBox::Yes);
+//                msgBox.button(QMessageBox::Yes)->setText("OK");
+//                msgBox.exec();
+                box->setInfo(QString("提示："),QString("未检测到U盘,请插入!"),true);
+                box->show();
                 return;
             }
         }
@@ -827,29 +847,7 @@ void recordPlayWidget::recordDownloadSlot()
 
         for (row = 0; row < ui->recordFileTableWidget->rowCount(); row++)
         {
-#if 0
-            if (ui->recordFileTableWidget->item(row, 0)->checkState() == Qt::Checked)
-            {
-                if (parseFileName(m_acFilePath[row]) != NULL)
-                {
-                    snprintf(acSaveFileName, sizeof(acSaveFileName), "%s%s", "/media/usb0/", parseFileName(m_acFilePath[row]));
-                }
-//                DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] add download file:%s!\n", __FUNCTION__, m_acFilePath[row]);
-                iRet = FTP_AddDownLoadFile(m_tFtpHandle[idex], m_acFilePath[row], acSaveFileName);
-                if (iRet < 0)
-                {
-                    FTP_DestoryConnect(m_tFtpHandle[m_iFtpServerIdex]);
-                    m_tFtpHandle[m_iFtpServerIdex] = 0;
-//                    DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget not get USB device!\n");
-                    QMessageBox msgBox(QMessageBox::Warning,QString(tr("提示")),QString(tr("文件下载失败")));
-                    msgBox.setWindowFlags(Qt::FramelessWindowHint);
-                    msgBox.setStandardButtons(QMessageBox::Yes);
-                    msgBox.button(QMessageBox::Yes)->setText("OK");
-                    msgBox.exec();
-                    return;
-                }
-            }
-#endif
+
             if(QWidget *w = ui->recordFileTableWidget->cellWidget(row,0))
             {
                 QCheckBox *checkBox = (QCheckBox*)(w->children().at(0));
@@ -866,11 +864,13 @@ void recordPlayWidget::recordDownloadSlot()
                         FTP_DestoryConnect(m_tFtpHandle[m_iFtpServerIdex]);
                         m_tFtpHandle[m_iFtpServerIdex] = 0;
     //                    DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget not get USB device!\n");
-                        QMessageBox msgBox(QMessageBox::Warning,QString(tr("提示")),QString(tr("文件下载失败")));
-                        msgBox.setWindowFlags(Qt::FramelessWindowHint);
-                        msgBox.setStandardButtons(QMessageBox::Yes);
-                        msgBox.button(QMessageBox::Yes)->setText("OK");
-                        msgBox.exec();
+//                        QMessageBox msgBox(QMessageBox::Warning,QString(tr("提示")),QString(tr("文件下载失败")));
+//                        msgBox.setWindowFlags(Qt::FramelessWindowHint);
+//                        msgBox.setStandardButtons(QMessageBox::Yes);
+//                        msgBox.button(QMessageBox::Yes)->setText("OK");
+//                        msgBox.exec();
+                        box->setInfo(QString("提示："),QString("文件下载失败!"),true);
+                        box->show();
                         return;
                     }
 
@@ -885,11 +885,13 @@ void recordPlayWidget::recordDownloadSlot()
             FTP_DestoryConnect(m_tFtpHandle[m_iFtpServerIdex]);
             m_tFtpHandle[m_iFtpServerIdex] = 0;
 //            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget record file download failed!\n");
-            QMessageBox msgBox(QMessageBox::Warning,QString(tr("提示")),QString(tr("文件下载失败")));
-            msgBox.setWindowFlags(Qt::FramelessWindowHint);
-            msgBox.setStandardButtons(QMessageBox::Yes);
-            msgBox.button(QMessageBox::Yes)->setText("OK");
-            msgBox.exec();
+//            QMessageBox msgBox(QMessageBox::Warning,QString(tr("提示")),QString(tr("文件下载失败")));
+//            msgBox.setWindowFlags(Qt::FramelessWindowHint);
+//            msgBox.setStandardButtons(QMessageBox::Yes);
+//            msgBox.button(QMessageBox::Yes)->setText("OK");
+//            msgBox.exec();
+            box->setInfo(QString("提示："),QString("文件下载失败!"),true);
+            box->show();
             return;
         }
     }
@@ -941,7 +943,7 @@ void recordPlayWidget::getTrainConfig()    	//获取车型配置文件，初始�
             {
                 item = "";
                 item = QString::number(1+j);
-                item += tr("摄像机");
+                item += tr("号");
                 ui->cameraSelectionComboBox->addItem(item);
 //                qDebug()<<"DEBUG_UI_NOMAL_PRINT tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum ="<<i<<"=:"<<tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum<<__FUNCTION__<<__LINE__<<endl;
 
@@ -1453,11 +1455,6 @@ void recordPlayWidget::recordPlayCtrl(int iRow, int iDex)
         CMP_OpenMediaFile(m_cmpHandle,acRtspAddr, CMP_TCP);
         if(NULL == m_cmpHandle)
         {
-            QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("录像窗口创建失败!"));
-            box.setWindowFlags(Qt::FramelessWindowHint);
-            box.setStandardButtons (QMessageBox::Ok);
-            box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
-            box.exec();
             return;
         }
 
@@ -1467,13 +1464,7 @@ void recordPlayWidget::recordPlayCtrl(int iRow, int iDex)
 
     if(iRet < 0)
     {
-        QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("录像播放失败!"));
-        box.setWindowFlags(Qt::FramelessWindowHint);
-        box.setStandardButtons (QMessageBox::Ok);
-        box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
-        box.exec();
         return;
-
     }
 
     m_iRecordIdex = iRow;

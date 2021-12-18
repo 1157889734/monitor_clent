@@ -401,7 +401,7 @@ public:
 "border-width: 1px;\n"
 "border-style: solid;}\n"
 "QPushButton:pressed\n"
-"{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}"));
+"{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 2px;border-style: solid;}"));
         label_7 = new QLabel(pvmsMonitorWidget);
         label_7->setObjectName(QString::fromUtf8("label_7"));
         label_7->setGeometry(QRect(794, 250, 231, 40));

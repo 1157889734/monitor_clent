@@ -33,6 +33,7 @@ public:
         if (presetPasswdConfirm->objectName().isEmpty())
             presetPasswdConfirm->setObjectName(QString::fromUtf8("presetPasswdConfirm"));
         presetPasswdConfirm->resize(400, 207);
+        presetPasswdConfirm->setFocusPolicy(Qt::StrongFocus);
         confirmPushButton = new QPushButton(presetPasswdConfirm);
         confirmPushButton->setObjectName(QString::fromUtf8("confirmPushButton"));
         confirmPushButton->setGeometry(QRect(80, 140, 99, 27));
@@ -63,7 +64,7 @@ public:
         label_2->setGeometry(QRect(0, 0, 400, 22));
         label_2->setStyleSheet(QString::fromUtf8("background-color: rgb(88, 124, 224);\n"
 "color: rgb(255, 255, 255);"));
-        label_2->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+        label_2->setAlignment(Qt::AlignCenter);
         closePushButton = new QPushButton(presetPasswdConfirm);
         closePushButton->setObjectName(QString::fromUtf8("closePushButton"));
         closePushButton->setGeometry(QRect(374, 0, 23, 20));

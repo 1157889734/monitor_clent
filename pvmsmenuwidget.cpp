@@ -77,6 +77,12 @@ pvmsMenuWidget::pvmsMenuWidget(QWidget *parent) :
     connect(m_devManagePage,SIGNAL(show_hide_Signal(int)),this,SLOT(show_hide_Funtion(int)));
 
 
+    box = new MsgBox(this);
+    box->setWindowModality(Qt::ApplicationModal);
+    box->setStyleSheet("background-color: rgb(51, 153, 223);");
+    box->move(350,300);
+    box->hide();
+
 
 
 
@@ -197,6 +203,10 @@ pvmsMenuWidget::~pvmsMenuWidget()
     {
         delete m_alarmPage;
     }
+
+    delete box;
+    box = NULL;
+
     delete ui;
 
 }
@@ -771,12 +781,14 @@ void pvmsMenuWidget::menuButtonClick()
         if (!strcmp(acUserType, "operator"))   //操作员不能查看此界面
         {
 //            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "pvmsMenu Widget this user type has not this right!\n");
-            QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("该用户没有查看权限!"));
-            box.setWindowFlags(Qt::FramelessWindowHint);
-            box.setStandardButtons (QMessageBox::Ok);
-            box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
-            box.exec();
-            return;
+//            QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("该用户没有查看权限!"));
+//            box.setWindowFlags(Qt::FramelessWindowHint);
+//            box.setStandardButtons (QMessageBox::Ok);
+//            box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
+//            box.exec();
+//            return;
+            box->setInfo(QString("提示："),QString("该用户没有查看权限!"),true);
+            box->show();
         }
         m_pvmsMonitorPage->enableVideoPlay(0);   //禁止受电弓监控页面解码显示
         m_pvmsMonitorPage->m_channelStateLabel->hide();
@@ -829,12 +841,14 @@ void pvmsMenuWidget::menuButtonClick()
         if (!strcmp(acUserType, "operator"))   //操作员不能查看此界面
         {
 //            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "pvmsMenu Widget this user type has not this right!\n");
-            QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("该用户没有查看权限!"));
-            box.setWindowFlags(Qt::FramelessWindowHint);
-            box.setStandardButtons (QMessageBox::Ok);
-            box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
-            box.exec();
-            return;
+//            QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("该用户没有查看权限!"));
+//            box.setWindowFlags(Qt::FramelessWindowHint);
+//            box.setStandardButtons (QMessageBox::Ok);
+//            box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
+//            box.exec();
+//            return;
+            box->setInfo(QString("提示："),QString("该用户没有查看权限!"),true);
+            box->show();
         }
         m_pvmsMonitorPage->enableVideoPlay(0);   //禁止受电弓监控页面解码显示
         m_pvmsMonitorPage->m_channelStateLabel->hide();

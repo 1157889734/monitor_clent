@@ -250,5 +250,6 @@
         <file>monres/35.bmp</file>
         <file>monres/checked.bmp</file>
         <file>monres/unchecked.bmp</file>
+        <file>monres/user.bmp</file>
     </qresource>
 </RCC>

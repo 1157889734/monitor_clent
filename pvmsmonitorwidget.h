@@ -16,6 +16,7 @@
 #include "qplayer.h"
 #include <QPainter>
 #include "alarmwidget.h"
+#include "qmessagedialog.h"
 //#include "libdrm/bo.h"
 //#include "vdec.h"
 
@@ -233,11 +234,12 @@ private:
     QTimer *m_alarmHappenTimer;
     QTimer *m_manualSwitchTimer;
     QTimer *m_temporarySaveTimer;
-//    presetPasswdConfirm *m_presetPasswdConfirmPage;    //预置点密码确认界面
+    presetPasswdConfirm *m_presetPasswdConfirmPage;    //预置点密码确认界面
     QTimer *m_fillLightSwitchTimer;
     QTimer *m_cameraSwitchTimer;
 
     T_WND_INFO                     m_RealMonitorVideos;
+    MsgBox *box;
 
 
 };

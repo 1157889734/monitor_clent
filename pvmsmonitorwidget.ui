@@ -871,7 +871,7 @@ border-color: rgb(255, 255, 255);
 border-width: 1px;
 border-style: solid;}
 QPushButton:pressed
-{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}</string>
+{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 2px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>

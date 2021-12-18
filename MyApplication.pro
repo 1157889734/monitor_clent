@@ -48,6 +48,7 @@ SOURCES += \
     mutex.cpp \
     pvmsmenuwidget.cpp \
     pvmsmonitorwidget.cpp \
+    qmessagedialog.cpp \
     recordplaywidget.cpp \
     inteanalywidget.cpp \
     devmanagewidget.cpp \
@@ -94,6 +95,7 @@ HEADERS += \
     mutex.h \
     pvmsmenuwidget.h \
     pvmsmonitorwidget.h \
+    qmessagedialog.h \
     recordplaywidget.h \
     inteanalywidget.h \
     devmanagewidget.h \
