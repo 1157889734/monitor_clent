@@ -3,7 +3,6 @@
 
 #include <QWidget>
 #include "ckeyboard.h"
-#include "qmessagedialog.h"
 
 namespace Ui {
 class loginWidget;
@@ -40,7 +39,6 @@ private:
     Ui::loginWidget *ui;
     int m_iLoginType;
     CKeyboard *mCkeybord;
-    MsgBox *box;
 
 };
 

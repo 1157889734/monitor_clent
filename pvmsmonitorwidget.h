@@ -16,7 +16,6 @@
 #include "qplayer.h"
 #include <QPainter>
 #include "alarmwidget.h"
-#include "qmessagedialog.h"
 //#include "libdrm/bo.h"
 //#include "vdec.h"
 
@@ -239,7 +238,6 @@ private:
     QTimer *m_cameraSwitchTimer;
 
     T_WND_INFO                     m_RealMonitorVideos;
-    MsgBox *box;
 
 
 };

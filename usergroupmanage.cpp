@@ -58,12 +58,6 @@ usergroupManage::usergroupManage(QWidget *parent) :
     mCkeybord->setGeometry(50,200,924,200);
     mCkeybord->hide();
 
-    box = new MsgBox(this);
-    box->setWindowModality(Qt::ApplicationModal);
-    box->setStyleSheet("background-color: rgb(51, 153, 223);");
-    box->move(350,300);
-    box->hide();
-
     connect(this,SIGNAL(show_hide_Signal(int)),this,SLOT(show_hide_Funtion(int)));
     connect(mCkeybord,SIGNAL(KeyboardPressKeySignal(char)),this,SLOT(KeyboardPressKeySlots(char)));
 
@@ -78,8 +72,6 @@ usergroupManage::~usergroupManage()
     delete mCkeybord;
     mCkeybord = NULL;
 
-    delete  box;
-    box = NULL;
 
     delete ui;
 }
@@ -214,13 +206,12 @@ void usergroupManage::init_datavase()
     }
     else
     {
-        box->setInfo(QString("提示："),QString("打开失败!"),true);
-        box->show();
-//        QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("打开失败!")));
-//        msgBox.setWindowFlags(Qt::FramelessWindowHint);
-//        msgBox.setStandardButtons(QMessageBox::Yes);
-//        msgBox.button(QMessageBox::Yes)->setText("OK");
-//        msgBox.exec();
+
+        static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("打开失败!")));
+        msgBox.setWindowFlags(Qt::FramelessWindowHint);
+        msgBox.setStandardButtons(QMessageBox::Yes);
+        msgBox.button(QMessageBox::Yes)->setText("OK");
+        msgBox.exec();
     }
 
     update_database_function();
@@ -300,13 +291,12 @@ void usergroupManage::on_savepushButton_clicked()
 
     if(ui->passwdlineEdit->text().isEmpty() || ui->surelineEdit->text().isEmpty())
     {
-        box->setInfo(QString("提示："),QString("密码不能为空!"),true);
-        box->show();
-//        QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("密码不能为空!")));
-//        msgBox.setWindowFlags(Qt::FramelessWindowHint);
-//        msgBox.setStandardButtons(QMessageBox::Yes);
-//        msgBox.button(QMessageBox::Yes)->setText("OK");
-//        msgBox.exec();
+
+        static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("密码不能为空!")));
+        msgBox.setWindowFlags(Qt::FramelessWindowHint);
+        msgBox.setStandardButtons(QMessageBox::Yes);
+        msgBox.button(QMessageBox::Yes)->setText("OK");
+        msgBox.exec();
         return;
     }
 
@@ -324,13 +314,12 @@ void usergroupManage::on_savepushButton_clicked()
             {
                if(ui->usernamelineEdit->text().compare(id1)==0)
                 {
-                   box->setInfo(QString("提示："),QString("该用户已存在不允许再次添加!"),true);
-                   box->show();
-//                    QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("该用户已存在不允许再次添加!")));
-//                    msgBox.setWindowFlags(Qt::FramelessWindowHint);
-//                    msgBox.setStandardButtons(QMessageBox::Yes);
-//                    msgBox.button(QMessageBox::Yes)->setText("OK");
-//                    msgBox.exec();
+
+                    static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("该用户已存在不允许再次添加!")));
+                    msgBox.setWindowFlags(Qt::FramelessWindowHint);
+                    msgBox.setStandardButtons(QMessageBox::Yes);
+                    msgBox.button(QMessageBox::Yes)->setText("OK");
+                    msgBox.exec();
                     T2=false;
                     return;
                 }
@@ -344,13 +333,12 @@ void usergroupManage::on_savepushButton_clicked()
 
                if(value_passwd != value_ensure_passwd)
                {
-                   box->setInfo(QString("提示："),QString("两次密码不一致!"),true);
-                   box->show();
-//                   QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("两次密码不一致!")));
-//                   msgBox.setWindowFlags(Qt::FramelessWindowHint);
-//                   msgBox.setStandardButtons(QMessageBox::Yes);
-//                   msgBox.button(QMessageBox::Yes)->setText("OK");
-//                   msgBox.exec();
+
+                   static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("两次密码不一致!")));
+                   msgBox.setWindowFlags(Qt::FramelessWindowHint);
+                   msgBox.setStandardButtons(QMessageBox::Yes);
+                   msgBox.button(QMessageBox::Yes)->setText("OK");
+                   msgBox.exec();
                    return;
                }
                QString sql;
@@ -359,24 +347,22 @@ void usergroupManage::on_savepushButton_clicked()
               bool ok = query.exec(sql);
               if(ok)
               {
-                  box->setInfo(QString("提示："),QString("修改成功"),true);
-                  box->show();
-//                QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("修改成功!")));
-//                msgBox.setWindowFlags(Qt::FramelessWindowHint);
-//                msgBox.setStandardButtons(QMessageBox::Yes);
-//                msgBox.button(QMessageBox::Yes)->setText("OK");
-//                msgBox.exec();
+
+                static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("修改成功!")));
+                msgBox.setWindowFlags(Qt::FramelessWindowHint);
+                msgBox.setStandardButtons(QMessageBox::Yes);
+                msgBox.button(QMessageBox::Yes)->setText("OK");
+                msgBox.exec();
                 g_curTextState = 0;
               }
               else
               {
-                  box->setInfo(QString("提示："),QString("修改失败!"),true);
-                  box->show();
-//                QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("修改失败!")));
-//                msgBox.setWindowFlags(Qt::FramelessWindowHint);
-//                msgBox.setStandardButtons(QMessageBox::Yes);
-//                msgBox.button(QMessageBox::Yes)->setText("OK");
-//                msgBox.exec();
+
+                static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("修改失败!")));
+                msgBox.setWindowFlags(Qt::FramelessWindowHint);
+                msgBox.setStandardButtons(QMessageBox::Yes);
+                msgBox.button(QMessageBox::Yes)->setText("OK");
+                msgBox.exec();
 
               }
               db.close();
@@ -388,13 +374,12 @@ void usergroupManage::on_savepushButton_clicked()
              QString sql;
             if(value_passwd != value_ensure_passwd)
             {
-                box->setInfo(QString("提示："),QString("两次密码不一致!"),true);
-                box->show();
-//                QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("两次密码不一致!")));
-//                msgBox.setWindowFlags(Qt::FramelessWindowHint);
-//                msgBox.setStandardButtons(QMessageBox::Yes);
-//                msgBox.button(QMessageBox::Yes)->setText("OK");
-//                msgBox.exec();
+
+                static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("两次密码不一致!")));
+                msgBox.setWindowFlags(Qt::FramelessWindowHint);
+                msgBox.setStandardButtons(QMessageBox::Yes);
+                msgBox.button(QMessageBox::Yes)->setText("OK");
+                msgBox.exec();
 
                 return;
             }
@@ -419,13 +404,12 @@ void usergroupManage::on_savepushButton_clicked()
                 {
     //                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "userManageWidget this user type has no right to delete user!\n");
 //                    qDebug()<<"userManageWidget this user type has no right to delete user!"<<__FUNCTION__<<__LINE__<<endl;
-//                    QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("没有权限添加此类型成员!"));     //新建消息提示框，提示错误信息
-//                    box.setWindowFlags(Qt::FramelessWindowHint);
-//                    box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
-//                    box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));     //将按钮显示改成"确 定"
-//                    box.exec();
-                    box->setInfo(QString("提示："),QString("没有权限添加此类型成员!"),true);
-                    box->show();
+                    static QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("没有权限添加此类型成员!"));     //新建消息提示框，提示错误信息
+                    box.setWindowFlags(Qt::FramelessWindowHint);
+                    box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
+                    box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));     //将按钮显示改成"确 定"
+                    box.exec();
+
 
                     return;
                 }
@@ -436,26 +420,24 @@ void usergroupManage::on_savepushButton_clicked()
                 {
     //                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "userManageWidget this user type has no right to delete user!\n");
 //                    qDebug()<<"userManageWidget this user type has no right to delete user!"<<__FUNCTION__<<__LINE__<<endl;
-//                    QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("没有权限添加此类型成员!"));     //新建消息提示框，提示错误信息
-//                    box.setWindowFlags(Qt::FramelessWindowHint);
-//                    box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
-//                    box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));     //将按钮显示改成"确 定"
-//                    box.exec();
-                    box->setInfo(QString("提示："),QString("没有权限添加此类型成员!"),true);
-                    box->show();
+                    static QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("没有权限添加此类型成员!"));     //新建消息提示框，提示错误信息
+                    box.setWindowFlags(Qt::FramelessWindowHint);
+                    box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
+                    box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));     //将按钮显示改成"确 定"
+                    box.exec();
+
                     return;
                 }
             }
             else if (!strcmp(acUserType, "operator"))
             {
 //                qDebug()<<"userManageWidget this user type has no right to delete user!"<<__FUNCTION__<<__LINE__<<endl;
-//                QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("没有权力添加成员!"));     //新建消息提示框，提示错误信息
-//                box.setWindowFlags(Qt::FramelessWindowHint);
-//                box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
-//                box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));     //将按钮显示改成"确 定"
-//                box.exec();
-                box->setInfo(QString("提示："),QString("没有权力添加成员!"),true);
-                box->show();
+                static QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("没有权力添加成员!"));     //新建消息提示框，提示错误信息
+                box.setWindowFlags(Qt::FramelessWindowHint);
+                box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
+                box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));     //将按钮显示改成"确 定"
+                box.exec();
+
                 return;
             }
 
@@ -465,23 +447,20 @@ void usergroupManage::on_savepushButton_clicked()
             bool ok = query.exec(sql);
             if(ok)
             {
-//                QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("添加成功!")));
-//                msgBox.setWindowFlags(Qt::FramelessWindowHint);
-//                msgBox.setStandardButtons(QMessageBox::Yes);
-//                msgBox.button(QMessageBox::Yes)->setText("OK");
-//                msgBox.exec();
-                box->setInfo(QString("提示："),QString("添加成功!"),true);
-                box->show();
+                static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("添加成功!")));
+                msgBox.setWindowFlags(Qt::FramelessWindowHint);
+                msgBox.setStandardButtons(QMessageBox::Yes);
+                msgBox.button(QMessageBox::Yes)->setText("OK");
+                msgBox.exec();
+
             }
             else
             {
-//                QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("添加失败!")));
-//                msgBox.setWindowFlags(Qt::FramelessWindowHint);
-//                msgBox.setStandardButtons(QMessageBox::Yes);
-//                msgBox.button(QMessageBox::Yes)->setText("OK");
-//                msgBox.exec();
-                box->setInfo(QString("提示："),QString("添加失败!"),true);
-                box->show();
+                static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("添加失败!")));
+                msgBox.setWindowFlags(Qt::FramelessWindowHint);
+                msgBox.setStandardButtons(QMessageBox::Yes);
+                msgBox.button(QMessageBox::Yes)->setText("OK");
+                msgBox.exec();
 
             }
             addFlag = 0;
@@ -530,13 +509,12 @@ void usergroupManage::on_deletepushButton_clicked()
             {
 //                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "userManageWidget this user type has no right to delete user!\n");
 //                qDebug()<<"userManageWidget this user type has no right to delete user!"<<__FUNCTION__<<__LINE__<<endl;
-//                QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("没有权力删除此类型成员!"));     //新建消息提示框，提示错误信息
-//                box.setWindowFlags(Qt::FramelessWindowHint);
-//                box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
-//                box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));     //将按钮显示改成"确 定"
-//                box.exec();
-                box->setInfo(QString("提示："),QString("没有权力删除此类型成员!"),true);
-                box->show();
+                static QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("没有权力删除此类型成员!"));     //新建消息提示框，提示错误信息
+                box.setWindowFlags(Qt::FramelessWindowHint);
+                box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
+                box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));     //将按钮显示改成"确 定"
+                box.exec();
+
                 return;
             }
         }
@@ -547,13 +525,12 @@ void usergroupManage::on_deletepushButton_clicked()
             {
 //                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "userManageWidget this user type has no right to delete user!\n");
 //                qDebug()<<"userManageWidget this user type has no right to delete user!"<<__FUNCTION__<<__LINE__<<endl;
-//                QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("没有权力删除此类型成员!"));     //新建消息提示框，提示错误信息
-//                box.setWindowFlags(Qt::FramelessWindowHint);
-//                box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
-//                box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));     //将按钮显示改成"确 定"
-//                box.exec();
-                box->setInfo(QString("提示："),QString("没有权力删除此类型成员!"),true);
-                box->show();
+                static QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("没有权力删除此类型成员!"));     //新建消息提示框，提示错误信息
+                box.setWindowFlags(Qt::FramelessWindowHint);
+                box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
+                box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));     //将按钮显示改成"确 定"
+                box.exec();
+
                 return;
             }
         }
@@ -562,13 +539,12 @@ void usergroupManage::on_deletepushButton_clicked()
 //            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "userManageWidget this user type has no right to delete user!\n");
 //            qDebug()<<"userManageWidget this user type has no right to delete user!"<<__FUNCTION__<<__LINE__<<endl;
 
-//            QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("没有权力删除此类型成员!"));
-//            box.setWindowFlags(Qt::FramelessWindowHint);
-//            box.setStandardButtons (QMessageBox::Ok);
-//            box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
-//            box.exec();
-            box->setInfo(QString("提示："),QString("没有权力删除此类型成员!"),true);
-            box->show();
+            static QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("没有权力删除此类型成员!"));
+            box.setWindowFlags(Qt::FramelessWindowHint);
+            box.setStandardButtons (QMessageBox::Ok);
+            box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
+            box.exec();
+
             return;
         }
 
@@ -576,23 +552,21 @@ void usergroupManage::on_deletepushButton_clicked()
         bool ok = query.exec(sql);
         if(ok)
         {
-//            QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("删除成功!")));
-//            msgBox.setWindowFlags(Qt::FramelessWindowHint);
-//            msgBox.setStandardButtons(QMessageBox::Yes);
-//            msgBox.button(QMessageBox::Yes)->setText("OK");
-//            msgBox.exec();
-            box->setInfo(QString("提示："),QString("删除成功!"),true);
-            box->show();
+            static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("删除成功!")));
+            msgBox.setWindowFlags(Qt::FramelessWindowHint);
+            msgBox.setStandardButtons(QMessageBox::Yes);
+            msgBox.button(QMessageBox::Yes)->setText("OK");
+            msgBox.exec();
+
         }
         else
         {
-//            QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("删除失败!")));
-//            msgBox.setWindowFlags(Qt::FramelessWindowHint);
-//            msgBox.setStandardButtons(QMessageBox::Yes);
-//            msgBox.button(QMessageBox::Yes)->setText("OK");
-//            msgBox.exec();
-            box->setInfo(QString("提示："),QString("删除失败!"),true);
-            box->show();
+            static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("删除失败!")));
+            msgBox.setWindowFlags(Qt::FramelessWindowHint);
+            msgBox.setStandardButtons(QMessageBox::Yes);
+            msgBox.button(QMessageBox::Yes)->setText("OK");
+            msgBox.exec();
+
         }
         update_database_function();
 
@@ -602,13 +576,12 @@ void usergroupManage::on_deletepushButton_clicked()
     {
 //        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "userManageWidget not select the user to delete!\n");
 //        qDebug()<<"userManageWidget not select the user to delete!"<<__FUNCTION__<<__LINE__<<endl;
-//        QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("请选择要删除的用户!")));
-//        msgBox.setWindowFlags(Qt::FramelessWindowHint);
-//        msgBox.setStandardButtons(QMessageBox::Yes);
-//        msgBox.button(QMessageBox::Yes)->setText("OK");
-//        msgBox.exec();
-        box->setInfo(QString("提示："),QString("请选择要删除的用户!"),true);
-        box->show();
+        static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("请选择要删除的用户!")));
+        msgBox.setWindowFlags(Qt::FramelessWindowHint);
+        msgBox.setStandardButtons(QMessageBox::Yes);
+        msgBox.button(QMessageBox::Yes)->setText("OK");
+        msgBox.exec();
+
     }
     db.close();
 

@@ -11,7 +11,6 @@
 #include <QTimer>
 #include "rs485serv.h"
 #include "ckeyboard.h"
-#include "qmessagedialog.h"
 
 
 namespace Ui {
@@ -72,7 +71,6 @@ private:
     QTimer *m_Rs485Timer;
     QTimer *m_PmsgTimer;
     CKeyboard *mCkeybord;
-    MsgBox *box;
 
 public slots:
     void showPageSlot();

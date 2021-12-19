@@ -6,7 +6,6 @@
 #include <QTableWidgetItem>
 #include <QTableWidget>
 #include "ckeyboard.h"
-#include "qmessagedialog.h"
 
 namespace Ui {
 class usergroupManage;
@@ -45,7 +44,6 @@ public slots:
 private:
     Ui::usergroupManage *ui;
     CKeyboard *mCkeybord;
-    MsgBox *box;
 
 };
 

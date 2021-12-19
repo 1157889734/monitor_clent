@@ -80,11 +80,6 @@ devManageWidget::devManageWidget(QWidget *parent) :
     ui->alarmPushButton->setFocusPolicy(Qt::NoFocus);
     ui->TrainNumberSetPushButton->setFocusPolicy(Qt::NoFocus);
 
-    box = new MsgBox(this);
-    box->setWindowModality(Qt::ApplicationModal);
-    box->setStyleSheet("background-color: rgb(51, 153, 223);");
-    box->move(350,300);
-    box->hide();
 
     int i = 0, j = 0;
 
@@ -120,8 +115,6 @@ devManageWidget::devManageWidget(QWidget *parent) :
 
 devManageWidget::~devManageWidget()
 {
-    delete  box;
-    box = NULL;
 
     delete ui;
 }
@@ -638,13 +631,13 @@ void devManageWidget::trainNumberChange(QString TrainNumberStr)
         strncpy(acTrainNumber, TrainNumberStr.toLatin1().data(), 7);
         ui->TrainNumberLineEdit->setText(QString(QLatin1String(acTrainNumber)));
 //        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devManageWidget input train number len can't over 7!\n");
-//        QMessageBox box(QMessageBox::Warning,QString::fromUtf8("提示"),QString::fromUtf8("输入的车次字符数不能超过7!"));     //提示框
-//        box.setWindowFlags(Qt::FramelessWindowHint);
-//        box.setStandardButtons (QMessageBox::Ok);
-//        box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
-//        box.exec();
-        box->setInfo(QString("提示："),QString("输入的车次字符数不能超过7!"),true);
-        box->show();
+        static QMessageBox box(QMessageBox::Warning,QString::fromUtf8("提示"),QString::fromUtf8("输入的车次字符数不能超过7!"));     //提示框
+        box.setWindowFlags(Qt::FramelessWindowHint);
+        box.setStandardButtons (QMessageBox::Ok);
+        box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
+        box.exec();
+
+
 
     }
 }

@@ -13,7 +13,6 @@
 
 #include "usergroupmanage.h"
 #include "ckeyboard.h"
-#include "qmessagedialog.h"
 
 
 
@@ -89,7 +88,6 @@ private:
     QString m_saturationText;
     QString m_contrastText;
     usergroupManage *gusergroupManage;
-    MsgBox *box;
 
 
 };

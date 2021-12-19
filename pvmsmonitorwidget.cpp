@@ -298,13 +298,6 @@ pvmsMonitorWidget::pvmsMonitorWidget(QWidget *parent) :
     g_buttonGroup->addButton(ui->presetNoPushButton_8,8);
 
 
-    box = new MsgBox(this);
-    box->setWindowModality(Qt::ApplicationModal);
-    box->setStyleSheet("background-color: rgb(51, 153, 223);");
-    box->move(350,300);
-    box->hide();
-
-
     connect(g_buttonGroup, SIGNAL(buttonClicked(int)), this, SLOT(presetNoGroupButtonClickSlot(int)));     //预置点按钮组按键信号连接响应槽函数
 
 
@@ -526,7 +519,7 @@ void *monitorThread(void *param)     //实时监控线程，对通道轮询、�
             //printf("tFullScreenCurTime=%d,pvmsMonitorPage->m_lastActionTime=%d\n",tFullScreenCurTime,pvmsMonitorPage->m_lastActionTime);
             if (pvmsMonitorPage->isHidden() != 1)   //只有当前处于受电弓监控界面时才做触发全屏处理
             {
-                pvmsMonitorPage->triggerFullScreenSignal();
+//                pvmsMonitorPage->triggerFullScreenSignal();
             }
             pvmsMonitorPage->m_lastActionTime = tFullScreenCurTime;
         }
@@ -938,7 +931,6 @@ void pvmsMonitorWidget::presetSetCtrlSlot()
 
     if (0 == m_iPresetPasswdOkFlag)
     {
-        m_iPresetPasswdOkFlag = 1;
 
         if (NULL == m_presetPasswdConfirmPage)
         {
@@ -954,6 +946,18 @@ void pvmsMonitorWidget::presetSetCtrlSlot()
     {
 //        DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget preset set option ctrl!\n");
 
+        QString  strr = "是否设置预置位信息?";
+        static QMessageBox msgBox(QMessageBox::Question,QString(tr("")),QString(strr));
+        msgBox.setWindowFlags(Qt::FramelessWindowHint);
+        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+        msgBox.button(QMessageBox::Yes)->setText("Yes");
+        msgBox.button(QMessageBox::No)->setText("No");
+        iRet=msgBox.exec();
+        if(iRet != QMessageBox::Yes)
+        {
+            return;
+        }
+
         /*发送调用或设置预置点的消息给服务器，消息内容为3个字节，第一个字节表示控制类型:设置还是调用预置点，第二个字节表示预置点号，第三个字节表示受电弓摄像机位置号*/
         acSendBuf[0] = E_PRESET_SET;
         acSendBuf[1] = m_iSelectPresetNo;
@@ -968,13 +972,7 @@ void pvmsMonitorWidget::presetSetCtrlSlot()
         this->m_tCameraInfo[m_iCameraPlayNo].tPtzOprateTime = s_info.uptime;
         this->m_tCameraInfo[m_iCameraPlayNo].iPresetNo = m_iSelectPresetNo;
 //        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "pvmsMonitorWidget set preserNo %d success!\n", m_iSelectPresetNo);
-//        QMessageBox box(QMessageBox::Information,QString::fromUtf8("注意"),QString::fromUtf8("预置点设置成功!"));
-//        box.setWindowFlags(Qt::FramelessWindowHint);
-//        box.setStandardButtons (QMessageBox::Ok);
-//        box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
-//        box.exec();
-        box->setInfo(QString("提示："),QString("预置点设置成功"),true);
-        box->show();
+
 
     }
 
@@ -986,6 +984,17 @@ void pvmsMonitorWidget::presetGetCtrlSlot()
 
 //      DebugPrint(DEBUG_UI_OPTION_PRINT, "pvmsMonitorWidget preset get button pressed! PresetNo=%d\n", m_iSelectPresetNo);
 
+      QString  strr = "是否调用预置位?";
+      static QMessageBox msgBox(QMessageBox::Question,QString(tr("")),QString(strr));
+      msgBox.setWindowFlags(Qt::FramelessWindowHint);
+      msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+      msgBox.button(QMessageBox::Yes)->setText("Yes");
+      msgBox.button(QMessageBox::No)->setText("No");
+      iRet=msgBox.exec();
+      if(iRet != QMessageBox::Yes)
+      {
+          return;
+      }
 
       /*发送调用或设置预置点的消息给服务器，消息内容为3个字节，第一个字节表示控制类型:设置还是调用预置点，第二个字节表示预置点号，第三个字节表示受电弓摄像机位置号*/
       acSendBuf[0] = E_PRESET_GET;
@@ -1002,13 +1011,6 @@ void pvmsMonitorWidget::presetGetCtrlSlot()
       this->m_tCameraInfo[m_iCameraPlayNo].tPtzOprateTime = s_info.uptime;
       this->m_tCameraInfo[m_iCameraPlayNo].iPresetNo = m_iSelectPresetNo;
 
-//      QMessageBox box(QMessageBox::Information,QString::fromUtf8("注意"),QString::fromUtf8("预置点调用成功!"));
-//      box.setWindowFlags(Qt::FramelessWindowHint);
-//      box.setStandardButtons (QMessageBox::Ok);
-//      box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
-//      box.exec();
-//      box->setInfo(QString("提示："),QString("预置点调用成功"),true);
-//      box->show();
 
 }
 
@@ -1055,27 +1057,19 @@ void pvmsMonitorWidget::temporarySaveBeginSlot()
 //    DebugPrint(DEBUG_UI_OPTION_PRINT, "pvmsMonitorWidget temporarySave button pressed!\n");
 
 //    DebugPrint(DEBUG_UI_MESSAGE_PRINT, "pvmsMonitorWidget temporarySave confirm!\n");
-//    QMessageBox msgBox(QMessageBox::Information,QString(tr("提示")),QString(tr("是否立即保存!")));
-//    msgBox.setWindowFlags(Qt::FramelessWindowHint);
-//    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-//    msgBox.button(QMessageBox::Yes)->setText("Yes");
-//    msgBox.button(QMessageBox::No)->setText("No");
-//    iRet = msgBox.exec();
-//    if(iRet != QMessageBox::Yes)
-//    {
-////        DebugPrint(DEBUG_UI_OPTION_PRINT, "pvmsMonitorWidget temporarySave cancle!\n");
-//        return;
-//    }
-//    DebugPrint(DEBUG_UI_OPTION_PRINT, "pvmsMonitorWidget temporarySave confirm!\n");
-
-
-    box->setInfo(QString("提示："),QString("是否立即保存"),false);
-    box->show();
-
-    if(box->gStatusFlag == 0)
+    static QMessageBox msgBox(QMessageBox::Information,QString(tr("提示")),QString(tr("是否立即保存?")));
+    msgBox.setWindowFlags(Qt::FramelessWindowHint);
+    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    msgBox.button(QMessageBox::Yes)->setText("Yes");
+    msgBox.button(QMessageBox::No)->setText("No");
+    iRet = msgBox.exec();
+    if(iRet != QMessageBox::Yes)
     {
+//        DebugPrint(DEBUG_UI_OPTION_PRINT, "pvmsMonitorWidget temporarySave cancle!\n");
         return;
     }
+//    DebugPrint(DEBUG_UI_OPTION_PRINT, "pvmsMonitorWidget temporarySave confirm!\n");
+
 
     ui->temporarySavePushButton->setStyleSheet("background-image:url(:/monres/saveing.bmp)");
     ui->temporarySavePushButton->setEnabled(false);
@@ -1141,24 +1135,16 @@ void pvmsMonitorWidget::cameraSwitchSlot()
         {
 //            DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget close camera!\n");
             QString  strr = QString("%1%2%3").arg("是否关闭").arg(m_iCameraPlayNo+1).arg("号受电弓摄像机?");
-
-            box->setInfo(QString("提示："),QString(strr),false);
-            box->show();
-
-            if(box->gStatusFlag == 0)
+            static QMessageBox msgBox(QMessageBox::Question,QString(tr("")),QString(strr));
+            msgBox.setWindowFlags(Qt::FramelessWindowHint);
+            msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+            msgBox.button(QMessageBox::Yes)->setText("Yes");
+            msgBox.button(QMessageBox::No)->setText("No");
+            iRet=msgBox.exec();
+            if(iRet != QMessageBox::Yes)
             {
                 return;
             }
-//            QMessageBox msgBox(QMessageBox::Question,QString(tr("")),QString(strr));
-//            msgBox.setWindowFlags(Qt::FramelessWindowHint);
-//            msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-//            msgBox.button(QMessageBox::Yes)->setText("Yes");
-//            msgBox.button(QMessageBox::No)->setText("No");
-//            iRet=msgBox.exec();
-//            if(iRet != QMessageBox::Yes)
-//            {
-//                return;
-//            }
 
 
             emit chStateLabelTextCtrlSignal(0);  //触发让通道状态标签显示文本的信号
@@ -1178,24 +1164,16 @@ void pvmsMonitorWidget::cameraSwitchSlot()
         {
 
             QString  strr = QString("%1%2%3").arg("是否开启").arg(m_iCameraPlayNo+1).arg("号受电弓摄像机?");
-
-            box->setInfo(QString("提示："),QString(strr),false);
-            box->show();
-
-            if(box->gStatusFlag == 0)
+            static QMessageBox msgBox(QMessageBox::Question,QString(tr("")),QString(strr));
+            msgBox.setWindowFlags(Qt::FramelessWindowHint);
+            msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+            msgBox.button(QMessageBox::Yes)->setText("Yes");
+            msgBox.button(QMessageBox::No)->setText("No");
+            iRet=msgBox.exec();
+            if(iRet != QMessageBox::Yes)
             {
                 return;
             }
-//            QMessageBox msgBox(QMessageBox::Question,QString(tr("")),QString(strr));
-//            msgBox.setWindowFlags(Qt::FramelessWindowHint);
-//            msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-//            msgBox.button(QMessageBox::Yes)->setText("Yes");
-//            msgBox.button(QMessageBox::No)->setText("No");
-//            iRet=msgBox.exec();
-//            if(iRet != QMessageBox::Yes)
-//            {
-//                return;
-//            }
 //                DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget open camera!\n");
             emit chStateLabelTextCtrlSignal(1);  //触发让通道状态标签显示文本的信号
             emit camSwitchButtonTextCtrlSignal(0);  //触发让摄像头开关按钮显示文本的信号
@@ -1272,26 +1250,17 @@ void pvmsMonitorWidget::fillLightSwitchSlot()
     /*发送开关补光灯的消息给服务器，消息内容为2个字节，第一个字节表示操作类型:开启还是关闭补光灯，第二个字节表示受电弓摄像机位置号*/
     if (FILLLIGHT_ON == m_tCameraInfo[m_iCameraPlayNo].iFillLightSwitchState)
     {
-        QString  strr = QString("%1%2%3").arg("是否关闭").arg(m_iCameraPlayNo+1).arg("号受电弓摄像机闪光灯?");
-
-        box->setInfo(QString("提示："),QString(strr),false);
-        box->show();
-
-        if(box->gStatusFlag == 0)
+        QString  strr = QString("%1%2%3").arg("关闭").arg(m_iCameraPlayNo+1).arg("号受电弓摄像机闪光灯?");
+        static QMessageBox msgBox(QMessageBox::Question,QString(tr("")),QString(strr));
+        msgBox.setWindowFlags(Qt::FramelessWindowHint);
+        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+        msgBox.button(QMessageBox::Yes)->setText("Yes");
+        msgBox.button(QMessageBox::No)->setText("No");
+        iRet=msgBox.exec();
+        if(iRet != QMessageBox::Yes)
         {
             return;
         }
-
-//        QMessageBox msgBox(QMessageBox::Question,QString(tr("")),QString(strr));
-//        msgBox.setWindowFlags(Qt::FramelessWindowHint);
-//        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-//        msgBox.button(QMessageBox::Yes)->setText("Yes");
-//        msgBox.button(QMessageBox::No)->setText("No");
-//        iRet=msgBox.exec();
-//        if(iRet != QMessageBox::Yes)
-//        {
-//            return;
-//        }
 
 
 //        DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget close fillLight!\n");
@@ -1302,25 +1271,17 @@ void pvmsMonitorWidget::fillLightSwitchSlot()
     }
     else
     {
-        QString  strr = QString("%1%2%3").arg("是否开启").arg(m_iCameraPlayNo+1).arg("号受电弓摄像机闪光灯?");
-
-        box->setInfo(QString("提示："),QString(strr),false);
-        box->show();
-
-        if(box->gStatusFlag == 0)
+        QString  strr = QString("%1%2%3").arg("开启").arg(m_iCameraPlayNo+1).arg("号受电弓摄像机闪光灯?");
+        static QMessageBox msgBox(QMessageBox::Question,QString(tr("")),QString(strr));
+        msgBox.setWindowFlags(Qt::FramelessWindowHint);
+        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+        msgBox.button(QMessageBox::Yes)->setText("Yes");
+        msgBox.button(QMessageBox::No)->setText("No");
+        iRet=msgBox.exec();
+        if(iRet != QMessageBox::Yes)
         {
             return;
         }
-//        QMessageBox msgBox(QMessageBox::Question,QString(tr("")),QString(strr));
-//        msgBox.setWindowFlags(Qt::FramelessWindowHint);
-//        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-//        msgBox.button(QMessageBox::Yes)->setText("Yes");
-//        msgBox.button(QMessageBox::No)->setText("No");
-//        iRet=msgBox.exec();
-//        if(iRet != QMessageBox::Yes)
-//        {
-//            return;
-//        }
 
 //        DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget open fillLight!\n");
         emit fillLightSwitchButtonTextCtrlSignal(0);  //触发让补光灯开关按钮显示文本的信号
@@ -1402,6 +1363,7 @@ void pvmsMonitorWidget::closePresetPasswdPageSlot()    //关闭预置点密码�
 }
 void pvmsMonitorWidget::setPresetSlot()
 {
+    m_iPresetPasswdOkFlag = 1;
 
     if(NULL==this->m_presetPasswdConfirmPage)
     {
@@ -2749,8 +2711,6 @@ pvmsMonitorWidget::~pvmsMonitorWidget()
     delete m_playWin;
     m_playWin = NULL;
 
-    delete  box;
-    box = NULL;
 
 
     delete ui;

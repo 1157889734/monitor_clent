@@ -3,7 +3,6 @@
 
 #include <QWidget>
 #include "ckeyboard.h"
-#include "qmessagedialog.h"
 
 namespace Ui {
 class presetPasswdConfirm;
@@ -33,7 +32,6 @@ signals:
 private:
     Ui::presetPasswdConfirm *ui;
     CKeyboard *mCkeybord;
-    MsgBox *box;
 
 };
 

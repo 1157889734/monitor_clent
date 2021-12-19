@@ -16,7 +16,6 @@
 #include <QMediaPlayer>
 #include "qplayer.h"
 #include "ftpApi.h"
-#include "qmessagedialog.h"
 
 
 #define MAX_RECORD_SEACH_NUM 10000
@@ -135,7 +134,6 @@ private:
     int m_iRecordIdex;
     QTimer *m_recordTabelWidgetFillTimer;
     T_WND_INFO                     m_RealMonitorVideos;
-    MsgBox *box;
 
 
 };

@@ -7,7 +7,6 @@
 #include "pmsgcli.h"
 #include "usergroupmanage.h"
 #include "ckeyboard.h"
-#include "qmessagedialog.h"
 namespace Ui {
 class devManageWidget;
 }
@@ -63,7 +62,6 @@ private:
     int m_iNoCheckDiskErrNum[MAX_SERVER_NUM];   //不检测服务器硬盘错误计数，每10秒加1
     QString m_TrainNumEditSave;
     void getTrainConfig();     //获取车型配置信息
-    MsgBox *box;
 
 
 };
