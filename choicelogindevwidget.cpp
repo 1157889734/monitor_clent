@@ -2,6 +2,7 @@
 #include "ui_choicelogindevwidget.h"
 #include "loginwidget.h"
 #include "state.h"
+#include "debug.h"
 
 choiceLoginDevWidget::choiceLoginDevWidget(QWidget *parent) :
     QWidget(parent),
@@ -30,7 +31,7 @@ choiceLoginDevWidget::choiceLoginDevWidget(QWidget *parent) :
     STATE_GetSysVersion(acVersion, sizeof(acVersion));
     if (strlen(acVersion) != 0)
     {
-//        DebugPrint(DEBUG_UI_NOMAL_PRINT, "ui app version:%s!\n",acVersion);
+        DebugPrint(DEBUG_UI_NOMAL_PRINT, "ui app version:%s!\n",acVersion);
         ui->versionLabel->setText(QString(QLatin1String(acVersion)));
     }
 

@@ -530,32 +530,6 @@ QPushButton:pressed
     <string/>
    </property>
   </widget>
-  <widget class="QLabel" name="label_15">
-   <property name="geometry">
-    <rect>
-     <x>190</x>
-     <y>92</y>
-     <width>41</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>时间</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>190</x>
-     <y>55</y>
-     <width>31</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>时间</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="alarmPushButton">
    <property name="geometry">
     <rect>
@@ -629,304 +603,86 @@ QPushButton:pressed
     <string/>
    </property>
   </widget>
-  <widget class="QComboBox" name="StartcomboBox">
-   <property name="geometry">
-    <rect>
-     <x>225</x>
-     <y>50</y>
-     <width>71</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <item>
-    <property name="text">
-     <string>0时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>1时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>2时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>3时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>4时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>5时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>6时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>7时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>8时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>9时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>10时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>11时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>12时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>13时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>14时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>15时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>16时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>17时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>18时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>19时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>20时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>21时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>22时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>23时</string>
-    </property>
-   </item>
-  </widget>
-  <widget class="QComboBox" name="EndcomboBox">
-   <property name="geometry">
-    <rect>
-     <x>225</x>
-     <y>90</y>
-     <width>71</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <item>
-    <property name="text">
-     <string>0时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>1时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>2时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>3时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>4时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>5时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>6时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>7时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>8时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>9时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>10时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>11时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>12时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>13时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>14时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>15时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>16时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>17时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>18时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>19时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>20时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>21时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>22时</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>23时</string>
-    </property>
-   </item>
-  </widget>
-  <widget class="QDateEdit" name="StartdateEdit">
-   <property name="geometry">
-    <rect>
-     <x>80</x>
-     <y>50</y>
-     <width>101</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="displayFormat">
-    <string>yyyy-MM-dd</string>
-   </property>
-   <property name="date">
-    <date>
-     <year>2020</year>
-     <month>1</month>
-     <day>1</day>
-    </date>
-   </property>
-  </widget>
-  <widget class="QDateEdit" name="EnddateEdit">
+  <widget class="QLabel" name="endTimeLabel">
    <property name="geometry">
     <rect>
      <x>80</x>
      <y>90</y>
-     <width>101</width>
-     <height>31</height>
+     <width>181</width>
+     <height>27</height>
     </rect>
    </property>
-   <property name="displayFormat">
-    <string>yyyy-MM-dd</string>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
    </property>
-   <property name="date">
-    <date>
-     <year>2020</year>
-     <month>1</month>
-     <day>1</day>
-    </date>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);
+border-color: rgb(0, 0, 0);
+border-width: 1px;
+border-style: solid;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="startTimeSetPushButton">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>52</y>
+     <width>21</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-image: url(:/res/time_set.png);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="startTimeSetPushButton_2">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>92</y>
+     <width>21</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-image: url(:/res/time_set.png);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="startTimeLabel">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>50</y>
+     <width>181</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);
+border-color: rgb(0, 0, 0);
+border-width: 1px;
+border-style: solid;</string>
+   </property>
+   <property name="text">
+    <string/>
    </property>
   </widget>
   <zorder>label_11</zorder>
@@ -947,15 +703,13 @@ QPushButton:pressed
   <zorder>comboBox_3</zorder>
   <zorder>pushButton_8</zorder>
   <zorder>recordFileTableWidget</zorder>
-  <zorder>label_15</zorder>
-  <zorder>label</zorder>
   <zorder>alarmPushButton</zorder>
   <zorder>canselPushButton</zorder>
   <zorder>pushButton_16</zorder>
-  <zorder>StartcomboBox</zorder>
-  <zorder>EndcomboBox</zorder>
-  <zorder>StartdateEdit</zorder>
-  <zorder>EnddateEdit</zorder>
+  <zorder>endTimeLabel</zorder>
+  <zorder>startTimeSetPushButton</zorder>
+  <zorder>startTimeSetPushButton_2</zorder>
+  <zorder>startTimeLabel</zorder>
  </widget>
  <resources/>
  <connections/>

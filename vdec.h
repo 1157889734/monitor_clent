@@ -4,7 +4,7 @@
 
 #include "mutex.h"
 #include "types.h"
-#include "debugout/debug.h"
+#include "debug.h"
 
 #define H264_CODE 0
 #define H265_CODE 1

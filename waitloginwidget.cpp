@@ -77,13 +77,13 @@ waitLoginWidget::waitLoginWidget(QWidget *parent) :
     int iRet = pthread_create(&m_threadId, NULL, pageCountDownBrushThread, (void *)this);    //启动页面倒计时刷新线程，得到线程ID
     if (iRet != 0)
     {
-//        DebugPrint(DEBUG_UI_ERROR_PRINT, "create pageCountDownBrush thread error\n");
+        DebugPrint(DEBUG_UI_ERROR_PRINT, "create pageCountDownBrush thread error\n");
     }
 
     STATE_GetSysVersion(acVersion, sizeof(acVersion));
     if (strlen(acVersion) != 0)
     {
-//        DebugPrint(DEBUG_UI_NOMAL_PRINT, "ui app version:%s!\n",acVersion);
+        DebugPrint(DEBUG_UI_NOMAL_PRINT, "ui app version:%s!\n",acVersion);
         ui->versionLabel->setText(QString(QLatin1String(acVersion)));
     }
 
@@ -126,7 +126,7 @@ void waitLoginWidget::setCountDownValueSlot(QString timeStr)
 
 void waitLoginWidget::okButtonClickSlot()
 {
-//    DebugPrint(DEBUG_UI_OPTION_PRINT, "waitingLogin Widget okButton pressed!\n");
+    DebugPrint(DEBUG_UI_OPTION_PRINT, "waitingLogin Widget okButton pressed!\n");
     m_iThreadRunFlag = 0;
     pageRedirect();
 }

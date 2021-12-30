@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_devUpdateWidget_t {
-    QByteArrayData data[36];
-    char stringdata0[609];
+    QByteArrayData data[42];
+    char stringdata0[647];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -56,18 +56,24 @@ QT_MOC_LITERAL(20, 329, 11), // "iComboBoxId"
 QT_MOC_LITERAL(21, 341, 30), // "lineEditpresetReturnTimeChange"
 QT_MOC_LITERAL(22, 372, 17), // "pollingTimeChange"
 QT_MOC_LITERAL(23, 390, 25), // "lineEditpollingTimeChange"
-QT_MOC_LITERAL(24, 416, 11), // "showSysTime"
-QT_MOC_LITERAL(25, 428, 14), // "monitorSysTime"
-QT_MOC_LITERAL(26, 443, 11), // "systimeSlot"
-QT_MOC_LITERAL(27, 455, 20), // "registOutButtonClick"
-QT_MOC_LITERAL(28, 476, 21), // "closeUserManageWidget"
-QT_MOC_LITERAL(29, 498, 23), // "setCameraImageParamSlot"
-QT_MOC_LITERAL(30, 522, 15), // "carNoChangeSlot"
-QT_MOC_LITERAL(31, 538, 12), // "setTrainType"
-QT_MOC_LITERAL(32, 551, 13), // "setPisSetting"
-QT_MOC_LITERAL(33, 565, 17), // "setTimeSignalCtrl"
-QT_MOC_LITERAL(34, 583, 21), // "KeyboardPressKeySlots"
-QT_MOC_LITERAL(35, 605, 3) // "key"
+QT_MOC_LITERAL(24, 416, 11), // "systimeSlot"
+QT_MOC_LITERAL(25, 428, 20), // "registOutButtonClick"
+QT_MOC_LITERAL(26, 449, 21), // "closeUserManageWidget"
+QT_MOC_LITERAL(27, 471, 23), // "setCameraImageParamSlot"
+QT_MOC_LITERAL(28, 495, 15), // "carNoChangeSlot"
+QT_MOC_LITERAL(29, 511, 12), // "setTrainType"
+QT_MOC_LITERAL(30, 524, 13), // "setPisSetting"
+QT_MOC_LITERAL(31, 538, 17), // "setTimeSignalCtrl"
+QT_MOC_LITERAL(32, 556, 21), // "KeyboardPressKeySlots"
+QT_MOC_LITERAL(33, 578, 3), // "key"
+QT_MOC_LITERAL(34, 582, 14), // "timeSetRecvMsg"
+QT_MOC_LITERAL(35, 597, 4), // "year"
+QT_MOC_LITERAL(36, 602, 5), // "month"
+QT_MOC_LITERAL(37, 608, 3), // "day"
+QT_MOC_LITERAL(38, 612, 4), // "hour"
+QT_MOC_LITERAL(39, 617, 3), // "min"
+QT_MOC_LITERAL(40, 621, 3), // "sec"
+QT_MOC_LITERAL(41, 625, 21) // "openTimeSetWidgetSlot"
 
     },
     "devUpdateWidget\0alarmPushButoonClickSignal\0"
@@ -81,11 +87,12 @@ QT_MOC_LITERAL(35, 605, 3) // "key"
     "presetReturnTimeChange\0iComboBoxId\0"
     "lineEditpresetReturnTimeChange\0"
     "pollingTimeChange\0lineEditpollingTimeChange\0"
-    "showSysTime\0monitorSysTime\0systimeSlot\0"
-    "registOutButtonClick\0closeUserManageWidget\0"
-    "setCameraImageParamSlot\0carNoChangeSlot\0"
-    "setTrainType\0setPisSetting\0setTimeSignalCtrl\0"
-    "KeyboardPressKeySlots\0key"
+    "systimeSlot\0registOutButtonClick\0"
+    "closeUserManageWidget\0setCameraImageParamSlot\0"
+    "carNoChangeSlot\0setTrainType\0setPisSetting\0"
+    "setTimeSignalCtrl\0KeyboardPressKeySlots\0"
+    "key\0timeSetRecvMsg\0year\0month\0day\0"
+    "hour\0min\0sec\0openTimeSetWidgetSlot"
 };
 #undef QT_MOC_LITERAL
 
@@ -132,9 +139,9 @@ static const uint qt_meta_data_devUpdateWidget[] = {
       29,    0,  200,    2, 0x0a /* Public */,
       30,    0,  201,    2, 0x0a /* Public */,
       31,    0,  202,    2, 0x0a /* Public */,
-      32,    0,  203,    2, 0x0a /* Public */,
-      33,    0,  204,    2, 0x0a /* Public */,
-      34,    1,  205,    2, 0x0a /* Public */,
+      32,    1,  203,    2, 0x0a /* Public */,
+      34,    6,  206,    2, 0x0a /* Public */,
+      41,    0,  219,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -166,9 +173,9 @@ static const uint qt_meta_data_devUpdateWidget[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::Char,   33,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString,   35,   36,   37,   38,   39,   40,
     QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void, QMetaType::Char,   35,
 
        0        // eod
 };
@@ -198,17 +205,17 @@ void devUpdateWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 16: _t->lineEditpresetReturnTimeChange((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 17: _t->pollingTimeChange((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 18: _t->lineEditpollingTimeChange((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 19: _t->showSysTime(); break;
-        case 20: _t->monitorSysTime(); break;
-        case 21: _t->systimeSlot(); break;
-        case 22: _t->registOutButtonClick(); break;
-        case 23: _t->closeUserManageWidget(); break;
-        case 24: _t->setCameraImageParamSlot(); break;
-        case 25: _t->carNoChangeSlot(); break;
-        case 26: _t->setTrainType(); break;
-        case 27: _t->setPisSetting(); break;
-        case 28: _t->setTimeSignalCtrl(); break;
-        case 29: _t->KeyboardPressKeySlots((*reinterpret_cast< char(*)>(_a[1]))); break;
+        case 19: _t->systimeSlot(); break;
+        case 20: _t->registOutButtonClick(); break;
+        case 21: _t->closeUserManageWidget(); break;
+        case 22: _t->setCameraImageParamSlot(); break;
+        case 23: _t->carNoChangeSlot(); break;
+        case 24: _t->setTrainType(); break;
+        case 25: _t->setPisSetting(); break;
+        case 26: _t->setTimeSignalCtrl(); break;
+        case 27: _t->KeyboardPressKeySlots((*reinterpret_cast< char(*)>(_a[1]))); break;
+        case 28: _t->timeSetRecvMsg((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3])),(*reinterpret_cast< QString(*)>(_a[4])),(*reinterpret_cast< QString(*)>(_a[5])),(*reinterpret_cast< QString(*)>(_a[6]))); break;
+        case 29: _t->openTimeSetWidgetSlot(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {

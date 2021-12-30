@@ -6,6 +6,7 @@
 #include "QtSql/QSqlError"
 #include "QSqlQuery"
 #include "state.h"
+#include "debug.h"
 
 
 
@@ -135,7 +136,7 @@ void loginWidget::okButtonSlot()
     QString urname,pwd,type;
     QSqlDatabase database;
 
-//    DebugPrint(DEBUG_UI_OPTION_PRINT, "login Widget okButton pressed!\n");
+    DebugPrint(DEBUG_UI_OPTION_PRINT, "login Widget okButton pressed!\n");
 
     /*是否已经存在一个默认的数据库连接，如果存在则通过database方法获取，不存在则通过addDatabase创建一个新的数据库连接*/
     if(QSqlDatabase::contains("qt_sql_default_connection"))
@@ -151,7 +152,7 @@ void loginWidget::okButtonSlot()
     //打开数据库
     if(!database.open())
     {
-//        DebugPrint(DEBUG_UI_ERROR_PRINT, "loginWidget database open error!\n");
+        DebugPrint(DEBUG_UI_ERROR_PRINT, "loginWidget database open error!\n");
     }
 
     //QSqlQuery类提供执行和操作的SQL语句的方法。
@@ -164,7 +165,7 @@ void loginWidget::okButtonSlot()
         select_sql = "select passwd from tab where username='admin'";   //检测数据库中是否存在admin用户
         if(!sql_query.exec(select_sql))    //执行SQL语句
         {
-//            DebugPrint(DEBUG_UI_ERROR_PRINT, "loginWidget database select error!\n");
+            DebugPrint(DEBUG_UI_ERROR_PRINT, "loginWidget database select error!\n");
             qDebug()<<"loginWidget database select error"<<__FUNCTION__<<__LINE__<<endl;
         }
         else
@@ -187,7 +188,7 @@ void loginWidget::okButtonSlot()
             }
             else
             {
-//                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "loginWidget username or passwd input not match!\n");
+                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "loginWidget username or passwd input not match!\n");
 
                 static QMessageBox box(QMessageBox::Warning,tr("信息有误"),tr("用户名或密码错误!"));     //新建消息提示框，提示错误信息
                 box.setWindowFlags(Qt::FramelessWindowHint);
@@ -202,7 +203,7 @@ void loginWidget::okButtonSlot()
         {
             if (ui->Passwd_Edit->text() != pwd)
             {
-//                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "loginWidget username or passwd input not match!\n");
+                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "loginWidget username or passwd input not match!\n");
 
                 static QMessageBox box(QMessageBox::Warning,tr("信息有误"),tr("用户名或密码错误!"));     //新建消息提示框，提示错误信息
                 box.setWindowFlags(Qt::FramelessWindowHint);
@@ -224,7 +225,7 @@ void loginWidget::okButtonSlot()
         QString select_sql = "select username, passwd, power from tab";    //查询数据库中所有的用户名、密码和用户类型记录
         if(!sql_query.exec(select_sql))    //执行SQL语句
         {
-//            DebugPrint(DEBUG_UI_ERROR_PRINT, "loginWidget database select error!\n");
+            DebugPrint(DEBUG_UI_ERROR_PRINT, "loginWidget database select error!\n");
         }
         else
         {
@@ -246,7 +247,7 @@ void loginWidget::okButtonSlot()
 
 
 
-//        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "loginWidget username or passwd input not match!\n");
+        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "loginWidget username or passwd input not match!\n");
         static QMessageBox box(QMessageBox::Warning,tr("信息有误"),tr("用户名或密码错误!"));     //新建消息提示框，提示错误信息
         box.setWindowFlags(Qt::FramelessWindowHint);
         box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮

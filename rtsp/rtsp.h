@@ -1,7 +1,7 @@
 #ifndef __RTSP_H_
 #define __RTSP_H_
 
-#include "../debugout/debug.h"
+#include "../debug.h"
 #include "mutex.h"
 #include "types.h"
 #include "rtspComm.h"

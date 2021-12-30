@@ -101,9 +101,9 @@ int DestroyRs485Queue(PT_RS485_QUEUE ptRs485Queue)
     {
         ptTmp = ptPktList;
         ptPktList = ptPktList->next;
-//        DebugPrint(DEBUG_ERROR_PRINT, "%s %s:%d\n",__FILE__,__FUNCTION__,__LINE__);
+        DebugPrint(DEBUG_ERROR_PRINT, "%s %s:%d\n",__FILE__,__FUNCTION__,__LINE__);
         free(ptTmp);
-//        DebugPrint(DEBUG_ERROR_PRINT, "%s %s:%d\n",__FILE__,__FUNCTION__,__LINE__);
+        DebugPrint(DEBUG_ERROR_PRINT, "%s %s:%d\n",__FILE__,__FUNCTION__,__LINE__);
     }
 
     ptRs485Queue->ptLast = NULL;
@@ -115,11 +115,11 @@ int DestroyRs485Queue(PT_RS485_QUEUE ptRs485Queue)
         pthread_mutex_unlock(ptRs485Queue->pMutex);
     }
 
-//    DebugPrint(DEBUG_ERROR_PRINT, "%s %s:%d\n",__FILE__,__FUNCTION__,__LINE__);
+    DebugPrint(DEBUG_ERROR_PRINT, "%s %s:%d\n",__FILE__,__FUNCTION__,__LINE__);
     free(ptRs485Queue);
-//    DebugPrint(DEBUG_ERROR_PRINT, "%s %s:%d\n",__FILE__,__FUNCTION__,__LINE__);
+    DebugPrint(DEBUG_ERROR_PRINT, "%s %s:%d\n",__FILE__,__FUNCTION__,__LINE__);
     ptRs485Queue = NULL;
-//    DebugPrint(DEBUG_ERROR_PRINT, "%s %s:%d\n",__FILE__,__FUNCTION__,__LINE__);
+    DebugPrint(DEBUG_ERROR_PRINT, "%s %s:%d\n",__FILE__,__FUNCTION__,__LINE__);
 
     return 0;
 }
@@ -384,12 +384,12 @@ void *Rs485ProcessThread(void *arg)
 		{
             if (iPos > 0)	
             {
-//                DebugPrint(DEBUG_RS485_DATA_PRINT, "uart data len %d", iPos);
+                DebugPrint(DEBUG_RS485_DATA_PRINT, "uart data len %d", iPos);
                 if (iPos > 3)
                 {
-//                    DebugPrint(DEBUG_RS485_DATA_PRINT, "%x %x %x", pcRecvBuf[0], pcRecvBuf[1], pcRecvBuf[2]);
+                    DebugPrint(DEBUG_RS485_DATA_PRINT, "%x %x %x", pcRecvBuf[0], pcRecvBuf[1], pcRecvBuf[2]);
                 }
-                if ((0xFF == pcRecvBuf[0]) && (0xFF == pcRecvBuf[1]) && (0x1A == pcRecvBuf[2]) && (iPos >= 29))
+                if ((0xFF == pcRecvBuf[0])/* && (0xFF == pcRecvBuf[1])*/ && (0x1A == pcRecvBuf[2]) && (iPos >= 29))
                 {
                     short sSpeed = 0;
                     short sYear = 0;
@@ -411,30 +411,31 @@ void *Rs485ProcessThread(void *arg)
                     T_RS485_PISMSG_INFO *ptPisInfo = NULL;
                     struct tm *tvTimeValue;
                     time_t uiTime = 0;
-                        
+
+
                     for (i = 0; i < 2; i++)
                     {
-//                        DebugPrint(DEBUG_RS485_DATA_PRINT,  "%x %x %x %x %x %x %x %x %x %x %x %x %x %x ", pcRecvBuf[i*14], pcRecvBuf[i*14 + 1], pcRecvBuf[i*14 + 2],
-//                                       pcRecvBuf[i*14 + 3], pcRecvBuf[i*14 + 4], pcRecvBuf[i*14 + 5], pcRecvBuf[i*14 + 6],
-//                                       pcRecvBuf[i*14 + 7], pcRecvBuf[i*14 + 8], pcRecvBuf[i*14 + 9], pcRecvBuf[i*14 + 10],
-//                                       pcRecvBuf[i*14 + 11], pcRecvBuf[i*14 + 12], pcRecvBuf[i*14 + 13]);
+                        DebugPrint(DEBUG_RS485_DATA_PRINT,  "%x %x %x %x %x %x %x %x %x %x %x %x %x %x ", pcRecvBuf[i*14], pcRecvBuf[i*14 + 1], pcRecvBuf[i*14 + 2],
+                                       pcRecvBuf[i*14 + 3], pcRecvBuf[i*14 + 4], pcRecvBuf[i*14 + 5], pcRecvBuf[i*14 + 6],
+                                       pcRecvBuf[i*14 + 7], pcRecvBuf[i*14 + 8], pcRecvBuf[i*14 + 9], pcRecvBuf[i*14 + 10],
+                                       pcRecvBuf[i*14 + 11], pcRecvBuf[i*14 + 12], pcRecvBuf[i*14 + 13]);
                     }
                     // check ecc
                     for (i = 2; i < 28; i++)
                     {
-                        cEcc += pcRecvBuf[i];	
+                        cEcc += pcRecvBuf[i];
                     }
                     if (cEcc != pcRecvBuf[28])
                     {
                         iPos = 0;
-//                        DebugPrint(DEBUG_RS485_DATA_PRINT, "ecc data %x, ecc %x", pcRecvBuf[28], cEcc);
+                        DebugPrint(DEBUG_RS485_DATA_PRINT, "ecc data %x, ecc %x", pcRecvBuf[28], cEcc);
                         continue;
                     }
                     
-                    //DebugPrint(DEBUG_LEVEL_3, "recv pisdata");
+                    DebugPrint(DEBUG_LEVEL_3, "recv pisdata");
                     sSpeed = (pcRecvBuf[5] << 8 & 0xFF00) + pcRecvBuf[6];                //速度
-                    //DebugPrint(DEBUG_LEVEL_3, "speed %x , %x, %x", sSpeed, pcRecvBuf[5], pcRecvBuf[6]);
-                        
+                    DebugPrint(DEBUG_LEVEL_3, "speed %x , %x, %x", sSpeed, pcRecvBuf[5], pcRecvBuf[6]);
+
                     cPisHour = (pcRecvBuf[12]/16)*10 + pcRecvBuf[12]%16;     //16   10    17  11    32  20   16进制字符串到10进制转换
                     cPisMin  = (pcRecvBuf[13]/16)*10 + pcRecvBuf[13]%16;
                     cPisSec  = (pcRecvBuf[14]/16)*10 + pcRecvBuf[14]%16;
@@ -512,8 +513,8 @@ void *Rs485ProcessThread(void *arg)
                     ptPisInfo->wDistance = htons(sDistance);
                     memcpy(ptPisInfo->cIntervalInfo, &pcRecvBuf[22], 3);
                     memcpy(&ptPisInfo->cIntervalInfo[3], &pcRecvBuf[25], 3);
-//                    DebugPrint(DEBUG_RS485_DATA_PRINT, "year %d, mon %d, day %d, hour %d, min %d, sec %d, speed %x, distance %x, trainno %s",
-//                                sYear, cMon, cDay, cHour, cMin, cSec, sSpeed, sDistance, acTrainNO);
+                    DebugPrint(DEBUG_RS485_DATA_PRINT, "year %d, mon %d, day %d, hour %d, min %d, sec %d, speed %x, distance %x, trainno %s",
+                                sYear, cMon, cDay, cHour, cMin, cSec, sSpeed, sDistance, acTrainNO);
                     cEcc = GetPisMsgDataEcc((BYTE *)acPisData, sizeof(T_RS485_PISMSG_INFO) + 4);
                     acPisData[sizeof(T_RS485_PISMSG_INFO) + 4] = cEcc;
                     
@@ -532,11 +533,11 @@ void *Rs485ProcessThread(void *arg)
         }
 	}
 
-//	DebugPrint(DEBUG_ERROR_PRINT, "%s %s:%d\n",__FILE__,__FUNCTION__,__LINE__);
+    DebugPrint(DEBUG_ERROR_PRINT, "%s %s:%d\n",__FILE__,__FUNCTION__,__LINE__);
 	free(pcRecvBuf);
-//	DebugPrint(DEBUG_ERROR_PRINT, "%s %s:%d\n",__FILE__,__FUNCTION__,__LINE__);
+    DebugPrint(DEBUG_ERROR_PRINT, "%s %s:%d\n",__FILE__,__FUNCTION__,__LINE__);
 	pcRecvBuf = NULL;
-//	DebugPrint(DEBUG_ERROR_PRINT, "%s %s:%d\n",__FILE__,__FUNCTION__,__LINE__);
+    DebugPrint(DEBUG_ERROR_PRINT, "%s %s:%d\n",__FILE__,__FUNCTION__,__LINE__);
 
 	return NULL;
 }
@@ -555,7 +556,7 @@ PRS485_HANDLE RS485_CreateConnect()
     
 	if ((fd = open(UART_DEV_NAME, O_RDWR)) == -1)
     {
-//        DebugPrint(DEBUG_UI_ERROR_PRINT, "open %s failed\n", UART_DEV_NAME);
+        DebugPrint(DEBUG_UI_ERROR_PRINT, "open %s failed\n", UART_DEV_NAME);
         free(pRs485ConnInfo);
         pRs485ConnInfo = NULL;
         return 0;	
@@ -578,11 +579,11 @@ PRS485_HANDLE RS485_CreateConnect()
 	iRet = pthread_create(&pRs485ConnInfo->ThreadHandle, NULL, Rs485ProcessThread, (void *)pRs485ConnInfo);
     if (iRet < 0)
     {
-//    	DebugPrint(DEBUG_ERROR_PRINT, "%s %s:%d\n",__FILE__,__FUNCTION__,__LINE__);
+        DebugPrint(DEBUG_ERROR_PRINT, "%s %s:%d\n",__FILE__,__FUNCTION__,__LINE__);
         free(pRs485ConnInfo);
-//    	DebugPrint(DEBUG_ERROR_PRINT, "%s %s:%d\n",__FILE__,__FUNCTION__,__LINE__);
+        DebugPrint(DEBUG_ERROR_PRINT, "%s %s:%d\n",__FILE__,__FUNCTION__,__LINE__);
         pRs485ConnInfo = NULL;
-//    	DebugPrint(DEBUG_ERROR_PRINT, "%s %s:%d\n",__FILE__,__FUNCTION__,__LINE__);
+        DebugPrint(DEBUG_ERROR_PRINT, "%s %s:%d\n",__FILE__,__FUNCTION__,__LINE__);
         return 0;	
     }
 
@@ -610,11 +611,11 @@ int RS485_DestroyConnect(PRS485_HANDLE pRs485Handle)
     DestroyPmsgQueue(ptRs485ConnInfo->ptRs485Queue);
     pthread_mutex_destroy(&ptRs485ConnInfo->tRs485QueueMutex);
     
-//	DebugPrint(DEBUG_ERROR_PRINT, "%s %s:%d\n",__FILE__,__FUNCTION__,__LINE__);
+    DebugPrint(DEBUG_ERROR_PRINT, "%s %s:%d\n",__FILE__,__FUNCTION__,__LINE__);
     free(ptRs485ConnInfo);
-//	DebugPrint(DEBUG_ERROR_PRINT, "%s %s:%d\n",__FILE__,__FUNCTION__,__LINE__);
+    DebugPrint(DEBUG_ERROR_PRINT, "%s %s:%d\n",__FILE__,__FUNCTION__,__LINE__);
     ptRs485ConnInfo = NULL;
-//	DebugPrint(DEBUG_ERROR_PRINT, "%s %s:%d\n",__FILE__,__FUNCTION__,__LINE__);
+    DebugPrint(DEBUG_ERROR_PRINT, "%s %s:%d\n",__FILE__,__FUNCTION__,__LINE__);
     
     return 0;
 }

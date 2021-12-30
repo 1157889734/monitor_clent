@@ -13,6 +13,7 @@
 
 #include "usergroupmanage.h"
 #include "ckeyboard.h"
+#include "timeset.h"
 
 
 
@@ -30,6 +31,7 @@ public:
     QDateTime timeTd;
     bool eventFilter(QObject *obj, QEvent *e);
     void ShowKeyboardSlots(int nShow);
+    timeset *timeSetWidget;    //时间设置控制窗体
 
 public slots:
 
@@ -49,8 +51,6 @@ public slots:
     void lineEditpresetReturnTimeChange(const QString &);
     void pollingTimeChange(int iComboBoxId);
     void lineEditpollingTimeChange(const QString &);
-    void showSysTime();
-    void monitorSysTime();
     void systimeSlot();
     void registOutButtonClick();
     void closeUserManageWidget();
@@ -64,6 +64,10 @@ public slots:
     void setTimeSignalCtrl();
     void KeyboardPressKeySlots(char key);
 
+    void timeSetRecvMsg(QString year, QString month, QString day, QString hour, QString min, QString sec);
+    void openTimeSetWidgetSlot();
+
+
 signals:
     void alarmPushButoonClickSignal();
     void registOutSignal(int page);     //注销信号，iType:表示执行注销的页面类型，这里应该为2，表示受电弓监控页面,
@@ -73,7 +77,6 @@ signals:
 private:
     Ui::devUpdateWidget *ui;
     QTimer *m_alarmHappenTimer;
-    QTimer *m_sys_timer;
     PMSG_HANDLE m_Phandle[MAX_SERVER_NUM];    //服务器PMSG通信句柄
     void getTrainConfig();     //获取车型配置信息
     void setTrainTypeCombox();

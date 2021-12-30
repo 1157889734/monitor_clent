@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>timeset</class>
+ <widget class="QWidget" name="timeset">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>291</width>
+    <height>291</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="mypushbutton" name="pushButton_5">
+   <property name="geometry">
+    <rect>
+     <x>105</x>
+     <y>157</y>
+     <width>71</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>+
+
+
+-</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>57</y>
+     <width>71</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(33, 131, 229);
+background-color: rgb(255, 255, 255);
+border-color: rgb(33, 131, 229);
+border-width: 1px;
+border-style: solid;</string>
+   </property>
+   <property name="text">
+    <string>11</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>291</width>
+     <height>291</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">#label {
+   color: rgb(33, 131, 229);
+	background-color: rgb(192, 193, 198);
+}
+#label  *{
+	background-color: rgb();
+}</string>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&amp;nbsp;日期 ----------------------------------------&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt; &amp;nbsp;&amp;nbsp;时间  ----------------------------------------&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_6">
+   <property name="geometry">
+    <rect>
+     <x>105</x>
+     <y>187</y>
+     <width>71</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(33, 131, 229);
+background-color: rgb(255, 255, 255);
+border-color: rgb(33, 131, 229);
+border-width: 1px;
+border-style: solid;</string>
+   </property>
+   <property name="text">
+    <string>30</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="mypushbutton" name="pushButton_6">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>157</y>
+     <width>71</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>+
+
+
+-</string>
+   </property>
+  </widget>
+  <widget class="mypushbutton" name="pushButton_4">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>157</y>
+     <width>71</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>+
+
+
+-</string>
+   </property>
+  </widget>
+  <widget class="mypushbutton" name="pushButton_8">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>257</y>
+     <width>99</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(33, 131, 229);
+border-color: rgb(33, 131, 229);
+border-width: 1px;
+border-style: solid;</string>
+   </property>
+   <property name="text">
+    <string>取消</string>
+   </property>
+  </widget>
+  <widget class="mypushbutton" name="pushButton_7">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>257</y>
+     <width>99</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(33, 131, 229);
+border-color: rgb(33, 131, 229);
+border-width: 1px;
+border-style: solid;</string>
+   </property>
+   <property name="text">
+    <string>确定</string>
+   </property>
+  </widget>
+  <widget class="mypushbutton" name="pushButton_1">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>30</y>
+     <width>81</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>+
+
+
+-</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>57</y>
+     <width>71</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(33, 131, 229);
+background-color: rgb(255, 255, 255);
+border-color: rgb(33, 131, 229);
+border-width: 1px;
+border-style: solid;</string>
+   </property>
+   <property name="text">
+    <string>19</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>57</y>
+     <width>81</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(33, 131, 229);
+background-color: rgb(255, 255, 255);
+border-color: rgb(33, 131, 229);
+border-width: 1px;
+border-style: solid;</string>
+   </property>
+   <property name="text">
+    <string>2016</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_7">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>187</y>
+     <width>71</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(33, 131, 229);
+background-color: rgb(255, 255, 255);
+border-color: rgb(33, 131, 229);
+border-width: 1px;
+border-style: solid;</string>
+   </property>
+   <property name="text">
+    <string>00</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="mypushbutton" name="pushButton_2">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>30</y>
+     <width>71</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>+
+
+
+-</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>187</y>
+     <width>71</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(33, 131, 229);
+background-color: rgb(255, 255, 255);
+border-color: rgb(33, 131, 229);
+border-width: 1px;
+border-style: solid;</string>
+   </property>
+   <property name="text">
+    <string>14</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="mypushbutton" name="pushButton_3">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>30</y>
+     <width>71</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>+
+
+
+-</string>
+   </property>
+  </widget>
+  <zorder>label</zorder>
+  <zorder>pushButton_6</zorder>
+  <zorder>pushButton_4</zorder>
+  <zorder>pushButton_8</zorder>
+  <zorder>pushButton_7</zorder>
+  <zorder>pushButton_1</zorder>
+  <zorder>label_2</zorder>
+  <zorder>label_7</zorder>
+  <zorder>pushButton_2</zorder>
+  <zorder>label_5</zorder>
+  <zorder>pushButton_3</zorder>
+  <zorder>pushButton_5</zorder>
+  <zorder>label_6</zorder>
+  <zorder>label_4</zorder>
+  <zorder>label_3</zorder>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>mypushbutton</class>
+   <extends>QPushButton</extends>
+   <header location="global">mypushbutton.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

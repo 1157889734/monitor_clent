@@ -7,6 +7,7 @@
 #include <netinet/in.h>
 #include <QDebug>
 #include <QTabWidget>
+#include "debug.h"
 
 static int g_ibShowKeyboard = 0;
 static int g_iDNum = 0;
@@ -204,6 +205,7 @@ int devManageWidget::rs485Ctrl(char *pcData, int iDataLen)
     ucMsgCmd = (unsigned char)pcData[1];
     iMsgDataLen = pcData[2] << 8 | pcData[3];
 
+//    qDebug()<<"**********ucMsgHead"<<ucMsgHead<<"*********ucMsgCmd"<<ucMsgCmd<<"***********iMsgDataLen"<<iMsgDataLen<<"********iDataLen"<<iDataLen<<__LINE__;
     if (0XFF != ucMsgHead || 0x04 != ucMsgCmd || (iMsgDataLen+5) != iDataLen)    //数据准确性检测
     {
         return -1;
@@ -284,7 +286,7 @@ void devManageWidget::pisMsgCtrl(char *pcMsgData)
         iRet = PMSG_SendPmsgData(m_NvrServerPhandle[i], CLI_SERV_MSG_TYPE_CHECK_TIME, (char *)&tTimeInfo, sizeof(T_TIME_INFO));    //发送校时命令
         if (iRet < 0)
         {
-//            DebugPrint(DEBUG_UI_ERROR_PRINT, "PMSG_SendPmsgData CLI_SERV_MSG_TYPE_CHECK_TIME error!iRet=%d\n",iRet);
+            DebugPrint(DEBUG_UI_ERROR_PRINT, "PMSG_SendPmsgData CLI_SERV_MSG_TYPE_CHECK_TIME error!iRet=%d\n",iRet);
         }
         else
         {
@@ -302,7 +304,7 @@ void devManageWidget::pisMsgCtrl(char *pcMsgData)
             iRet = PMSG_SendPmsgData(m_NvrServerPhandle[i], CLI_SERV_MSG_TYPE_SET_OSD, (char *)&tOsdInfo, sizeof(T_OSD_INFO));
             if (iRet < 0)
             {
-//                DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] PMSG_SendPmsgData CLI_SERV_MSG_TYPE_SET_OSD error!iRet=%d,server=%d\n", __FUNCTION__, iRet,i+1);
+                DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] PMSG_SendPmsgData CLI_SERV_MSG_TYPE_SET_OSD error!iRet=%d,server=%d\n", __FUNCTION__, iRet,i+1);
             }
             else
             {
@@ -350,7 +352,7 @@ void devManageWidget::getIpcStatusCtrl(PMSG_HANDLE pHandle, char *pcMsgData)
 
                 if (1 == ptIpcstaus->i8OnLine)
                 {
-//                    DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] server %d camera %d status is online\n", __FUNCTION__, i+1, 1);
+                    DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] server %d camera %d status is online\n", __FUNCTION__, i+1, 1);
                     ui->devStatusTableWidget->setItem(m_aiCameraIdex[i][0]-1, 4, new QTableWidgetItem(QString(QLatin1String(acVersion))));
                     ui->devStatusTableWidget->item(m_aiCameraIdex[i][0]-1, 4)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
                     ui->devStatusTableWidget->setItem(m_aiCameraIdex[i][0]-1, 6, new QTableWidgetItem(QString(QLatin1String(ptIpcstaus->acFactory))));
@@ -365,7 +367,7 @@ void devManageWidget::getIpcStatusCtrl(PMSG_HANDLE pHandle, char *pcMsgData)
                 }
                 else  //相机为离线状态时不显示厂商及版本号和报警信息
                 {
-//                    DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] server %d camera %d status is offline\n", __FUNCTION__, i+1, 1);
+                    DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] server %d camera %d status is offline\n", __FUNCTION__, i+1, 1);
                     ui->devStatusTableWidget->setItem(m_aiCameraIdex[i][0]-1, 4, new QTableWidgetItem(""));
                     ui->devStatusTableWidget->setItem(m_aiCameraIdex[i][0]-1, 6, new QTableWidgetItem(""));
                     ui->devStatusTableWidget->setItem(m_aiCameraIdex[i][0]-1, 7, new QTableWidgetItem(""));
@@ -388,7 +390,7 @@ void devManageWidget::getIpcStatusCtrl(PMSG_HANDLE pHandle, char *pcMsgData)
 
                 if (1 == ptIpcstaus->i8OnLine)
                 {
-//                    DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] server %d camera %d status is online\n", __FUNCTION__, i+1, 2);
+                    DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] server %d camera %d status is online\n", __FUNCTION__, i+1, 2);
                     ui->devStatusTableWidget->setItem(m_aiCameraIdex[i][1]-1, 4, new QTableWidgetItem(QString(QLatin1String(acVersion))));
                     ui->devStatusTableWidget->item(m_aiCameraIdex[i][1]-1, 4)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
                     ui->devStatusTableWidget->setItem(m_aiCameraIdex[i][1]-1, 6, new QTableWidgetItem(QString(QLatin1String(ptIpcstaus->acFactory))));
@@ -404,7 +406,7 @@ void devManageWidget::getIpcStatusCtrl(PMSG_HANDLE pHandle, char *pcMsgData)
                 }
                 else  //相机为离线状态时不显示厂商及版本号和报警信息
                 {
-//                    DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] server %d camera %d status is offline\n", __FUNCTION__, i+1, 2);
+                    DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] server %d camera %d status is offline\n", __FUNCTION__, i+1, 2);
                     ui->devStatusTableWidget->setItem(m_aiCameraIdex[i][1]-1, 4, new QTableWidgetItem(""));
                     ui->devStatusTableWidget->setItem(m_aiCameraIdex[i][1]-1, 6, new QTableWidgetItem(""));
                     ui->devStatusTableWidget->setItem(m_aiCameraIdex[i][1]-1, 7, new QTableWidgetItem(""));
@@ -470,6 +472,8 @@ void devManageWidget::getNvrStatusCtrl(PMSG_HANDLE pHandle, char *pcMsgData)
                     ui->devStorageTableWidget->item(i, 5)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
                     ui->devStorageTableWidget->setItem(i, 6, new QTableWidgetItem(QString(tr("硬盘异常"))));
                     ui->devStorageTableWidget->item(i, 6)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
+//                    gpio_output_ctrl(LED_HDD_DEVICE,LED_OFF);
+
                 }
             }
             else
@@ -482,6 +486,8 @@ void devManageWidget::getNvrStatusCtrl(PMSG_HANDLE pHandle, char *pcMsgData)
 
                 ui->devStorageTableWidget->setItem(i, 6, new QTableWidgetItem(QString(tr("正常"))));
                 ui->devStorageTableWidget->item(i, 6)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
+//                gpio_output_ctrl(LED_HDD_DEVICE,LED_ON);
+
             }
             break;
         }
@@ -496,14 +502,14 @@ void devManageWidget::videoAlarmCtrl(PMSG_HANDLE pHandle, char *pcMsgData)
     T_VIDEO_ALARM_STATUS *ptVideoAlarmStatus = (T_VIDEO_ALARM_STATUS *)pcMsgData;
     if (1 == ptVideoAlarmStatus->i8VideoShade)
     {
-//        DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "devManageWidget [%s] recv video shade alarm pmsg\n", __FUNCTION__);
+        DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "devManageWidget [%s] recv video shade alarm pmsg\n", __FUNCTION__);
         devStatus = tr("遮挡");
     }
     else
     {
         if (1 == ptVideoAlarmStatus->i8VideoLost)
         {
-//            DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "devManageWidget [%s] recv video lost alarm pmsg\n", __FUNCTION__);
+            DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "devManageWidget [%s] recv video lost alarm pmsg\n", __FUNCTION__);
             devStatus = tr("丢失");
         }
         else
@@ -520,7 +526,7 @@ void devManageWidget::videoAlarmCtrl(PMSG_HANDLE pHandle, char *pcMsgData)
             {
                 if (1 == m_aiCameraOnlineFlag[i][0])
                 {
-//                    DebugPrint(DEBUG_UI_NOMAL_PRINT, "devManageWidget [%s] add camera video alarm info to devStatusTableWidget row:%d, column:%d\n", __FUNCTION__, i+1, 1);
+                    DebugPrint(DEBUG_UI_NOMAL_PRINT, "devManageWidget [%s] add camera video alarm info to devStatusTableWidget row:%d, column:%d\n", __FUNCTION__, i+1, 1);
                     ui->devStatusTableWidget->setItem(m_aiCameraIdex[i][0]-1, 7, new QTableWidgetItem(devStatus));
                     ui->devStatusTableWidget->item(m_aiCameraIdex[i][0]-1, 7)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
                 }
@@ -534,7 +540,7 @@ void devManageWidget::videoAlarmCtrl(PMSG_HANDLE pHandle, char *pcMsgData)
             {
                 if (1 == m_aiCameraOnlineFlag[i][1])
                 {
-//                    DebugPrint(DEBUG_UI_NOMAL_PRINT, "devManageWidget [%s] add camera video alarm info to devStatusTableWidget row:%d, column:%d\n", __FUNCTION__, i+1, 1);
+                    DebugPrint(DEBUG_UI_NOMAL_PRINT, "devManageWidget [%s] add camera video alarm info to devStatusTableWidget row:%d, column:%d\n", __FUNCTION__, i+1, 1);
                     ui->devStatusTableWidget->setItem(m_aiCameraIdex[i][1]-1, 7, new QTableWidgetItem(devStatus));
                     ui->devStatusTableWidget->item(m_aiCameraIdex[i][1]-1, 7)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
                 }
@@ -630,12 +636,12 @@ void devManageWidget::trainNumberChange(QString TrainNumberStr)
     {
         strncpy(acTrainNumber, TrainNumberStr.toLatin1().data(), 7);
         ui->TrainNumberLineEdit->setText(QString(QLatin1String(acTrainNumber)));
-//        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devManageWidget input train number len can't over 7!\n");
-        static QMessageBox box(QMessageBox::Warning,QString::fromUtf8("提示"),QString::fromUtf8("输入的车次字符数不能超过7!"));     //提示框
-        box.setWindowFlags(Qt::FramelessWindowHint);
-        box.setStandardButtons (QMessageBox::Ok);
-        box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
-        box.exec();
+        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devManageWidget input train number len can't over 7!\n");
+//        static QMessageBox box(QMessageBox::Warning,QString::fromUtf8("提示"),QString::fromUtf8("输入的车次字符数不能超过7!"));     //提示框
+//        box.setWindowFlags(Qt::FramelessWindowHint);
+//        box.setStandardButtons (QMessageBox::Ok);
+//        box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
+//        box.exec();
 
 
 
@@ -647,7 +653,7 @@ void devManageWidget::getDevStateSignalCtrl()
     T_TRAIN_CONFIG tTrainConfigInfo;
     T_LOG_INFO tLogInfo;
 
-//    DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] getDevState\n", __FUNCTION__);
+    DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] getDevState\n", __FUNCTION__);
     memset(&tTrainConfigInfo, 0, sizeof(T_TRAIN_CONFIG));
     STATE_GetCurrentTrainConfigInfo(&tTrainConfigInfo);
     for (i = 0; i < tTrainConfigInfo.iNvrServerCount; i++)
@@ -656,26 +662,26 @@ void devManageWidget::getDevStateSignalCtrl()
         {
             if (E_SERV_STATUS_CONNECT == PMSG_GetConnectStatus(m_NvrServerPhandle[i]))    //获取到服务器状态为在线
             {
-//                DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] server %d status is online\n", __FUNCTION__, i+1);
+                DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] server %d status is online\n", __FUNCTION__, i+1);
                 ui->devStatusTableWidget->setItem(m_aiServerIdex[i]-1, 5, new QTableWidgetItem(tr("在线")));
                 ui->devStatusTableWidget->item(m_aiServerIdex[i]-1, 5)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
                 iRet = PMSG_SendPmsgData(m_NvrServerPhandle[i], CLI_SERV_MSG_TYPE_GET_NVR_STATUS, NULL, 0);
                 if (iRet < 0)
                 {
-//                    DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] PMSG_SendPmsgData CLI_SERV_MSG_TYPE_GET_NVR_STATUS error!iRet=%d,server=%d\n", __FUNCTION__, iRet,i+1);
+                    DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] PMSG_SendPmsgData CLI_SERV_MSG_TYPE_GET_NVR_STATUS error!iRet=%d,server=%d\n", __FUNCTION__, iRet,i+1);
                 }
 
                 iRet = PMSG_SendPmsgData(m_NvrServerPhandle[i], CLI_SERV_MSG_TYPE_GET_IPC_STATUS, NULL, 0);
                 if (iRet < 0)
                 {
-//                    DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] PMSG_SendPmsgData CLI_SERV_MSG_TYPE_GET_IPC_STATUS error!iRet=%d,server=%d\n", __FUNCTION__, iRet,i+1);
+                    DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] PMSG_SendPmsgData CLI_SERV_MSG_TYPE_GET_IPC_STATUS error!iRet=%d,server=%d\n", __FUNCTION__, iRet,i+1);
                 }
 
                 m_aiNvrOnlineFlag[i] = 1;
             }
             else
             {
-//                DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] server %d status is offline\n", __FUNCTION__, i+1);
+                DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] server %d status is offline\n", __FUNCTION__, i+1);
                 ui->devStatusTableWidget->setItem(m_aiServerIdex[i]-1, 5, new QTableWidgetItem(tr("离线")));
                 ui->devStatusTableWidget->item(m_aiServerIdex[i]-1, 5)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
                 ui->devStatusTableWidget->setItem(m_aiServerIdex[i]-1, 4, new QTableWidgetItem(""));
@@ -732,7 +738,7 @@ void devManageWidget::trainNumberSetSlot_fuction()
     memset(&tOsdInfo, 0, sizeof(T_OSD_INFO));
     memset(&tTrainConfigInfo, 0, sizeof(T_TRAIN_CONFIG));
 
-//    DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] send CLI_SERV_MSG_TYPE_SET_OSD msg to all server to set train number\n", __FUNCTION__);
+    DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] send CLI_SERV_MSG_TYPE_SET_OSD msg to all server to set train number\n", __FUNCTION__);
 
     STATE_GetCurrentTrainConfigInfo(&tTrainConfigInfo);
     snprintf(acTrainNumber, sizeof(acTrainNumber), "%s", ui->TrainNumberLineEdit->text().toLatin1().data());
@@ -756,7 +762,7 @@ void devManageWidget::trainNumberSetSlot_fuction()
             iRet = PMSG_SendPmsgData(m_NvrServerPhandle[i], CLI_SERV_MSG_TYPE_SET_OSD, (char *)&tOsdInfo, sizeof(T_OSD_INFO));
             if (iRet < 0)
             {
-//                DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] PMSG_SendPmsgData CLI_SERV_MSG_TYPE_SET_OSD error!iRet=%d,server=%d\n", __FUNCTION__, iRet,i+1);
+                DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] PMSG_SendPmsgData CLI_SERV_MSG_TYPE_SET_OSD error!iRet=%d,server=%d\n", __FUNCTION__, iRet,i+1);
             }
             else
             {
@@ -921,7 +927,7 @@ int devManageWidget::pmsgCtrl(PMSG_HANDLE pHandle, unsigned char ucMsgCmd, char 
         }
         case SERV_CLI_MSG_TYPE_VIDEO_ALARM_REPORT:
         {
-//            DebugPrint(DEBUG_PMSG_DATA_PRINT, "devManage Widget get pmsg response cmd 0x%x data:0x%x 0x%x 0x%x 0x%x\n", ucMsgCmd, pcMsgData[0], pcMsgData[1], pcMsgData[2],pcMsgData[3]);
+            DebugPrint(DEBUG_PMSG_DATA_PRINT, "devManage Widget get pmsg response cmd 0x%x data:0x%x 0x%x 0x%x 0x%x\n", ucMsgCmd, pcMsgData[0], pcMsgData[1], pcMsgData[2],pcMsgData[3]);
 
             if (pcMsgData == NULL || iMsgDataLen != 4)
             {
@@ -935,10 +941,10 @@ int devManageWidget::pmsgCtrl(PMSG_HANDLE pHandle, unsigned char ucMsgCmd, char 
         }
         case SERV_CLI_MSG_TYPE_GET_NVR_STATUS_RESP:
         {
-//            DebugPrint(DEBUG_PMSG_DATA_PRINT, "devManage Widget get pmsg response cmd 0x%x data:\n", ucMsgCmd);
-//            DebugPrint(DEBUG_PMSG_DATA_PRINT, "0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x", pcMsgData[0],pcMsgData[1],pcMsgData[2],pcMsgData[3],
-//                    pcMsgData[4],pcMsgData[5],pcMsgData[6],pcMsgData[7],pcMsgData[8],pcMsgData[9],pcMsgData[10],pcMsgData[11],pcMsgData[12],
-//                    pcMsgData[13],pcMsgData[14],pcMsgData[15],pcMsgData[16],pcMsgData[17]);
+            DebugPrint(DEBUG_PMSG_DATA_PRINT, "devManage Widget get pmsg response cmd 0x%x data:\n", ucMsgCmd);
+            DebugPrint(DEBUG_PMSG_DATA_PRINT, "0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x", pcMsgData[0],pcMsgData[1],pcMsgData[2],pcMsgData[3],
+                    pcMsgData[4],pcMsgData[5],pcMsgData[6],pcMsgData[7],pcMsgData[8],pcMsgData[9],pcMsgData[10],pcMsgData[11],pcMsgData[12],
+                    pcMsgData[13],pcMsgData[14],pcMsgData[15],pcMsgData[16],pcMsgData[17]);
 
             if (pcMsgData == NULL || iMsgDataLen != 18)
             {
@@ -952,10 +958,10 @@ int devManageWidget::pmsgCtrl(PMSG_HANDLE pHandle, unsigned char ucMsgCmd, char 
         }
         case SERV_CLI_MSG_TYPE_GET_IPC_STATUS_RESP:
         {
-//            DebugPrint(DEBUG_PMSG_DATA_PRINT, "devManage Widget get pmsg response cmd 0x%x data:\n", ucMsgCmd);
-//            DebugPrint(DEBUG_PMSG_DATA_PRINT, "0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x", pcMsgData[0],pcMsgData[1],pcMsgData[2],pcMsgData[3],
-//                pcMsgData[4],pcMsgData[5],pcMsgData[6],pcMsgData[7],pcMsgData[8],pcMsgData[9],pcMsgData[10],pcMsgData[11],pcMsgData[12],
-//                pcMsgData[13],pcMsgData[14],pcMsgData[15]);
+            DebugPrint(DEBUG_PMSG_DATA_PRINT, "devManage Widget get pmsg response cmd 0x%x data:\n", ucMsgCmd);
+            DebugPrint(DEBUG_PMSG_DATA_PRINT, "0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x", pcMsgData[0],pcMsgData[1],pcMsgData[2],pcMsgData[3],
+                pcMsgData[4],pcMsgData[5],pcMsgData[6],pcMsgData[7],pcMsgData[8],pcMsgData[9],pcMsgData[10],pcMsgData[11],pcMsgData[12],
+                pcMsgData[13],pcMsgData[14],pcMsgData[15]);
 
             if (pcMsgData == NULL || iMsgDataLen != 16)
             {

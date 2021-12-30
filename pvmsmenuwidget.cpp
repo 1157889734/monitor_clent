@@ -145,9 +145,9 @@ pvmsMenuWidget::pvmsMenuWidget(QWidget *parent) :
     ui->devManageMenuPushButton->setChecked(false);
     ui->devUpdateMenuPushButton->setChecked(false);
 
-//    m_Rs485Timer = new QTimer(this);
-//    m_Rs485Timer->start(100);
-//    connect(m_Rs485Timer, SIGNAL(timeout()), this, SLOT(rs485TimerFunc()));
+    m_Rs485Timer = new QTimer(this);
+    m_Rs485Timer->start(100);
+    connect(m_Rs485Timer, SIGNAL(timeout()), this, SLOT(rs485TimerFunc()));
 
 
     m_PmsgTimer = new QTimer(this);
@@ -230,11 +230,9 @@ void pvmsMenuWidget::rs485TimerFunc()
      iRet = RS485_GetDataFromRs485Queue(m_pRs485Handle, &tPkt);
      if (iRet < 0)
      {
-//         DebugPrint(DEBUG_RS485_DATA_PRINT, "get rs485 data error\n");
-//         qDebug()<<"get rs485 data error"<<__FUNCTION__<<__LINE__<<endl;
+         DebugPrint(DEBUG_RS485_DATA_PRINT, "get rs485 data error\n");
          return;
      }
-
      if (NULL == tPkt.pcData || 0 == tPkt.iDataLen)
      {
          return;
@@ -264,12 +262,10 @@ void pvmsMenuWidget::pmsgTimerFunc()
         iRet = PMSG_GetDataFromPmsgQueue(pmsgHandle, &tPkt);
         if (iRet < 0)
         {
-//            DebugPrint(DEBUG_PMSG_ERROR_PRINT, "get server 192.168.%d.81 pmsg data error\n", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO);
-//            qDebug()<<"get server 192.168.%d.81 pmsg data error"<<100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO<<endl;
+            DebugPrint(DEBUG_PMSG_ERROR_PRINT, "get server 192.168.%d.81 pmsg data error\n", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO);
             continue;
         }
-//        DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "pmsgTimerFunc get pmsg message 0x%x, msgDataLen=%d\n",(int)tPkt.ucMsgCmd, tPkt.iMsgDataLen);
-//        qDebug()<<"pmsgTimerFunc get pmsg message 0x%x, msgDataLen="<<tPkt.ucMsgCmd<<tPkt.iMsgDataLen<<endl;
+        DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "pmsgTimerFunc get pmsg message 0x%x, msgDataLen=%d\n",(int)tPkt.ucMsgCmd, tPkt.iMsgDataLen);
 
         recvPmsgCtrl(tPkt.PHandle, tPkt.ucMsgCmd, tPkt.pcMsgData, tPkt.iMsgDataLen);
         if (tPkt.pcMsgData)
@@ -296,7 +292,7 @@ void pvmsMenuWidget::recvPmsgCtrl(PMSG_HANDLE pHandle, unsigned char ucMsgCmd, c
         case SERV_CLI_MSG_TYPE_PVMS_UPDOWN_REPORT:
         case SERV_CLI_MSG_TYPE_PVMS_UP_DOWN_CTRL:
         {
-//            DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "pvmsMenu Widget get pmsg message 0x%x, msgDataLen=%d\n",(int)ucMsgCmd, iMsgDataLen);
+            DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "pvmsMenu Widget get pmsg message 0x%x, msgDataLen=%d\n",(int)ucMsgCmd, iMsgDataLen);
             if (m_pvmsMonitorPage != NULL)
             {
                 m_pvmsMonitorPage->pmsgCtrl(pHandle, ucMsgCmd, pcMsgData, iMsgDataLen);
@@ -306,7 +302,7 @@ void pvmsMenuWidget::recvPmsgCtrl(PMSG_HANDLE pHandle, unsigned char ucMsgCmd, c
         case SERV_CLI_MSG_TYPE_GET_RECORD_TIME_LEN_RESP:
         case SERV_CLI_MSG_TYPE_GET_RECORD_FILE_RESP:
         {
-//            DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "pvmsMenu Widget get pmsg message 0x%x, msgDataLen=%d\n",(int)ucMsgCmd, iMsgDataLen);
+            DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "pvmsMenu Widget get pmsg message 0x%x, msgDataLen=%d\n",(int)ucMsgCmd, iMsgDataLen);
             if (m_recordPlayPage != NULL)
             {
                 m_recordPlayPage->pmsgCtrl(pHandle, ucMsgCmd, pcMsgData, iMsgDataLen);
@@ -374,7 +370,7 @@ void pvmsMenuWidget::recvPmsgCtrl(PMSG_HANDLE pHandle, unsigned char ucMsgCmd, c
         case SERV_CLI_MSG_TYPE_GET_IPC_STATUS_RESP:
         case SERV_CLI_MSG_TYPE_PISMSG_REPORT:
         {
-//            DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "pvmsMenu Widget get pmsg message 0x%x, msgDataLen=%d\n",(int)ucMsgCmd, iMsgDataLen);
+            DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "pvmsMenu Widget get pmsg message 0x%x, msgDataLen=%d\n",(int)ucMsgCmd, iMsgDataLen);
             if (m_devManagePage != NULL)
             {
                 m_devManagePage->pmsgCtrl(pHandle, ucMsgCmd, pcMsgData, iMsgDataLen);
@@ -383,7 +379,7 @@ void pvmsMenuWidget::recvPmsgCtrl(PMSG_HANDLE pHandle, unsigned char ucMsgCmd, c
         }
         case SERV_CLI_MSG_TYPE_VIDEO_ALARM_REPORT:
         {
-//            DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "pvmsMenu Widget get pmsg message 0x%x, msgDataLen=%d\n",(int)ucMsgCmd, iMsgDataLen);
+            DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "pvmsMenu Widget get pmsg message 0x%x, msgDataLen=%d\n",(int)ucMsgCmd, iMsgDataLen);
             if (pcMsgData == NULL || iMsgDataLen != 4)
             {
                 break;
@@ -446,7 +442,7 @@ void pvmsMenuWidget::recvPmsgCtrl(PMSG_HANDLE pHandle, unsigned char ucMsgCmd, c
         #if 1
         case SERV_CLI_MSG_TYPE_HDISK_ALARM_REPORT:
         {
-//            DebugPrint(DEBUG_PMSG_DATA_PRINT, "pvmsMenu Widget get pmsg message data:\n%s\n",pcMsgData);
+            DebugPrint(DEBUG_PMSG_DATA_PRINT, "pvmsMenu Widget get pmsg message data:\n%s\n",pcMsgData);
 
             if (pcMsgData == NULL || iMsgDataLen != 2)
             {
@@ -661,7 +657,7 @@ void pvmsMenuWidget::registOutButtonClick(int page)
 
 void pvmsMenuWidget::serverOffLineSlot(int iDex)   //服务器离线后将服务器检测硬盘错误标志及不检测计数清0，使得再次连上服务器后头3分钟依然不处理硬盘报警
 {
-//    DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMenuWidget server %d OffLine\n", iDex);
+    DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMenuWidget server %d OffLine\n", iDex);
 
     T_TRAIN_CONFIG tTrainConfigInfo;
 
@@ -769,7 +765,7 @@ void pvmsMenuWidget::menuButtonClick()
     {
         if (!strcmp(acUserType, "operator"))   //操作员不能查看此界面
         {
-//            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "pvmsMenu Widget this user type has not this right!\n");
+            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "pvmsMenu Widget this user type has not this right!\n");
             static QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("该用户没有查看权限!"));
             box.setWindowFlags(Qt::FramelessWindowHint);
             box.setStandardButtons (QMessageBox::Ok);
@@ -828,7 +824,7 @@ void pvmsMenuWidget::menuButtonClick()
     {
         if (!strcmp(acUserType, "operator"))   //操作员不能查看此界面
         {
-//            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "pvmsMenu Widget this user type has not this right!\n");
+            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "pvmsMenu Widget this user type has not this right!\n");
             static QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("该用户没有查看权限!"));
             box.setWindowFlags(Qt::FramelessWindowHint);
             box.setStandardButtons (QMessageBox::Ok);

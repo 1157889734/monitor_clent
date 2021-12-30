@@ -9,11 +9,9 @@
 #ifndef UI_INTEANALYWIDGET_H
 #define UI_INTEANALYWIDGET_H
 
-#include <QtCore/QDate>
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QComboBox>
-#include <QtWidgets/QDateEdit>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
@@ -43,15 +41,13 @@ public:
     QLabel *label_2;
     QLabel *label_7;
     QPushButton *pushButton_33;
-    QLabel *label_15;
-    QLabel *label;
     QPushButton *alarmPushButton;
     QPushButton *canselPushButton;
     QLabel *label_11;
-    QComboBox *StartcomboBox;
-    QComboBox *EndcomboBox;
-    QDateEdit *StartdateEdit;
-    QDateEdit *EnddateEdit;
+    QLabel *endTimeLabel;
+    QPushButton *startTimeSetPushButton;
+    QPushButton *startTimeSetPushButton_2;
+    QLabel *startTimeLabel;
 
     void setupUi(QWidget *inteAnalyWidget)
     {
@@ -245,12 +241,6 @@ public:
 "\n"
 "QPushButton:pressed\n"
 "{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}"));
-        label_15 = new QLabel(inteAnalyWidget);
-        label_15->setObjectName(QString::fromUtf8("label_15"));
-        label_15->setGeometry(QRect(190, 92, 41, 21));
-        label = new QLabel(inteAnalyWidget);
-        label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(190, 55, 31, 21));
         alarmPushButton = new QPushButton(inteAnalyWidget);
         alarmPushButton->setObjectName(QString::fromUtf8("alarmPushButton"));
         alarmPushButton->setGeometry(QRect(800, 590, 82, 36));
@@ -280,68 +270,32 @@ public:
         label_11->setObjectName(QString::fromUtf8("label_11"));
         label_11->setGeometry(QRect(0, 0, 1024, 630));
         label_11->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
-        StartcomboBox = new QComboBox(inteAnalyWidget);
-        StartcomboBox->addItem(QString());
-        StartcomboBox->addItem(QString());
-        StartcomboBox->addItem(QString());
-        StartcomboBox->addItem(QString());
-        StartcomboBox->addItem(QString());
-        StartcomboBox->addItem(QString());
-        StartcomboBox->addItem(QString());
-        StartcomboBox->addItem(QString());
-        StartcomboBox->addItem(QString());
-        StartcomboBox->addItem(QString());
-        StartcomboBox->addItem(QString());
-        StartcomboBox->addItem(QString());
-        StartcomboBox->addItem(QString());
-        StartcomboBox->addItem(QString());
-        StartcomboBox->addItem(QString());
-        StartcomboBox->addItem(QString());
-        StartcomboBox->addItem(QString());
-        StartcomboBox->addItem(QString());
-        StartcomboBox->addItem(QString());
-        StartcomboBox->addItem(QString());
-        StartcomboBox->addItem(QString());
-        StartcomboBox->addItem(QString());
-        StartcomboBox->addItem(QString());
-        StartcomboBox->addItem(QString());
-        StartcomboBox->setObjectName(QString::fromUtf8("StartcomboBox"));
-        StartcomboBox->setGeometry(QRect(225, 50, 71, 25));
-        EndcomboBox = new QComboBox(inteAnalyWidget);
-        EndcomboBox->addItem(QString());
-        EndcomboBox->addItem(QString());
-        EndcomboBox->addItem(QString());
-        EndcomboBox->addItem(QString());
-        EndcomboBox->addItem(QString());
-        EndcomboBox->addItem(QString());
-        EndcomboBox->addItem(QString());
-        EndcomboBox->addItem(QString());
-        EndcomboBox->addItem(QString());
-        EndcomboBox->addItem(QString());
-        EndcomboBox->addItem(QString());
-        EndcomboBox->addItem(QString());
-        EndcomboBox->addItem(QString());
-        EndcomboBox->addItem(QString());
-        EndcomboBox->addItem(QString());
-        EndcomboBox->addItem(QString());
-        EndcomboBox->addItem(QString());
-        EndcomboBox->addItem(QString());
-        EndcomboBox->addItem(QString());
-        EndcomboBox->addItem(QString());
-        EndcomboBox->addItem(QString());
-        EndcomboBox->addItem(QString());
-        EndcomboBox->addItem(QString());
-        EndcomboBox->addItem(QString());
-        EndcomboBox->setObjectName(QString::fromUtf8("EndcomboBox"));
-        EndcomboBox->setGeometry(QRect(225, 90, 71, 25));
-        StartdateEdit = new QDateEdit(inteAnalyWidget);
-        StartdateEdit->setObjectName(QString::fromUtf8("StartdateEdit"));
-        StartdateEdit->setGeometry(QRect(80, 50, 101, 31));
-        StartdateEdit->setDate(QDate(2020, 1, 1));
-        EnddateEdit = new QDateEdit(inteAnalyWidget);
-        EnddateEdit->setObjectName(QString::fromUtf8("EnddateEdit"));
-        EnddateEdit->setGeometry(QRect(80, 90, 101, 31));
-        EnddateEdit->setDate(QDate(2020, 1, 1));
+        endTimeLabel = new QLabel(inteAnalyWidget);
+        endTimeLabel->setObjectName(QString::fromUtf8("endTimeLabel"));
+        endTimeLabel->setGeometry(QRect(80, 90, 181, 27));
+        endTimeLabel->setFont(font);
+        endTimeLabel->setStyleSheet(QString::fromUtf8("color: rgb(0, 0, 0);\n"
+"background-color: rgb(255, 255, 255);\n"
+"border-color: rgb(0, 0, 0);\n"
+"border-width: 1px;\n"
+"border-style: solid;"));
+        startTimeSetPushButton = new QPushButton(inteAnalyWidget);
+        startTimeSetPushButton->setObjectName(QString::fromUtf8("startTimeSetPushButton"));
+        startTimeSetPushButton->setGeometry(QRect(270, 52, 21, 21));
+        startTimeSetPushButton->setStyleSheet(QString::fromUtf8("border-image: url(:/res/time_set.png);"));
+        startTimeSetPushButton_2 = new QPushButton(inteAnalyWidget);
+        startTimeSetPushButton_2->setObjectName(QString::fromUtf8("startTimeSetPushButton_2"));
+        startTimeSetPushButton_2->setGeometry(QRect(270, 92, 21, 21));
+        startTimeSetPushButton_2->setStyleSheet(QString::fromUtf8("border-image: url(:/res/time_set.png);"));
+        startTimeLabel = new QLabel(inteAnalyWidget);
+        startTimeLabel->setObjectName(QString::fromUtf8("startTimeLabel"));
+        startTimeLabel->setGeometry(QRect(80, 50, 181, 27));
+        startTimeLabel->setFont(font);
+        startTimeLabel->setStyleSheet(QString::fromUtf8("color: rgb(0, 0, 0);\n"
+"background-color: rgb(255, 255, 255);\n"
+"border-color: rgb(0, 0, 0);\n"
+"border-width: 1px;\n"
+"border-style: solid;"));
         label_11->raise();
         pushButton_15->raise();
         label_3->raise();
@@ -360,15 +314,13 @@ public:
         comboBox_3->raise();
         pushButton_8->raise();
         recordFileTableWidget->raise();
-        label_15->raise();
-        label->raise();
         alarmPushButton->raise();
         canselPushButton->raise();
         pushButton_16->raise();
-        StartcomboBox->raise();
-        EndcomboBox->raise();
-        StartdateEdit->raise();
-        EnddateEdit->raise();
+        endTimeLabel->raise();
+        startTimeSetPushButton->raise();
+        startTimeSetPushButton_2->raise();
+        startTimeLabel->raise();
 
         retranslateUi(inteAnalyWidget);
 
@@ -407,63 +359,13 @@ public:
         label_2->setText(QCoreApplication::translate("inteAnalyWidget", " \346\243\200\347\264\242\350\256\276\347\275\256", nullptr));
         label_7->setText(QCoreApplication::translate("inteAnalyWidget", " \346\225\205\351\232\234\347\255\211\347\272\247", nullptr));
         pushButton_33->setText(QString());
-        label_15->setText(QCoreApplication::translate("inteAnalyWidget", "\346\227\266\351\227\264", nullptr));
-        label->setText(QCoreApplication::translate("inteAnalyWidget", "\346\227\266\351\227\264", nullptr));
         alarmPushButton->setText(QString());
         canselPushButton->setText(QString());
         label_11->setText(QString());
-        StartcomboBox->setItemText(0, QCoreApplication::translate("inteAnalyWidget", "0\346\227\266", nullptr));
-        StartcomboBox->setItemText(1, QCoreApplication::translate("inteAnalyWidget", "1\346\227\266", nullptr));
-        StartcomboBox->setItemText(2, QCoreApplication::translate("inteAnalyWidget", "2\346\227\266", nullptr));
-        StartcomboBox->setItemText(3, QCoreApplication::translate("inteAnalyWidget", "3\346\227\266", nullptr));
-        StartcomboBox->setItemText(4, QCoreApplication::translate("inteAnalyWidget", "4\346\227\266", nullptr));
-        StartcomboBox->setItemText(5, QCoreApplication::translate("inteAnalyWidget", "5\346\227\266", nullptr));
-        StartcomboBox->setItemText(6, QCoreApplication::translate("inteAnalyWidget", "6\346\227\266", nullptr));
-        StartcomboBox->setItemText(7, QCoreApplication::translate("inteAnalyWidget", "7\346\227\266", nullptr));
-        StartcomboBox->setItemText(8, QCoreApplication::translate("inteAnalyWidget", "8\346\227\266", nullptr));
-        StartcomboBox->setItemText(9, QCoreApplication::translate("inteAnalyWidget", "9\346\227\266", nullptr));
-        StartcomboBox->setItemText(10, QCoreApplication::translate("inteAnalyWidget", "10\346\227\266", nullptr));
-        StartcomboBox->setItemText(11, QCoreApplication::translate("inteAnalyWidget", "11\346\227\266", nullptr));
-        StartcomboBox->setItemText(12, QCoreApplication::translate("inteAnalyWidget", "12\346\227\266", nullptr));
-        StartcomboBox->setItemText(13, QCoreApplication::translate("inteAnalyWidget", "13\346\227\266", nullptr));
-        StartcomboBox->setItemText(14, QCoreApplication::translate("inteAnalyWidget", "14\346\227\266", nullptr));
-        StartcomboBox->setItemText(15, QCoreApplication::translate("inteAnalyWidget", "15\346\227\266", nullptr));
-        StartcomboBox->setItemText(16, QCoreApplication::translate("inteAnalyWidget", "16\346\227\266", nullptr));
-        StartcomboBox->setItemText(17, QCoreApplication::translate("inteAnalyWidget", "17\346\227\266", nullptr));
-        StartcomboBox->setItemText(18, QCoreApplication::translate("inteAnalyWidget", "18\346\227\266", nullptr));
-        StartcomboBox->setItemText(19, QCoreApplication::translate("inteAnalyWidget", "19\346\227\266", nullptr));
-        StartcomboBox->setItemText(20, QCoreApplication::translate("inteAnalyWidget", "20\346\227\266", nullptr));
-        StartcomboBox->setItemText(21, QCoreApplication::translate("inteAnalyWidget", "21\346\227\266", nullptr));
-        StartcomboBox->setItemText(22, QCoreApplication::translate("inteAnalyWidget", "22\346\227\266", nullptr));
-        StartcomboBox->setItemText(23, QCoreApplication::translate("inteAnalyWidget", "23\346\227\266", nullptr));
-
-        EndcomboBox->setItemText(0, QCoreApplication::translate("inteAnalyWidget", "0\346\227\266", nullptr));
-        EndcomboBox->setItemText(1, QCoreApplication::translate("inteAnalyWidget", "1\346\227\266", nullptr));
-        EndcomboBox->setItemText(2, QCoreApplication::translate("inteAnalyWidget", "2\346\227\266", nullptr));
-        EndcomboBox->setItemText(3, QCoreApplication::translate("inteAnalyWidget", "3\346\227\266", nullptr));
-        EndcomboBox->setItemText(4, QCoreApplication::translate("inteAnalyWidget", "4\346\227\266", nullptr));
-        EndcomboBox->setItemText(5, QCoreApplication::translate("inteAnalyWidget", "5\346\227\266", nullptr));
-        EndcomboBox->setItemText(6, QCoreApplication::translate("inteAnalyWidget", "6\346\227\266", nullptr));
-        EndcomboBox->setItemText(7, QCoreApplication::translate("inteAnalyWidget", "7\346\227\266", nullptr));
-        EndcomboBox->setItemText(8, QCoreApplication::translate("inteAnalyWidget", "8\346\227\266", nullptr));
-        EndcomboBox->setItemText(9, QCoreApplication::translate("inteAnalyWidget", "9\346\227\266", nullptr));
-        EndcomboBox->setItemText(10, QCoreApplication::translate("inteAnalyWidget", "10\346\227\266", nullptr));
-        EndcomboBox->setItemText(11, QCoreApplication::translate("inteAnalyWidget", "11\346\227\266", nullptr));
-        EndcomboBox->setItemText(12, QCoreApplication::translate("inteAnalyWidget", "12\346\227\266", nullptr));
-        EndcomboBox->setItemText(13, QCoreApplication::translate("inteAnalyWidget", "13\346\227\266", nullptr));
-        EndcomboBox->setItemText(14, QCoreApplication::translate("inteAnalyWidget", "14\346\227\266", nullptr));
-        EndcomboBox->setItemText(15, QCoreApplication::translate("inteAnalyWidget", "15\346\227\266", nullptr));
-        EndcomboBox->setItemText(16, QCoreApplication::translate("inteAnalyWidget", "16\346\227\266", nullptr));
-        EndcomboBox->setItemText(17, QCoreApplication::translate("inteAnalyWidget", "17\346\227\266", nullptr));
-        EndcomboBox->setItemText(18, QCoreApplication::translate("inteAnalyWidget", "18\346\227\266", nullptr));
-        EndcomboBox->setItemText(19, QCoreApplication::translate("inteAnalyWidget", "19\346\227\266", nullptr));
-        EndcomboBox->setItemText(20, QCoreApplication::translate("inteAnalyWidget", "20\346\227\266", nullptr));
-        EndcomboBox->setItemText(21, QCoreApplication::translate("inteAnalyWidget", "21\346\227\266", nullptr));
-        EndcomboBox->setItemText(22, QCoreApplication::translate("inteAnalyWidget", "22\346\227\266", nullptr));
-        EndcomboBox->setItemText(23, QCoreApplication::translate("inteAnalyWidget", "23\346\227\266", nullptr));
-
-        StartdateEdit->setDisplayFormat(QCoreApplication::translate("inteAnalyWidget", "yyyy-MM-dd", nullptr));
-        EnddateEdit->setDisplayFormat(QCoreApplication::translate("inteAnalyWidget", "yyyy-MM-dd", nullptr));
+        endTimeLabel->setText(QString());
+        startTimeSetPushButton->setText(QString());
+        startTimeSetPushButton_2->setText(QString());
+        startTimeLabel->setText(QString());
     } // retranslateUi
 
 };

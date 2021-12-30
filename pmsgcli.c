@@ -506,12 +506,12 @@ PMSG_HANDLE PMSG_CreateConnect(char *pcIpAddr, int iPort)
     pthread_mutexattr_t	mutexattr;
     int iRet = 0;
 
-//    DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "PMSG_CreateConnect server ip=%s, iPort=%d\n", pcIpAddr, iPort);
+    DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "PMSG_CreateConnect server ip=%s, iPort=%d\n", pcIpAddr, iPort);
     
     ptPmsgConnInfo = (PT_PMSG_CONN_INFO)malloc(sizeof(T_PMSG_CONN_INFO));
     if (NULL == ptPmsgConnInfo)
     {		
-//		DebugPrint(DEBUG_PMSG_ERROR_PRINT, "PMSG_CreateConnect error! malloc error\n");
+        DebugPrint(DEBUG_PMSG_ERROR_PRINT, "PMSG_CreateConnect error! malloc error\n");
         return 0;	
     }
     memset(ptPmsgConnInfo, 0, sizeof(T_PMSG_CONN_INFO));
@@ -532,12 +532,12 @@ PMSG_HANDLE PMSG_CreateConnect(char *pcIpAddr, int iPort)
     {
         free(ptPmsgConnInfo);
         ptPmsgConnInfo = NULL;
-//		DebugPrint(DEBUG_PMSG_ERROR_PRINT, "PMSG_CreateConnect error! CliProcessThread create error\n");
+        DebugPrint(DEBUG_PMSG_ERROR_PRINT, "PMSG_CreateConnect error! CliProcessThread create error\n");
         return 0;	
     }
-//	DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "PMSG_CreateConnect create thread %d ok\n", (int)ptPmsgConnInfo->ThreadHandle);
+    DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "PMSG_CreateConnect create thread %d ok\n", (int)ptPmsgConnInfo->ThreadHandle);
 
-//	DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "PMSG_CreateConnect Ok\n");
+    DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "PMSG_CreateConnect Ok\n");
     return (PMSG_HANDLE)ptPmsgConnInfo;
 }
 
@@ -547,7 +547,7 @@ int PMSG_DestroyConnect(PMSG_HANDLE pMsgHandle)
     
     if (NULL == ptPmsgConnInfo)
     {	
-//		DebugPrint(DEBUG_PMSG_ERROR_PRINT, "PMSG_DestroyConnect error! pmsg handle is NULL\n");
+        DebugPrint(DEBUG_PMSG_ERROR_PRINT, "PMSG_DestroyConnect error! pmsg handle is NULL\n");
         return -1;	
     }
     ptPmsgConnInfo->iThreadRunFlag = 0;
@@ -555,9 +555,9 @@ int PMSG_DestroyConnect(PMSG_HANDLE pMsgHandle)
     // join thread exit
     if (ptPmsgConnInfo->ThreadHandle)
     {
-//		DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "PMSG_DestroyConnect, CliProcessThread join begin\n");
+        DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "PMSG_DestroyConnect, CliProcessThread join begin\n");
         pthread_join(ptPmsgConnInfo->ThreadHandle, NULL);
-//		DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "PMSG_DestroyConnect, CliProcessThread join end\n");
+        DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "PMSG_DestroyConnect, CliProcessThread join end\n");
     }
     pthread_mutex_destroy(&ptPmsgConnInfo->tPmsgMutex);
     DestroyPmsgQueue(ptPmsgConnInfo->ptPmsgQueue);
@@ -565,7 +565,7 @@ int PMSG_DestroyConnect(PMSG_HANDLE pMsgHandle)
     free(ptPmsgConnInfo);
     ptPmsgConnInfo = NULL;
     
-//	DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "PMSG_DestroyConnect Ok\n");
+    DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "PMSG_DestroyConnect Ok\n");
     return 0;
 }
 
@@ -575,11 +575,11 @@ int PMSG_GetConnectStatus(PMSG_HANDLE pMsgHandle)
     
     if (NULL == ptPmsgConnInfo)
     {
-//		DebugPrint(DEBUG_PMSG_ERROR_PRINT, "PMSG_GetConnectStatus error! pmsg handle is NULL\n");
+        DebugPrint(DEBUG_PMSG_ERROR_PRINT, "PMSG_GetConnectStatus error! pmsg handle is NULL\n");
         return -1;	
     }
 
-//	DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "PMSG_GetConnectStatus Ok, %s iConnectStatus=%d\n", ptPmsgConnInfo->acIpAddr, ptPmsgConnInfo->iConnectStatus);
+    DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "PMSG_GetConnectStatus Ok, %s iConnectStatus=%d\n", ptPmsgConnInfo->acIpAddr, ptPmsgConnInfo->iConnectStatus);
     return ptPmsgConnInfo->iConnectStatus;
 }
 
@@ -590,7 +590,7 @@ int PMSG_SendRawData(PMSG_HANDLE pMsgHandle, char *pcData, int iDataLen)
     
     if ((NULL == ptPmsgConnInfo) || (NULL == pcData) || (iDataLen <= 0))
     {
-//		DebugPrint(DEBUG_PMSG_ERROR_PRINT, "PMSG_SendRawData error! pmsg handle is NULL\n");
+        DebugPrint(DEBUG_PMSG_ERROR_PRINT, "PMSG_SendRawData error! pmsg handle is NULL\n");
         return -1;	
     }
 	
@@ -602,7 +602,7 @@ int PMSG_SendRawData(PMSG_HANDLE pMsgHandle, char *pcData, int iDataLen)
     iRet = send(ptPmsgConnInfo->iSockfd, pcData, iDataLen, 0);
     pthread_mutex_unlock(&ptPmsgConnInfo->tPmsgMutex);
     
-//	DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "PMSG_SendRawData Ok, send data len=%d\n",iRet);
+    DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "PMSG_SendRawData Ok, send data len=%d\n",iRet);
     return iRet;
 }
 
@@ -616,15 +616,15 @@ int PMSG_SendPmsgData(PMSG_HANDLE pMsgHandle, unsigned char ucMsgCmd, char *pcDa
     int iRet = 0;
     if (NULL == ptPmsgConnInfo)  
     {
-//		DebugPrint(DEBUG_PMSG_ERROR_PRINT, "PMSG_SendPmsgData error! pmsg handle is NULL\n");
+        DebugPrint(DEBUG_PMSG_ERROR_PRINT, "PMSG_SendPmsgData error! pmsg handle is NULL\n");
         return -1;	
     }
 
-//	DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "PMSG_SendPmsgData, ucMsgCmd=0x%x\n", (int)ucMsgCmd);
+    DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "PMSG_SendPmsgData, ucMsgCmd=0x%x\n", (int)ucMsgCmd);
 
     if (E_SERV_STATUS_CONNECT != ptPmsgConnInfo->iConnectStatus)
     {
-//		DebugPrint(DEBUG_PMSG_ERROR_PRINT, "PMSG_SendPmsgData error, not connected\n");
+        DebugPrint(DEBUG_PMSG_ERROR_PRINT, "PMSG_SendPmsgData error, not connected\n");
         return -1;
     }
     if (iDataLen > (1024 - 5))
@@ -664,7 +664,7 @@ int PMSG_SendPmsgData(PMSG_HANDLE pMsgHandle, unsigned char ucMsgCmd, char *pcDa
 //    printf("*************PMSG_SendPmsgData**iRet=%d\n",iRet);
     pthread_mutex_unlock(&ptPmsgConnInfo->tPmsgMutex);
     
-//	DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "PMSG_SendPmsgData Ok send data len=%d\n", iRet);
+    DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "PMSG_SendPmsgData Ok send data len=%d\n", iRet);
     return iRet;
 }
 
@@ -675,14 +675,14 @@ int PMSG_GetDataFromPmsgQueue(PMSG_HANDLE pMsgHandle, PT_PMSG_PACKET ptPkt)
 
     if (NULL == ptPmsgConnInfo)
     {
-//        DebugPrint(DEBUG_PMSG_ERROR_PRINT, "PMSG_GetDataFromPmsgQueue error! pmsg handle is NULL\n");
+        DebugPrint(DEBUG_PMSG_ERROR_PRINT, "PMSG_GetDataFromPmsgQueue error! pmsg handle is NULL\n");
         return -1;
     }
 
     iRet = GetNodeFromPmsgQueue(ptPmsgConnInfo->ptPmsgQueue, ptPkt);
     if (0 == iRet)
     {
-//        DebugPrint(DEBUG_PMSG_ERROR_PRINT, "PMSG_GetDataFromPmsgQueue error! data get error\n");
+        DebugPrint(DEBUG_PMSG_ERROR_PRINT, "PMSG_GetDataFromPmsgQueue error! data get error\n");
         return -1;
     }
 

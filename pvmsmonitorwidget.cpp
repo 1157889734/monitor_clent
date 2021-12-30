@@ -11,6 +11,7 @@
 #include <QUrl>
 #include "cmplayer.h"
 #include "vdec.h"
+#include "debug.h"
 
 
 static pthread_mutex_t g_tCmpCtrlMutex;
@@ -337,7 +338,7 @@ pvmsMonitorWidget::pvmsMonitorWidget(QWidget *parent) :
     m_temporarySaveTimer = NULL;
     m_iCameraSwitchState = NORMAL;   //摄像头切换状态默认为正常，表示不切换
     m_iPresetPasswdOkFlag = 0;
-    m_presetPasswdConfirmPage = NULL;
+//    m_presetPasswdConfirmPage = NULL;
     m_iCameraNum = 0;
     m_iCameraPlayNo = 0;
     m_iPollingFlag = 1;   //默认轮询开启
@@ -415,7 +416,7 @@ void *monitorThread(void *param)     //实时监控线程，对通道轮询、�
         iRet = GetNodeFromCmpQueue(pvmsMonitorPage->m_ptQueue, &tCmpPkt);   //读取cmp队列，对解码通道进行相应处理
         if (iRet > 0)
         {
-//            DebugPrint(DEBUG_UI_NOMAL_PRINT, "MonitorPlayThread get cmpctrl cmd:%d, ch=%d\n", tCmpPkt.iMsgCmd, tCmpPkt.iCh);
+            DebugPrint(DEBUG_UI_NOMAL_PRINT, "MonitorPlayThread get cmpctrl cmd:%d, ch=%d\n", tCmpPkt.iMsgCmd, tCmpPkt.iCh);
               pvmsMonitorPage->triggerCmpOptionCtrlSinal(tCmpPkt.iMsgCmd, tCmpPkt.iCh);
         }
 
@@ -506,7 +507,7 @@ void *monitorThread(void *param)     //实时监控线程，对通道轮询、�
         {
             if ((pvmsMonitorPage->m_tCameraInfo[i].iPresetNo != 1) && ((tPresetReturnCurTime-pvmsMonitorPage->m_tCameraInfo[i].tPtzOprateTime) >= iPresetReturnTime) && (pvmsMonitorPage->m_tCameraInfo[i].phandle != 0))   //检测预置点返回操作
             {
-    //            DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget monitor thread presetReturn timeOut, no=%d !\n",i);
+                DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget monitor thread presetReturn timeOut, no=%d !\n",i);
                 pvmsMonitorPage->triggerPresetReturnSignal(i);
                 pvmsMonitorPage->m_tCameraInfo[i].tPtzOprateTime = tPresetReturnCurTime;
             }
@@ -515,8 +516,7 @@ void *monitorThread(void *param)     //实时监控线程，对通道轮询、�
         /*检测是否要全屏*/
         if ((tFullScreenCurTime-pvmsMonitorPage->m_lastActionTime) >= FULLSCREEN_MONITOR_TIME && 0 == pvmsMonitorPage->m_iFullScreenFlag)    //界面20秒无操作,全屏
         {
-    //        DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget monitor thread fullScreen timeOut!\n");
-            //printf("tFullScreenCurTime=%d,pvmsMonitorPage->m_lastActionTime=%d\n",tFullScreenCurTime,pvmsMonitorPage->m_lastActionTime);
+            DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget monitor thread fullScreen timeOut!\n");
             if (pvmsMonitorPage->isHidden() != 1)   //只有当前处于受电弓监控界面时才做触发全屏处理
             {
 //                pvmsMonitorPage->triggerFullScreenSignal();
@@ -527,7 +527,7 @@ void *monitorThread(void *param)     //实时监控线程，对通道轮询、�
         /*检测设备状态*/
         if ((tGetDevStateCurTime - tGetDevStateOldTime) >= GET_DEVSTATE_MONITOR_TIME)
         {
-    //        DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget monitor thread get device state timeOut!\n");
+            DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget monitor thread get device state timeOut!\n");
             pvmsMonitorPage->triggerGetDevStateSignal();
             tGetDevStateOldTime = tGetDevStateCurTime;
 
@@ -536,7 +536,7 @@ void *monitorThread(void *param)     //实时监控线程，对通道轮询、�
         /*检测系统时间*/
         if ((tSetTimeCurTime - tSetTimeOldTime) >= SET_TIME_MONITOR_TIME)
         {
-            //DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget monitor thread set devUpdatePage time timeOut!\n");
+            DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget monitor thread set devUpdatePage time timeOut!\n");
             pvmsMonitorPage->triggerSetTimeSignal();
             tSetTimeOldTime = tSetTimeCurTime;
 
@@ -646,7 +646,7 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
 
     if (1 == iFirstFlag)    //程序运行起来第一次进当前界面，需要把所有的摄像头打开,摄像头开关状态为开，补光灯开关状态为开，预置点编号为0
     {
-//        DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] send CLI_SERV_MSG_TYPE_PVMS_IPC_CTRL to server to open all camera%d\n",__FUNCTION__);
+        DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] send CLI_SERV_MSG_TYPE_PVMS_IPC_CTRL to server to open all camera%d\n",__FUNCTION__);
         for (i = 0; i < m_iCameraNum; i++)
         {
             acSendBuf[0] = 1;  //发送消息的第2个字节表示操作类型，这里为开启摄像头
@@ -654,7 +654,7 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
             iRet = PMSG_SendPmsgData(m_tCameraInfo[i].phandle, CLI_SERV_MSG_TYPE_PVMS_IPC_CTRL, acSendBuf, 2);    //发送摄像头开关控制命令
             if (iRet < 0)
             {
-//                DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] PMSG_SendPmsgData CLI_SERV_MSG_TYPE_PVMS_IPC_CTRL error!iRet=%d, cameraNo=%d\n",__FUNCTION__,iRet, i);
+                DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] PMSG_SendPmsgData CLI_SERV_MSG_TYPE_PVMS_IPC_CTRL error!iRet=%d, cameraNo=%d\n",__FUNCTION__,iRet, i);
             }
             else
             {
@@ -675,7 +675,7 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
             iRet = PMSG_SendPmsgData(m_tCameraInfo[i].phandle, CLI_SERV_MSG_TYPE_PVMS_LIGHT_CTRL, acSendBuf, 2);    //发送补光灯开关控制命令
             if (iRet < 0)
             {
-//                DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] PMSG_SendPmsgData CLI_SERV_MSG_TYPE_PVMS_LIGHT_CTRL error!iRet=%d, cameraNo=%d\n",__FUNCTION__,iRet, i);
+                DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] PMSG_SendPmsgData CLI_SERV_MSG_TYPE_PVMS_LIGHT_CTRL error!iRet=%d, cameraNo=%d\n",__FUNCTION__,iRet, i);
             }
             else
             {
@@ -929,22 +929,22 @@ void pvmsMonitorWidget::presetSetCtrlSlot()
     int iRet = 0;
     char acSendBuf[4] = {0};
 
-    if (0 == m_iPresetPasswdOkFlag)
-    {
+//    if (0 == m_iPresetPasswdOkFlag)
+//    {
 
-        if (NULL == m_presetPasswdConfirmPage)
-        {
-            m_presetPasswdConfirmPage = new presetPasswdConfirm(this);  //新建一个确认密码的子窗体
-        }
-        m_presetPasswdConfirmPage->move(300, 270);
-        m_presetPasswdConfirmPage->show();
-        connect(m_presetPasswdConfirmPage, SIGNAL(sendCloseSignal()), this, SLOT(closePresetPasswdPageSlot()));  //密码验证不通过会受到close信号，closePresetPasswdPageSlot里只会关闭密码验证界面
-        connect(m_presetPasswdConfirmPage, SIGNAL(sendOkSignal()), this, SLOT(setPresetSlot()));  //密码验证正确会受到OK信号，setPresetSlot里会关闭密码验证界面，并执行预置点设置操作
+//        if (NULL == m_presetPasswdConfirmPage)
+//        {
+//            m_presetPasswdConfirmPage = new presetPasswdConfirm(this);  //新建一个确认密码的子窗体
+//        }
+//        m_presetPasswdConfirmPage->move(300, 270);
+//        m_presetPasswdConfirmPage->show();
+//        connect(m_presetPasswdConfirmPage, SIGNAL(sendCloseSignal()), this, SLOT(closePresetPasswdPageSlot()));  //密码验证不通过会受到close信号，closePresetPasswdPageSlot里只会关闭密码验证界面
+//        connect(m_presetPasswdConfirmPage, SIGNAL(sendOkSignal()), this, SLOT(setPresetSlot()));  //密码验证正确会受到OK信号，setPresetSlot里会关闭密码验证界面，并执行预置点设置操作
 
-    }
-    else
-    {
-//        DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget preset set option ctrl!\n");
+//    }
+//    else
+//    {
+        DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget preset set option ctrl!\n");
 
         QString  strr = "是否设置预置位信息?";
         static QMessageBox msgBox(QMessageBox::Question,QString(tr("")),QString(strr));
@@ -965,16 +965,16 @@ void pvmsMonitorWidget::presetSetCtrlSlot()
         iRet = PMSG_SendPmsgData(this->m_tCameraInfo[m_iCameraPlayNo].phandle, CLI_SERV_MSG_TYPE_SET_PRESETS, acSendBuf, 3);    //发送预置点控制命令
         if (iRet < 0)
         {
-//            DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] camera %d send CLI_SERV_MSG_TYPE_SET_PRESETS failed,iRet=%d\n", __FUNCTION__, m_iCameraPlayNo, iRet);
+            DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] camera %d send CLI_SERV_MSG_TYPE_SET_PRESETS failed,iRet=%d\n", __FUNCTION__, m_iCameraPlayNo, iRet);
         }
         struct sysinfo s_info;
         sysinfo(&s_info);
         this->m_tCameraInfo[m_iCameraPlayNo].tPtzOprateTime = s_info.uptime;
         this->m_tCameraInfo[m_iCameraPlayNo].iPresetNo = m_iSelectPresetNo;
-//        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "pvmsMonitorWidget set preserNo %d success!\n", m_iSelectPresetNo);
+        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "pvmsMonitorWidget set preserNo %d success!\n", m_iSelectPresetNo);
 
 
-    }
+//    }
 
 }
 void pvmsMonitorWidget::presetGetCtrlSlot()
@@ -982,7 +982,7 @@ void pvmsMonitorWidget::presetGetCtrlSlot()
     int iRet = 0;
       char acSendBuf[4] = {0};
 
-//      DebugPrint(DEBUG_UI_OPTION_PRINT, "pvmsMonitorWidget preset get button pressed! PresetNo=%d\n", m_iSelectPresetNo);
+      DebugPrint(DEBUG_UI_OPTION_PRINT, "pvmsMonitorWidget preset get button pressed! PresetNo=%d\n", m_iSelectPresetNo);
 
       QString  strr = "是否调用预置位?";
       static QMessageBox msgBox(QMessageBox::Question,QString(tr("")),QString(strr));
@@ -1003,7 +1003,7 @@ void pvmsMonitorWidget::presetGetCtrlSlot()
       iRet = PMSG_SendPmsgData(this->m_tCameraInfo[m_iCameraPlayNo].phandle, CLI_SERV_MSG_TYPE_SET_PRESETS, acSendBuf, 3);	//发送预置点控制命令
       if (iRet < 0)
       {
-//          DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] PMSG_SendPmsgData CLI_SERV_MSG_TYPE_SET_PRESETS error!iRet=%d, cameraNo=%d\n",__FUNCTION__,iRet, m_iCameraPlayNo);
+          DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] PMSG_SendPmsgData CLI_SERV_MSG_TYPE_SET_PRESETS error!iRet=%d, cameraNo=%d\n",__FUNCTION__,iRet, m_iCameraPlayNo);
       }
       struct sysinfo s_info;
       memset(&s_info,0,sizeof(s_info));
@@ -1054,9 +1054,9 @@ void pvmsMonitorWidget::temporarySaveBeginSlot()
     T_LOG_INFO tLogInfo;
     PMSG_HANDLE pmsgHandle = 0;
 
-//    DebugPrint(DEBUG_UI_OPTION_PRINT, "pvmsMonitorWidget temporarySave button pressed!\n");
+    DebugPrint(DEBUG_UI_OPTION_PRINT, "pvmsMonitorWidget temporarySave button pressed!\n");
 
-//    DebugPrint(DEBUG_UI_MESSAGE_PRINT, "pvmsMonitorWidget temporarySave confirm!\n");
+    DebugPrint(DEBUG_UI_MESSAGE_PRINT, "pvmsMonitorWidget temporarySave confirm!\n");
     static QMessageBox msgBox(QMessageBox::Information,QString(tr("提示")),QString(tr("是否立即保存?")));
     msgBox.setWindowFlags(Qt::FramelessWindowHint);
     msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
@@ -1065,10 +1065,10 @@ void pvmsMonitorWidget::temporarySaveBeginSlot()
     iRet = msgBox.exec();
     if(iRet != QMessageBox::Yes)
     {
-//        DebugPrint(DEBUG_UI_OPTION_PRINT, "pvmsMonitorWidget temporarySave cancle!\n");
+        DebugPrint(DEBUG_UI_OPTION_PRINT, "pvmsMonitorWidget temporarySave cancle!\n");
         return;
     }
-//    DebugPrint(DEBUG_UI_OPTION_PRINT, "pvmsMonitorWidget temporarySave confirm!\n");
+    DebugPrint(DEBUG_UI_OPTION_PRINT, "pvmsMonitorWidget temporarySave confirm!\n");
 
 
     ui->temporarySavePushButton->setStyleSheet("background-image:url(:/monres/saveing.bmp)");
@@ -1087,17 +1087,17 @@ void pvmsMonitorWidget::temporarySaveBeginSlot()
 
     for (i = 0; i < tTrainConfigInfo.iNvrServerCount; i++)
     {
-//        DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] server%d's PvmsCameraNum=%d\n",__FUNCTION__,i, tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum);
+        DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] server%d's PvmsCameraNum=%d\n",__FUNCTION__,i, tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum);
         acSendBuf[0] = tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO;	  //发送消息的第1个字节表示受电弓服务器车厢号
         for (j = 0; j < tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum; j++)
         {
             acSendBuf[1] = 8+j;   //发送消息的第2个字节表示受电弓摄像机位置号
-//            DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] camera %d, no=%d send CLI_SERV_MSG_TYPE_SEND_TEMPORARY_SAVE\n", __FUNCTION__, j, 8+j);
+            DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] camera %d, no=%d send CLI_SERV_MSG_TYPE_SEND_TEMPORARY_SAVE\n", __FUNCTION__, j, 8+j);
             pmsgHandle = STATE_GetNvrServerPmsgHandle(i);
             iRet = PMSG_SendPmsgData(pmsgHandle, CLI_SERV_MSG_TYPE_SEND_TEMPORARY_SAVE, acSendBuf, 2);    //发送临时存储命令
             if (iRet <= 0)
             {
-//                DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] camera %d, no=%d send CLI_SERV_MSG_TYPE_SEND_TEMPORARY_SAVE failed\n", __FUNCTION__, j, 8+j);
+                DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] camera %d, no=%d send CLI_SERV_MSG_TYPE_SEND_TEMPORARY_SAVE failed\n", __FUNCTION__, j, 8+j);
             }
             else
             {
@@ -1105,7 +1105,7 @@ void pvmsMonitorWidget::temporarySaveBeginSlot()
                 tLogInfo.iLogType = 0;
                 snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "camera %d.%d temporary save OK", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO, 200+j);
                 LOG_WriteLog(&tLogInfo);
-//                DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] camera %d, no=%d send CLI_SERV_MSG_TYPE_SEND_TEMPORARY_SAVE Ok\n", __FUNCTION__, j, 8+j);
+                DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] camera %d, no=%d send CLI_SERV_MSG_TYPE_SEND_TEMPORARY_SAVE Ok\n", __FUNCTION__, j, 8+j);
             }
         }
     }
@@ -1123,7 +1123,7 @@ void pvmsMonitorWidget::cameraSwitchSlot()
         memset(&tTrainConfigInfo, 0, sizeof(T_TRAIN_CONFIG));
         STATE_GetCurrentTrainConfigInfo(&tTrainConfigInfo);
 
-//        DebugPrint(DEBUG_UI_OPTION_PRINT, "pvmsMonitorWidget cameraSwitch button pressed!\n");
+        DebugPrint(DEBUG_UI_OPTION_PRINT, "pvmsMonitorWidget cameraSwitch button pressed!\n");
 
         if (1 == m_iPollingFlag)
         {
@@ -1133,7 +1133,7 @@ void pvmsMonitorWidget::cameraSwitchSlot()
 
         if (CAMERA_ON == m_tCameraInfo[m_iCameraPlayNo].iCameraSwitchState)
         {
-//            DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget close camera!\n");
+            DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget close camera!\n");
             QString  strr = QString("%1%2%3").arg("是否关闭").arg(m_iCameraPlayNo+1).arg("号受电弓摄像机?");
             static QMessageBox msgBox(QMessageBox::Question,QString(tr("")),QString(strr));
             msgBox.setWindowFlags(Qt::FramelessWindowHint);
@@ -1174,7 +1174,7 @@ void pvmsMonitorWidget::cameraSwitchSlot()
             {
                 return;
             }
-//                DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget open camera!\n");
+            DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget open camera!\n");
             emit chStateLabelTextCtrlSignal(1);  //触发让通道状态标签显示文本的信号
             emit camSwitchButtonTextCtrlSignal(0);  //触发让摄像头开关按钮显示文本的信号
 
@@ -1200,7 +1200,7 @@ void pvmsMonitorWidget::cameraSwitchSlot()
         iRet = PMSG_SendPmsgData(this->m_tCameraInfo[m_iCameraPlayNo].phandle, CLI_SERV_MSG_TYPE_PVMS_IPC_CTRL, acSendBuf, 2);    //发送摄像头开关控制命令
         if (iRet < 0)
         {
-//                DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] PMSG_SendPmsgData CLI_SERV_MSG_TYPE_PVMS_IPC_CTRL error!iRet=%d, cameraNo=%d\n",__FUNCTION__,iRet, m_iCameraPlayNo);
+                DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] PMSG_SendPmsgData CLI_SERV_MSG_TYPE_PVMS_IPC_CTRL error!iRet=%d, cameraNo=%d\n",__FUNCTION__,iRet, m_iCameraPlayNo);
         }
         else
         {
@@ -1244,7 +1244,7 @@ void pvmsMonitorWidget::fillLightSwitchSlot()
     T_TRAIN_CONFIG tTrainConfigInfo;
     T_LOG_INFO tLogInfo;
 
-//    DebugPrint(DEBUG_UI_OPTION_PRINT, "pvmsMonitorWidget fillLightSwitch button pressed!\n");
+    DebugPrint(DEBUG_UI_OPTION_PRINT, "pvmsMonitorWidget fillLightSwitch button pressed!\n");
 
 
     /*发送开关补光灯的消息给服务器，消息内容为2个字节，第一个字节表示操作类型:开启还是关闭补光灯，第二个字节表示受电弓摄像机位置号*/
@@ -1263,7 +1263,7 @@ void pvmsMonitorWidget::fillLightSwitchSlot()
         }
 
 
-//        DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget close fillLight!\n");
+        DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget close fillLight!\n");
         emit fillLightSwitchButtonTextCtrlSignal(1);  //触发让补光灯开关按钮显示文本的信号
 
         acSendBuf[0] = 2;  //操作类型为关闭补光灯
@@ -1283,7 +1283,7 @@ void pvmsMonitorWidget::fillLightSwitchSlot()
             return;
         }
 
-//        DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget open fillLight!\n");
+        DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget open fillLight!\n");
         emit fillLightSwitchButtonTextCtrlSignal(0);  //触发让补光灯开关按钮显示文本的信号
 
         acSendBuf[0] = 1;  //操作类型为开启补光灯
@@ -1293,7 +1293,7 @@ void pvmsMonitorWidget::fillLightSwitchSlot()
     iRet = PMSG_SendPmsgData(this->m_tCameraInfo[m_iCameraPlayNo].phandle, CLI_SERV_MSG_TYPE_PVMS_LIGHT_CTRL, acSendBuf, 2);    //发送补光灯开关控制命令
     if (iRet < 0)
     {
-//        DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] PMSG_SendPmsgData CLI_SERV_MSG_TYPE_PVMS_LIGHT_CTRL error!iRet=%d, cameraNo=%d\n",__FUNCTION__,iRet, m_iCameraPlayNo);
+        DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] PMSG_SendPmsgData CLI_SERV_MSG_TYPE_PVMS_LIGHT_CTRL error!iRet=%d, cameraNo=%d\n",__FUNCTION__,iRet, m_iCameraPlayNo);
     }
     else
     {
@@ -1351,29 +1351,29 @@ void pvmsMonitorWidget::fillLightSwitchEndSlot()
 
 void pvmsMonitorWidget::closePresetPasswdPageSlot()    //关闭预置点密码确认界面
 {
-    if(NULL==this->m_presetPasswdConfirmPage)
-    {
-        return;
-    }
-    else
-    {
-        delete this->m_presetPasswdConfirmPage;
-    }
-    this->m_presetPasswdConfirmPage=NULL;
+//    if(NULL==this->m_presetPasswdConfirmPage)
+//    {
+//        return;
+//    }
+//    else
+//    {
+//        delete this->m_presetPasswdConfirmPage;
+//    }
+//    this->m_presetPasswdConfirmPage=NULL;
 }
 void pvmsMonitorWidget::setPresetSlot()
 {
-    m_iPresetPasswdOkFlag = 1;
+//    m_iPresetPasswdOkFlag = 1;
 
-    if(NULL==this->m_presetPasswdConfirmPage)
-    {
-        return;
-    }
-    else
-    {
-        delete this->m_presetPasswdConfirmPage;
-    }
-    this->m_presetPasswdConfirmPage=NULL;
+//    if(NULL==this->m_presetPasswdConfirmPage)
+//    {
+//        return;
+//    }
+//    else
+//    {
+//        delete this->m_presetPasswdConfirmPage;
+//    }
+//    this->m_presetPasswdConfirmPage=NULL;
 
 }
 
@@ -1394,7 +1394,7 @@ void pvmsMonitorWidget::setRecordPlayFlag(int iFlag)
     int i = 0;
     T_CMP_PACKET tPkt;
 
-//    DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] set record flag to %d!\n", __FUNCTION__, iFlag);
+    DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] set record flag to %d!\n", __FUNCTION__, iFlag);
     m_iRecordPlayFlag = iFlag;
 
     if (1 == m_iRecordPlayFlag)   //录像回放使禁止实时的所有使能，确保回放能正常打开并使能显示
@@ -1419,7 +1419,7 @@ void pvmsMonitorWidget::videoPollingSignalCtrl()
     int i = 0, iLastCamaraNo = 0;
     T_CMP_PACKET tPkt;
 
-//    DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] camera %d Polling Ctrl!\n", __FUNCTION__, m_iCameraPlayNo);
+    DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] camera %d Polling Ctrl!\n", __FUNCTION__, m_iCameraPlayNo);
 
     /*只有全局使能情况下的当前摄像头使能显示，其他摄像头全部禁止显示*/
     for (i = 0; i < m_iCameraNum; i++)
@@ -1490,11 +1490,11 @@ void pvmsMonitorWidget::videoPollingSignalCtrl()
         emit fillLightSwitchButtonTextCtrlSignal(1);  //触发让补光灯开关按钮显示文本的信号
     }
 
-    if (m_presetPasswdConfirmPage != NULL)    //摄像头切换了，如果弹出了预置点密码确认界面，则关闭，避免出现跨云台设置预置点的问题
-    {
-        delete m_presetPasswdConfirmPage;
-        m_presetPasswdConfirmPage = NULL;
-    }
+//    if (m_presetPasswdConfirmPage != NULL)    //摄像头切换了，如果弹出了预置点密码确认界面，则关闭，避免出现跨云台设置预置点的问题
+//    {
+//        delete m_presetPasswdConfirmPage;
+//        m_presetPasswdConfirmPage = NULL;
+//    }
 
     if (this->isHidden() != 1)
     {
@@ -1528,11 +1528,11 @@ void pvmsMonitorWidget::setFullScreenSignalCtrl()
 
         m_channelStateLabel->setGeometry(452, 230, 130, 50);
         m_channelNoLabel->setGeometry(20, 690, 100, 50);
-        if (m_presetPasswdConfirmPage != NULL)
-        {
-            m_presetPasswdConfirmPage->hide();
+//        if (m_presetPasswdConfirmPage != NULL)
+//        {
+//            m_presetPasswdConfirmPage->hide();
 
-        }
+//        }
         emit hideAlarmWidgetSignal();
         m_iFullScreenFlag = 1;
     }
@@ -1544,7 +1544,7 @@ void pvmsMonitorWidget::presetReturnSignalCtrl(int iCameraNO)
     char acSendBuf[4] = {0};
     int iRet = 0;
 
-//    DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] camera %d presetReturn Ctrl!\n", __FUNCTION__, iCameraNO);
+    DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] camera %d presetReturn Ctrl!\n", __FUNCTION__, iCameraNO);
 
     /*发送调用预置点1的消息给服务器，消息内容为3个字节，第一个字节表示控制类型:设置还是调用预置点，第二个字节表示预置点号，第三个字节表示受电弓摄像机位置号*/
     acSendBuf[0] = E_PRESET_GET;
@@ -1553,7 +1553,7 @@ void pvmsMonitorWidget::presetReturnSignalCtrl(int iCameraNO)
     iRet = PMSG_SendPmsgData(m_tCameraInfo[iCameraNO].phandle, CLI_SERV_MSG_TYPE_SET_PRESETS, acSendBuf, 3);    //发送预置点控制命令
     if (iRet < 0)
     {
-//        DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] PMSG_SendPmsgData CLI_SERV_MSG_TYPE_SET_PRESETS prestNo 1 error!iRet=%d!cameraNo=%d\n", __FUNCTION__, iRet, iCameraNO);
+        DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] PMSG_SendPmsgData CLI_SERV_MSG_TYPE_SET_PRESETS prestNo 1 error!iRet=%d!cameraNo=%d\n", __FUNCTION__, iRet, iCameraNO);
     }
     else
     {
@@ -2036,7 +2036,7 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
 
     if (event->type()==QEvent::MouseButtonPress || event->type()==QEvent::MouseMove) //判断界面操作
     {
-            //DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] a mousemove or movebuttonpress or a keypress is checked!\n", __FUNCTION__);
+            DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] a mousemove or movebuttonpress or a keypress is checked!\n", __FUNCTION__);
             if (event->type()==QEvent::MouseMove)
             {
                 QMouseEvent *mEvent = (QMouseEvent *)event;
@@ -2071,7 +2071,7 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
                 }
                 m_iFullScreenFlag = 0;
 
-//                DebugPrint(DEBUG_UI_OPTION_PRINT, "pvmsMonitorWidget quit full screen!\n");
+                DebugPrint(DEBUG_UI_OPTION_PRINT, "pvmsMonitorWidget quit full screen!\n");
                 QMouseEvent *mouseEvent=static_cast<QMouseEvent*>(event);
                 if(mouseEvent->button()==Qt::RightButton)    //只响应鼠标左击
                 {
@@ -2128,7 +2128,7 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
                             CMP_SetPlayEnable(m_tCameraInfo[i].cmpHandle, 0);
                             usleep(1000*10);
                         }
-        //                DebugPrint(DEBUG_UI_OPTION_PRINT, "pvmsMonitorWidget mouse double click to full screen!\n");
+                        DebugPrint(DEBUG_UI_OPTION_PRINT, "pvmsMonitorWidget mouse double click to full screen!\n");
                         m_playWin->move(0, 0);
                         m_playWin->resize(1024, 768);
 
@@ -2222,11 +2222,11 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
         acSendBuf[1] = t_ptzOption.i8MoveType;
         acSendBuf[2] = this->m_tCameraInfo[m_iCameraPlayNo].iPosNO;      //发送消息的第3个字节表示受电弓摄像机位置号
 
-//        DebugPrint(DEBUG_UI_OPTION_PRINT, "pvmsMonitorWidget ptz option, CtrlType=%d, MoveType=%d, camera no=%d!\n",t_ptzOption.i8CtrlType, t_ptzOption.i8MoveType, m_iCameraPlayNo);
+        DebugPrint(DEBUG_UI_OPTION_PRINT, "pvmsMonitorWidget ptz option, CtrlType=%d, MoveType=%d, camera no=%d!\n",t_ptzOption.i8CtrlType, t_ptzOption.i8MoveType, m_iCameraPlayNo);
         iRet = PMSG_SendPmsgData(this->m_tCameraInfo[m_iCameraPlayNo].phandle, CLI_SERV_MSG_TYPE_SET_PTZ, acSendBuf, 3);    //发送云台控制命令
         if (iRet < 0)
         {
-//            DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] camera %d send CLI_SERV_MSG_TYPE_SET_PTZ failed,iRet=%d\n", __FUNCTION__, m_iCameraPlayNo, iRet);
+            DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] camera %d send CLI_SERV_MSG_TYPE_SET_PTZ failed,iRet=%d\n", __FUNCTION__, m_iCameraPlayNo, iRet);
         }
         else
         {
@@ -2261,7 +2261,7 @@ void pvmsMonitorWidget::pvmsDownEndSlot1()
     iRet = PMSG_SendPmsgData(m_tCameraInfo[0].phandle, CLI_SERV_MSG_TYPE_PVMS_LIGHT_CTRL, acSendBuf, 2);    //发送补光灯开关控制命令
     if (iRet < 0)
     {
-//        DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] PMSG_SendPmsgData CLI_SERV_MSG_TYPE_PVMS_LIGHT_CTRL error!iRet=%d, cameraNo=%d\n",__FUNCTION__,iRet, 0);
+        DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] PMSG_SendPmsgData CLI_SERV_MSG_TYPE_PVMS_LIGHT_CTRL error!iRet=%d, cameraNo=%d\n",__FUNCTION__,iRet, 0);
     }
     else
     {
@@ -2311,7 +2311,7 @@ void pvmsMonitorWidget::pvmsDownEndSlot2()
     iRet = PMSG_SendPmsgData(m_tCameraInfo[1].phandle, CLI_SERV_MSG_TYPE_PVMS_LIGHT_CTRL, acSendBuf, 2);    //发送补光灯开关控制命令
     if (iRet < 0)
     {
-//        DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] PMSG_SendPmsgData CLI_SERV_MSG_TYPE_PVMS_LIGHT_CTRL error!iRet=%d, cameraNo=%d\n",__FUNCTION__,iRet, 1);
+        DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] PMSG_SendPmsgData CLI_SERV_MSG_TYPE_PVMS_LIGHT_CTRL error!iRet=%d, cameraNo=%d\n",__FUNCTION__,iRet, 1);
     }
     else
     {
@@ -2361,7 +2361,7 @@ void pvmsMonitorWidget::pvmsDownEndSlot3()
     iRet = PMSG_SendPmsgData(m_tCameraInfo[2].phandle, CLI_SERV_MSG_TYPE_PVMS_LIGHT_CTRL, acSendBuf, 2);    //发送补光灯开关控制命令
     if (iRet < 0)
     {
-//        DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] PMSG_SendPmsgData CLI_SERV_MSG_TYPE_PVMS_LIGHT_CTRL error!iRet=%d, cameraNo=%d\n",__FUNCTION__,iRet, 2);
+        DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] PMSG_SendPmsgData CLI_SERV_MSG_TYPE_PVMS_LIGHT_CTRL error!iRet=%d, cameraNo=%d\n",__FUNCTION__,iRet, 2);
     }
     else
     {
@@ -2411,7 +2411,7 @@ void pvmsMonitorWidget::pvmsDownEndSlot4()
     iRet = PMSG_SendPmsgData(m_tCameraInfo[3].phandle, CLI_SERV_MSG_TYPE_PVMS_LIGHT_CTRL, acSendBuf, 2);    //发送补光灯开关控制命令
     if (iRet < 0)
     {
-//        DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] PMSG_SendPmsgData CLI_SERV_MSG_TYPE_PVMS_LIGHT_CTRL error!iRet=%d, cameraNo=%d\n",__FUNCTION__,iRet, 3);
+        DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] PMSG_SendPmsgData CLI_SERV_MSG_TYPE_PVMS_LIGHT_CTRL error!iRet=%d, cameraNo=%d\n",__FUNCTION__,iRet, 3);
     }
     else
     {
@@ -2486,10 +2486,10 @@ void pvmsMonitorWidget::blackScreenCtrlSlot()     //黑屏触发信号处理，�
         {
             m_channelNoLabel->setGeometry(20, 690, 100, 50);
         }
-        if (m_presetPasswdConfirmPage != NULL)
-        {
-            m_presetPasswdConfirmPage->show();
-        }
+//        if (m_presetPasswdConfirmPage != NULL)
+//        {
+//            m_presetPasswdConfirmPage->show();
+//        }
 
         emit showAlarmWidgetSignal();
     }
@@ -2522,7 +2522,7 @@ void pvmsMonitorWidget::pvmsUpdownCtrl(char *pcMsgData)
     {
         if (PVMS_UP == m_tCameraInfo[i].iPvmsUpdownState)
         {
-//            DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] get cameraNo%d pvms updown signal,state is up\n",__FUNCTION__, i);
+            DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] get cameraNo%d pvms updown signal,state is up\n",__FUNCTION__, i);
             if (m_tCameraInfo[i].pvmsDownMonitorTimer != NULL)   //收到了升弓信号就删除降弓监控定时器，取消重新开始
             {
                 if (m_tCameraInfo[i].pvmsDownMonitorTimer ->isActive())
@@ -2544,7 +2544,7 @@ void pvmsMonitorWidget::pvmsUpdownCtrl(char *pcMsgData)
                 iRet = PMSG_SendPmsgData(m_tCameraInfo[i].phandle, CLI_SERV_MSG_TYPE_PVMS_LIGHT_CTRL, acSendBuf, 2);    //发送补光灯开关控制命令
                 if (iRet < 0)
                 {
-//                    DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] PMSG_SendPmsgData CLI_SERV_MSG_TYPE_PVMS_LIGHT_CTRL error!iRet=%d, cameraNo=%d\n",__FUNCTION__,iRet, i);
+                    DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] PMSG_SendPmsgData CLI_SERV_MSG_TYPE_PVMS_LIGHT_CTRL error!iRet=%d, cameraNo=%d\n",__FUNCTION__,iRet, i);
                 }
                 else
                 {
@@ -2569,7 +2569,7 @@ void pvmsMonitorWidget::pvmsUpdownCtrl(char *pcMsgData)
         }
         else if ((PVMS_DOWN == m_tCameraInfo[i].iPvmsUpdownState)  && (FILLLIGHT_ON == m_tCameraInfo[i].iFillLightSwitchState))
         {
-//            DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] get cameraNo%d pvms updown signal,state is down\n",__FUNCTION__, i);
+            DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] get cameraNo%d pvms updown signal,state is down\n",__FUNCTION__, i);
 
             if (NULL == m_tCameraInfo[i].pvmsDownMonitorTimer)
             {
@@ -2616,7 +2616,7 @@ int pvmsMonitorWidget::pmsgCtrl(PMSG_HANDLE pHandle, unsigned char ucMsgCmd, cha
                 {
                     break;
                 }
-//                DebugPrint(DEBUG_PMSG_DATA_PRINT, "pvmsMonitorWidget Widget get pmsg response cmd 0x%x data:%d\n", ucMsgCmd, pcMsgData[0]);
+                DebugPrint(DEBUG_PMSG_DATA_PRINT, "pvmsMonitorWidget Widget get pmsg response cmd 0x%x data:%d\n", ucMsgCmd, pcMsgData[0]);
                 break;
             }
             case SERV_CLI_MSG_TYPE_PVMS_UPDOWN_REPORT:
@@ -2627,7 +2627,7 @@ int pvmsMonitorWidget::pmsgCtrl(PMSG_HANDLE pHandle, unsigned char ucMsgCmd, cha
                 }
                 else
                 {
-//                    DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "pvmsMonitorWidget Widget get pmsg cmd 0x%x\n", ucMsgCmd);
+                    DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "pvmsMonitorWidget Widget get pmsg cmd 0x%x\n", ucMsgCmd);
 
                     /*没收到PIS发送的升降弓命令之前，PIS和NVR发过来的升降弓命令都处理，一旦收到过PIS发过来的，之后对NVR发过来的命令就不处理了*/
                     if (pHandle == m_PisServerPhandle)
@@ -2652,7 +2652,7 @@ int pvmsMonitorWidget::pmsgCtrl(PMSG_HANDLE pHandle, unsigned char ucMsgCmd, cha
                 {
                     if (m_iPisGetFlag != 1)   //只有没收到过PIS发送的升降弓命令才进行这条命令的处理
                     {
-//                        DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "pvmsMonitorWidget Widget get pmsg cmd 0x%x %d-%d\n", ucMsgCmd, m_iPisGetFlag, pcMsgData[0]);
+                        DebugPrint(DEBUG_PMSG_NORMAL_PRINT, "pvmsMonitorWidget Widget get pmsg cmd 0x%x %d-%d\n", ucMsgCmd, m_iPisGetFlag, pcMsgData[0]);
                         memset(&tPvmsUpdownInfo, 0, sizeof(T_PVMS_UPDOWN_INFO));
 
                         if (1 == pcMsgData[0])   //升弓
@@ -2694,11 +2694,11 @@ pvmsMonitorWidget::~pvmsMonitorWidget()
         pthread_mutex_destroy(&tMutex);
     }
 
-    if (m_presetPasswdConfirmPage != NULL)
-    {
-        delete m_presetPasswdConfirmPage;
-        m_presetPasswdConfirmPage = NULL;
-    }
+//    if (m_presetPasswdConfirmPage != NULL)
+//    {
+//        delete m_presetPasswdConfirmPage;
+//        m_presetPasswdConfirmPage = NULL;
+//    }
     delete g_buttonGroup;
     g_buttonGroup = NULL;
 

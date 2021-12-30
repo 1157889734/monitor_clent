@@ -8,6 +8,7 @@
 #include <QTableWidgetItem>
 #include <QButtonGroup>
 #include "state.h"
+#include "debug.h"
 
 
 static int g_ibShowKeyboard = 0;
@@ -284,12 +285,8 @@ void usergroupManage::on_savepushButton_clicked()
     QString value_passwd = ui->passwdlineEdit->text();
     QString value_ensure_passwd = ui->surelineEdit->text();
 
-    if(ui->usernamelineEdit->text().isEmpty())
-    {
-        return;
-    }
 
-    if(ui->passwdlineEdit->text().isEmpty() || ui->surelineEdit->text().isEmpty())
+    if(ui->passwdlineEdit->text().isEmpty() || ui->surelineEdit->text().isEmpty() || ui->usernamelineEdit->text().isEmpty())
     {
 
         static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("密码不能为空!")));
@@ -402,8 +399,7 @@ void usergroupManage::on_savepushButton_clicked()
             {
                 if (0 == QString::compare(value_type, tr("supperManager")))
                 {
-    //                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "userManageWidget this user type has no right to delete user!\n");
-//                    qDebug()<<"userManageWidget this user type has no right to delete user!"<<__FUNCTION__<<__LINE__<<endl;
+                    DebugPrint(DEBUG_UI_MESSAGE_PRINT, "userManageWidget this user type has no right to delete user!\n");
                     static QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("没有权限添加此类型成员!"));     //新建消息提示框，提示错误信息
                     box.setWindowFlags(Qt::FramelessWindowHint);
                     box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
@@ -418,8 +414,7 @@ void usergroupManage::on_savepushButton_clicked()
             {
                 if (0 == QString::compare(value_type, tr("supperManager")) || (0 == QString::compare(value_type, tr("manager"))))
                 {
-    //                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "userManageWidget this user type has no right to delete user!\n");
-//                    qDebug()<<"userManageWidget this user type has no right to delete user!"<<__FUNCTION__<<__LINE__<<endl;
+                    DebugPrint(DEBUG_UI_MESSAGE_PRINT, "userManageWidget this user type has no right to delete user!\n");
                     static QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("没有权限添加此类型成员!"));     //新建消息提示框，提示错误信息
                     box.setWindowFlags(Qt::FramelessWindowHint);
                     box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
@@ -431,7 +426,7 @@ void usergroupManage::on_savepushButton_clicked()
             }
             else if (!strcmp(acUserType, "operator"))
             {
-//                qDebug()<<"userManageWidget this user type has no right to delete user!"<<__FUNCTION__<<__LINE__<<endl;
+                qDebug()<<"userManageWidget this user type has no right to delete user!"<<__FUNCTION__<<__LINE__<<endl;
                 static QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("没有权力添加成员!"));     //新建消息提示框，提示错误信息
                 box.setWindowFlags(Qt::FramelessWindowHint);
                 box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
@@ -507,8 +502,7 @@ void usergroupManage::on_deletepushButton_clicked()
         {
             if (0 == QString::compare(ui->tableWidget->item(rowIndex, 1)->text(), tr("超级管理员")))
             {
-//                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "userManageWidget this user type has no right to delete user!\n");
-//                qDebug()<<"userManageWidget this user type has no right to delete user!"<<__FUNCTION__<<__LINE__<<endl;
+                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "userManageWidget this user type has no right to delete user!\n");
                 static QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("没有权力删除此类型成员!"));     //新建消息提示框，提示错误信息
                 box.setWindowFlags(Qt::FramelessWindowHint);
                 box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
@@ -523,8 +517,7 @@ void usergroupManage::on_deletepushButton_clicked()
             if (0 == QString::compare(ui->tableWidget->item(rowIndex, 1)->text(), tr("超级管理员")) ||
                 0 == QString::compare(ui->tableWidget->item(rowIndex, 1)->text(), tr("管理员")))
             {
-//                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "userManageWidget this user type has no right to delete user!\n");
-//                qDebug()<<"userManageWidget this user type has no right to delete user!"<<__FUNCTION__<<__LINE__<<endl;
+                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "userManageWidget this user type has no right to delete user!\n");
                 static QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("没有权力删除此类型成员!"));     //新建消息提示框，提示错误信息
                 box.setWindowFlags(Qt::FramelessWindowHint);
                 box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
@@ -536,8 +529,7 @@ void usergroupManage::on_deletepushButton_clicked()
         }
         else if (!strcmp(acUserType, "operator"))   //操作员不能删除任何用户
         {
-//            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "userManageWidget this user type has no right to delete user!\n");
-//            qDebug()<<"userManageWidget this user type has no right to delete user!"<<__FUNCTION__<<__LINE__<<endl;
+            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "userManageWidget this user type has no right to delete user!\n");
 
             static QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("没有权力删除此类型成员!"));
             box.setWindowFlags(Qt::FramelessWindowHint);
@@ -574,8 +566,7 @@ void usergroupManage::on_deletepushButton_clicked()
     }
     else
     {
-//        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "userManageWidget not select the user to delete!\n");
-//        qDebug()<<"userManageWidget not select the user to delete!"<<__FUNCTION__<<__LINE__<<endl;
+        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "userManageWidget not select the user to delete!\n");
         static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("请选择要删除的用户!")));
         msgBox.setWindowFlags(Qt::FramelessWindowHint);
         msgBox.setStandardButtons(QMessageBox::Yes);

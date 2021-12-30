@@ -33,7 +33,7 @@ public:
         if (presetPasswdConfirm->objectName().isEmpty())
             presetPasswdConfirm->setObjectName(QString::fromUtf8("presetPasswdConfirm"));
         presetPasswdConfirm->resize(400, 207);
-        presetPasswdConfirm->setFocusPolicy(Qt::StrongFocus);
+        presetPasswdConfirm->setFocusPolicy(Qt::ClickFocus);
         confirmPushButton = new QPushButton(presetPasswdConfirm);
         confirmPushButton->setObjectName(QString::fromUtf8("confirmPushButton"));
         confirmPushButton->setGeometry(QRect(80, 140, 99, 27));

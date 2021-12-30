@@ -2,7 +2,7 @@
 #include <list>
 #include "mutex.h"
 #include "vdec.h"
-#include "debugout/debug.h"
+#include "debug.h"
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -852,7 +852,7 @@ CMPPlayer_API int CMP_SetPlaySpeed(CMPHandle hPlay, double dSpeed)
     PushMessage(ptCmpPlayer, E_PLAY_STATE_FAST_FORWARD, dSpeed);
 
 
-//    DebugPrint(DEBUG_CMPLAYER_ERROR_PRINT,"[%s %d] CMP_SetPlaySpeed dSpeed = %.2f",__FUNCTION__, __LINE__, dSpeed);
+    DebugPrint(DEBUG_CMPLAYER_ERROR_PRINT,"[%s %d] CMP_SetPlaySpeed dSpeed = %.2f",__FUNCTION__, __LINE__, dSpeed);
 
     if (dSpeed > 0.11 && dSpeed < 0.13)
     {

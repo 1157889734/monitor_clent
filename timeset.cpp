@@ -1,15 +1,16 @@
-﻿#include "timeset.h"
+#include "timeset.h"
 #include "ui_timeset.h"
 #include <QDateTime>
 #include <stdio.h>
 
 int idayNum[12]={31,28,31,30,31,30,31,31,30,31,30,31};
 
-timeSet::timeSet(QWidget *parent) :
+timeset::timeset(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::timeSet)
+    ui(new Ui::timeset)
 {
     ui->setupUi(this);
+
     setWindowFlags(Qt::FramelessWindowHint);
 
     connect(ui->pushButton_1, SIGNAL(clicked_left()), this, SLOT(stButtonClick()));
@@ -20,26 +21,30 @@ timeSet::timeSet(QWidget *parent) :
     connect(ui->pushButton_6, SIGNAL(clicked_left()), this, SLOT(stButtonClick()));
     connect(ui->pushButton_7, SIGNAL(clicked_left()), this, SLOT(okButtonClick()));
     connect(ui->pushButton_8, SIGNAL(clicked_left()), this, SLOT(cancleButtonClick()));
+
+
 }
 
-timeSet::~timeSet()
+timeset::~timeset()
 {
     delete ui;
 }
 
-void timeSet::cancleButtonClick()
+
+
+void timeset::cancleButtonClick()
 {
     this->hide();
-	emit cancleMsg();  
+    emit cancleMsg();
 }
 
-void timeSet::okButtonClick()
+void timeset::okButtonClick()
 {
     this->hide();
     emit timeSetSendMsg(ui->label_2->text(), ui->label_3->text(), ui->label_4->text(), ui->label_5->text(), ui->label_6->text(), ui->label_7->text());
 }
 
-void timeSet::stButtonClick()
+void timeset::stButtonClick()
 {
     //printf("timeSet::stButtonClick (%d,%d),(%d,%d)\n",cursor().pos().x(),cursor().pos().y(),this->pos().x(),this->pos().y());
     int num = 0, mon = 0;
@@ -203,11 +208,11 @@ void timeSet::stButtonClick()
     }
 }
 
-void timeSet::setTimeLabelText(int year, int month, int day, int hour, int min, int sec)
+void timeset::setTimeLabelText(int year, int month, int day, int hour, int min, int sec)
 {
-	QString string = "";
-	ui->label_2->setText(QString::number(year));
-	if (month < 10)
+    QString string = "";
+    ui->label_2->setText(QString::number(year));
+    if (month < 10)
     {
         string = "0";
     }
@@ -216,8 +221,8 @@ void timeSet::setTimeLabelText(int year, int month, int day, int hour, int min, 
         string = "";
     }
     string += QString::number(month);
-	ui->label_3->setText(string);
-	if (day < 10)
+    ui->label_3->setText(string);
+    if (day < 10)
     {
         string = "0";
     }
@@ -226,8 +231,8 @@ void timeSet::setTimeLabelText(int year, int month, int day, int hour, int min, 
         string = "";
     }
     string += QString::number(day);
-	ui->label_4->setText(string);
-	if (hour < 10)
+    ui->label_4->setText(string);
+    if (hour < 10)
     {
         string = "0";
     }
@@ -236,8 +241,8 @@ void timeSet::setTimeLabelText(int year, int month, int day, int hour, int min, 
         string = "";
     }
     string += QString::number(hour);
-	ui->label_5->setText(string);
-	if (min < 10)
+    ui->label_5->setText(string);
+    if (min < 10)
     {
         string = "0";
     }
@@ -246,8 +251,8 @@ void timeSet::setTimeLabelText(int year, int month, int day, int hour, int min, 
         string = "";
     }
     string += QString::number(min);
-	ui->label_6->setText(string);
-	if (sec < 10)
+    ui->label_6->setText(string);
+    if (sec < 10)
     {
         string = "0";
     }
@@ -256,5 +261,5 @@ void timeSet::setTimeLabelText(int year, int month, int day, int hour, int min, 
         string = "";
     }
     string += QString::number(sec);
-	ui->label_7->setText(string);
+    ui->label_7->setText(string);
 }

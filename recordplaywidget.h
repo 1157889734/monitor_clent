@@ -16,6 +16,8 @@
 #include <QMediaPlayer>
 #include "qplayer.h"
 #include "ftpApi.h"
+#include "timeset.h"
+#include "debug.h"
 
 
 #define MAX_RECORD_SEACH_NUM 10000
@@ -36,7 +38,7 @@ public:
     ~recordPlayWidget();
     int pmsgCtrl(PMSG_HANDLE pHandle, unsigned char ucMsgCmd, char *pcMsgData, int iMsgDataLen);     //与服务器通信消息处理
     mySlider *m_playSlider;    //播放进度条
-    timeSet *timeSetWidget;    //时间设置控制窗体
+    timeset *timeSetWidget;    //时间设置控制窗体
     bool Mouseflag;
     QMouseEvent *e;
     int m_iPlayFlag;   //播放标志，0-暂停状态，未播放，1-在播放
@@ -64,6 +66,8 @@ public:
 
 
 public slots:
+    void openStartTimeSetWidgetSlot();
+    void openStopTimeSetWidgetSlot();
     void alarmPushButoonClickSlot();
     void alarmHappenCtrlSlot();
     void alarmHappenSlot();
@@ -88,6 +92,7 @@ public slots:
 
     void recordSelectionSlot(QTableWidgetItem *item);
     void recordPlaySlot(QTableWidgetItem *item);
+    void timeSetRecvMsg(QString year, QString month, QString day, QString hour, QString min, QString sec);
 
     void playSliderMoveSlot(int iPosTime);
     void playSliderPressSlot(int iPosTime);

@@ -74,7 +74,7 @@ int ModifyParam(const char *pcFileName, const char *pcGroupKey, const char *pcKe
 	pOldFile = fopen(pcFileName, "rb");
 	if (NULL == pOldFile)
 	{
-//		DebugPrint(DEBUG_ERROR_PRINT, "[%s] open file %s error\n", __FUNCTION__, pcFileName);
+        DebugPrint(DEBUG_ERROR_PRINT, "[%s] open file %s error\n", __FUNCTION__, pcFileName);
 		perror(":");
 		return -1;
 	}
@@ -83,7 +83,7 @@ int ModifyParam(const char *pcFileName, const char *pcGroupKey, const char *pcKe
 	pNewFile = fopen(acTmpName, "wb");
 	if (NULL == pNewFile)
 	{
-//		DebugPrint(DEBUG_ERROR_PRINT, "[%s] open file %s error\n", __FUNCTION__, acTmpName);
+        DebugPrint(DEBUG_ERROR_PRINT, "[%s] open file %s error\n", __FUNCTION__, acTmpName);
 		perror(":");
 		fclose(pOldFile);
 		return -1;
@@ -147,7 +147,7 @@ int ReadParam(const char *pcFileName, const char *pcGroupKey, const char *pcKey,
 	pFile = fopen(pcFileName, "rb");
 	if (NULL == pFile)
 	{
-//		DebugPrint(DEBUG_ERROR_PRINT, "[%s] open file %s error\n", __FUNCTION__, pcFileName);
+        DebugPrint(DEBUG_ERROR_PRINT, "[%s] open file %s error\n", __FUNCTION__, pcFileName);
 		perror(":");
 		return -1;
 	}
@@ -165,7 +165,7 @@ int ReadParam(const char *pcFileName, const char *pcGroupKey, const char *pcKey,
 			strsep(&pcPos, "=");
 			if (NULL == pcPos)
 			{
-//				DebugPrint(DEBUG_ERROR_PRINT, "line:%s, param error!!!\n", acBuf);
+                DebugPrint(DEBUG_ERROR_PRINT, "line:%s, param error!!!\n", acBuf);
 				break;
 			}
 			iLen = strlen(pcPos);
@@ -197,7 +197,7 @@ int DeleteParam(const char *pcFileName, char *pcValue)
 	pOldFile = fopen(pcFileName, "rb");
 	if (NULL == pOldFile)
 	{
-//		DebugPrint(DEBUG_ERROR_PRINT, "[%s] open file %s error\n", __FUNCTION__, pcFileName);
+        DebugPrint(DEBUG_ERROR_PRINT, "[%s] open file %s error\n", __FUNCTION__, pcFileName);
 		perror(":");
 		return -1;
 	}
@@ -206,7 +206,7 @@ int DeleteParam(const char *pcFileName, char *pcValue)
 	pNewFile = fopen(acTmpName, "wb");
 	if (NULL == pNewFile)
 	{
-//		DebugPrint(DEBUG_ERROR_PRINT, "[%s] open file %s error\n", __FUNCTION__, acTmpName);
+        DebugPrint(DEBUG_ERROR_PRINT, "[%s] open file %s error\n", __FUNCTION__, acTmpName);
 		perror(":");
 		fclose(pOldFile);
 		return -1;

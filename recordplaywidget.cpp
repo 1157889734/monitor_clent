@@ -18,6 +18,7 @@
 #include "cmplayer.h"
 #include "vdec.h"
 #include <QCheckBox>
+#include "debug.h"
 
 int g_iDateEditNo = 0;      //要显示时间的不同控件的编号
 static int g_iRNum = 0;
@@ -53,9 +54,9 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::recordPlayWidget)
 {
-//    char timestr[128] = {0};
+    char timestr[128] = {0};
     int i = 0;
-//    int iYear = 0, iMonth= 0, iDay = 0;
+    int iYear = 0, iMonth= 0, iDay = 0;
     QString string = "";
     ui->setupUi(this);
     this->setWindowFlags(Qt::FramelessWindowHint);
@@ -151,19 +152,56 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
 
     cmplaybackInit();
 
-//    Mouseflag = true;
-    ui->StartdateEdit->setCalendarPopup(true);
-    ui->StartdateEdit->setDate(QDate::currentDate());
+
+     timeSetWidget = new timeset(this);
+     timeSetWidget->hide();
+
+     connect(timeSetWidget, SIGNAL(timeSetSendMsg(QString,QString,QString,QString,QString,QString)), this, SLOT(timeSetRecvMsg(QString,QString,QString,QString,QString,QString)));  //时间设置窗体控件设置信号响应
+     connect(ui->startTimeSetPushButton, SIGNAL(clicked(bool)), this, SLOT(openStartTimeSetWidgetSlot()));   //开始时间设置按钮按键信号响应
+      connect(ui->stopTimeSetPushButton, SIGNAL(clicked(bool)), this, SLOT(openStopTimeSetWidgetSlot()));  //结束时间设置按钮按键信号响应
 
 
-    ui->EnddateEdit->setCalendarPopup(true);
-    ui->EnddateEdit->setDate(QDate::currentDate());
+     QDateTime time = QDateTime::currentDateTime();
+     snprintf(timestr, sizeof(timestr), "%4d-%02d-%02d %02d:%02d:%02d", time.date().year(), time.date().month(), time.date().day(), time.time().hour(), time.time().minute(), time.time().second());
+     string = QString(QLatin1String(timestr)) ;
+     ui->endTimeLabel->setText(string);		 //结束时间控件初始显示当前系统时间
 
+     memset(&timestr, 0, sizeof(timestr));
+     iYear = time.date().year();
+     iMonth = time.date().month();
+     iDay = time.date().day()-1;
+     if (0 == iDay)
+     {
+         iMonth = time.date().month()-1;
+         if (0 == iMonth)
+         {
+             iMonth = 12;
+             iYear = time.date().year() - 1;
+         }
+         if (1 == iMonth || 3 == iMonth || 5 == iMonth || 7 == iMonth || 8 == iMonth || 10 == iMonth || 12 == iMonth)
+         {
+             iDay = 31;
+         }
+         else if (4 == iMonth || 6 == iMonth || 9 == iMonth || 11 == iMonth)
+         {
+             iDay = 30;
+         }
+         else
+         {
+             if((0 == iYear%4 && 0 == iYear%100)||(0 == iYear%400))
+             {
+                 iDay = 29;
+             }
+             else
+             {
+                 iDay = 28;
+             }
+         }
+     }
 
-    int value = QTime::currentTime().hour();
-    ui->EndcomboBox->setCurrentIndex(value);
-    ui->StartcomboBox->setCurrentIndex(0);
-
+     snprintf(timestr, sizeof(timestr), "%4d-%02d-%02d %02d:%02d:%02d", iYear, iMonth, iDay, time.time().hour(), time.time().minute(), time.time().second());
+     string = QString(QLatin1String(timestr)) ;
+     ui->startTimeLabel->setText(string);     //起始时间控件初始显示当前系统时间前一天
 
 
     connect(ui->alarmPushButton, SIGNAL(clicked(bool)), this, SLOT(alarmPushButoonClickSlot()));   //报警按钮按键信号响应打开报警信息界面
@@ -230,7 +268,8 @@ recordPlayWidget::~recordPlayWidget()
     free(m_pcRecordFileBuf);
     m_pcRecordFileBuf = NULL;
 
-
+    delete timeSetWidget;
+    timeSetWidget = NULL;
 
     delete ui;
 }
@@ -606,16 +645,11 @@ void recordPlayWidget::recordQuerySlot()
     iServerIdex = ui->carSeletionComboBox->currentIndex();
     iCameraIdex = ui->cameraSelectionComboBox->currentIndex();
 
-    int start = ui->StartcomboBox->currentIndex();
-    int end = ui->EndcomboBox->currentIndex();
-
     if (m_Phandle[iServerIdex])
     {
         T_NVR_SEARCH_RECORD tRecordSeach;
         memset(&tRecordSeach, 0, sizeof(T_NVR_SEARCH_RECORD));
-
-        sscanf(ui->StartdateEdit->text().toLatin1().data(),"%4d/%2d/%2d", &year, &mon, &day);
-        hour =  start;
+        sscanf(ui->startTimeLabel->text().toLatin1().data(), "%4d-%2d-%2d %2d:%2d:%2d", &year, &mon, &day, &hour, &min, &sec);
 
 
         yr = year;
@@ -625,8 +659,9 @@ void recordPlayWidget::recordQuerySlot()
         tRecordSeach.tStartTime.i8Hour = hour;
         tRecordSeach.tStartTime.i8Min = min;
         tRecordSeach.tStartTime.i8Sec = sec;
-        sscanf(ui->EnddateEdit->text().toLatin1().data(),"%4d/%2d/%2d", &year, &mon, &day);
-        hour =  end;
+
+        sscanf(ui->endTimeLabel->text().toLatin1().data(), "%4d-%2d-%2d %2d:%2d:%2d", &year, &mon, &day, &hour, &min, &sec);
+
 
         yr = year;
         tRecordSeach.tEndTime.i16Year = htons(yr);
@@ -648,10 +683,11 @@ void recordPlayWidget::recordQuerySlot()
         {
             memset(&tLogInfo, 0, sizeof(T_LOG_INFO));
             tLogInfo.iLogType = 0;
-            snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "Req camera %d.%d record in %s %2d:%2d%2d  to %s %2d:%2d%2d",
-                  100+tTrainConfigInfo.tNvrServerInfo[iServerIdex].iCarriageNO, 200+iCameraIdex, ui->StartdateEdit->text().toLatin1().data(),tRecordSeach.tStartTime.i8Hour,min,sec,
-                  ui->EnddateEdit->text().toLatin1().data(),tRecordSeach.tEndTime.i8Hour,min,sec);
-
+//            snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "Req camera %d.%d record in %s %2d:%2d%2d  to %s %2d:%2d%2d",
+//                  100+tTrainConfigInfo.tNvrServerInfo[iServerIdex].iCarriageNO, 200+iCameraIdex, ui->StartdateEdit->text().toLatin1().data(),tRecordSeach.tStartTime.i8Hour,min,sec,
+//                  ui->EnddateEdit->text().toLatin1().data(),tRecordSeach.tEndTime.i8Hour,min,sec);
+            snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "Req camera %d.%d record in %s to %s",
+                100+tTrainConfigInfo.tNvrServerInfo[iServerIdex].iCarriageNO, 200+iCameraIdex, ui->startTimeLabel->text().toLatin1().data(), ui->endTimeLabel->text().toLatin1().data());
             LOG_WriteLog(&tLogInfo);
         }
 
@@ -708,7 +744,7 @@ void recordPlayWidget::recordQueryEndSlot()
             }
 
 
-//            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "[%s-%d] recordQuery fail!\n",__FUNCTION__, __LINE__);
+            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "[%s-%d] recordQuery fail!\n",__FUNCTION__, __LINE__);
             static QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("未查询到录像数据!"));
             box.setWindowFlags(Qt::FramelessWindowHint);
             box.setStandardButtons (QMessageBox::Ok);
@@ -735,7 +771,7 @@ void recordPlayWidget::recordDownloadSlot()
 
     if (!strcmp(acUserType, "operator"))   //操作员不能下载
     {
-//        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget this user type has no right to download record file!\n");
+        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget this user type has no right to download record file!\n");
         static QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("该用户没有下载权限!"));
         box.setWindowFlags(Qt::FramelessWindowHint);
         box.setStandardButtons (QMessageBox::Ok);
@@ -749,10 +785,7 @@ void recordPlayWidget::recordDownloadSlot()
     {
         for (row = 0; row < ui->recordFileTableWidget->rowCount(); row++)    //先判断一次是否没有录像文件被选中，没有则弹框提示
         {
-//            if (ui->recordFileTableWidget->item(row, 0)->checkState() == Qt::Checked)
-//            {
-//                break;
-//            }
+
             if(QWidget *w = ui->recordFileTableWidget->cellWidget(row,0))
             {
                 QCheckBox *checkBox = (QCheckBox*)(w->children().at(0));
@@ -766,7 +799,7 @@ void recordPlayWidget::recordDownloadSlot()
 
         if (row == ui->recordFileTableWidget->rowCount())
         {
-//            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget not select record file to download!\n");
+            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget not select record file to download!\n");
             static QMessageBox msgBox(QMessageBox::Question,QString(tr("注意")),QString(tr("请选择您要下载的录像文件!")));
             msgBox.setWindowFlags(Qt::FramelessWindowHint);
             msgBox.setStandardButtons(QMessageBox::Yes);
@@ -778,7 +811,7 @@ void recordPlayWidget::recordDownloadSlot()
 
         if (access("/media/usb0/", F_OK) < 0)
         {
-//            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget not get USB device!\n");
+            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget not get USB device!\n");
             static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
             msgBox.setWindowFlags(Qt::FramelessWindowHint);
             msgBox.setStandardButtons(QMessageBox::Yes);
@@ -791,7 +824,7 @@ void recordPlayWidget::recordDownloadSlot()
         {
             if (0 == STATE_FindUsbDev())   //这里处理一个特殊情况:U盘拔掉是umount失败，/mnt/usb/u/路径还存在，但是实际U盘是没有再插上的
             {
-//                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget not get USB device!\n");
+                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget not get USB device!\n");
                 static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
                 msgBox.setWindowFlags(Qt::FramelessWindowHint);
                 msgBox.setStandardButtons(QMessageBox::Yes);
@@ -813,15 +846,13 @@ void recordPlayWidget::recordDownloadSlot()
         memset(&tTrainConfigInfo, 0, sizeof(T_TRAIN_CONFIG));
         STATE_GetCurrentTrainConfigInfo(&tTrainConfigInfo);
         snprintf(acIpAddr, sizeof(acIpAddr), "192.168.%d.81", 100+tTrainConfigInfo.tNvrServerInfo[idex].iCarriageNO);
-//        snprintf(acIpAddr, sizeof(acIpAddr), "rtsp://192.168.101.81");
-//        snprintf(acIpAddr, sizeof(acIpAddr), "rtsp://127.0.0.1");
 
 
         m_tFtpHandle[idex] = FTP_CreateConnect(acIpAddr, FTP_SERVER_PORT, PftpProc);
 
         if (0 == m_tFtpHandle[idex])
         {
-//            DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] connect to ftp server:%s error!\n", __FUNCTION__, acIpAddr);
+            DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] connect to ftp server:%s error!\n", __FUNCTION__, acIpAddr);
             return;
         }
 
@@ -837,13 +868,13 @@ void recordPlayWidget::recordDownloadSlot()
                     {
                         snprintf(acSaveFileName, sizeof(acSaveFileName), "%s%s", "/media/usb0/", parseFileName(m_acFilePath[row]));
                     }
-    //                DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] add download file:%s!\n", __FUNCTION__, m_acFilePath[row]);
+                    DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] add download file:%s!\n", __FUNCTION__, m_acFilePath[row]);
                     iRet = FTP_AddDownLoadFile(m_tFtpHandle[idex], m_acFilePath[row], acSaveFileName);
                     if (iRet < 0)
                     {
                         FTP_DestoryConnect(m_tFtpHandle[m_iFtpServerIdex]);
                         m_tFtpHandle[m_iFtpServerIdex] = 0;
-    //                    DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget not get USB device!\n");
+                        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget not get USB device!\n");
                         static QMessageBox msgBox(QMessageBox::Warning,QString(tr("提示")),QString(tr("文件下载失败!")));
                         msgBox.setWindowFlags(Qt::FramelessWindowHint);
                         msgBox.setStandardButtons(QMessageBox::Yes);
@@ -863,7 +894,7 @@ void recordPlayWidget::recordDownloadSlot()
         {
             FTP_DestoryConnect(m_tFtpHandle[m_iFtpServerIdex]);
             m_tFtpHandle[m_iFtpServerIdex] = 0;
-//            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget record file download failed!\n");
+            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget record file download failed!\n");
             static QMessageBox msgBox(QMessageBox::Warning,QString(tr("提示")),QString(tr("文件下载失败")));
             msgBox.setWindowFlags(Qt::FramelessWindowHint);
             msgBox.setStandardButtons(QMessageBox::Yes);
@@ -902,8 +933,7 @@ void recordPlayWidget::getTrainConfig()    	//获取车型配置文件，初始�
     memset(&tTrainConfigInfo, 0, sizeof(T_TRAIN_CONFIG));
     STATE_GetCurrentTrainConfigInfo(&tTrainConfigInfo);
 
-//    DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] GetCurrentTrainConfigInfo, nvr server num=%d\n",__FUNCTION__,tTrainConfigInfo.iNvrServerCount);
-//    qDebug()<<"DEBUG_UI_NOMAL_PRINT GetCurrentTrainConfigInfo, nvr server num="<<tTrainConfigInfo.iNvrServerCount<<__FUNCTION__<<__LINE__<<endl;
+    DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] GetCurrentTrainConfigInfo, nvr server num=%d\n",__FUNCTION__,tTrainConfigInfo.iNvrServerCount);
     for (i = 0; i < tTrainConfigInfo.iNvrServerCount; i++)
     {
         item = "";
@@ -911,11 +941,9 @@ void recordPlayWidget::getTrainConfig()    	//获取车型配置文件，初始�
         item += tr("车厢");
         ui->carSeletionComboBox->addItem(item);
         m_Phandle[i] = STATE_GetNvrServerPmsgHandle(i);
-//        qDebug()<<"DEBUG_UI_NOMAL_PRINT  tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO::="<<i<<":="<<tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO;
         if (0 == i)
         {
-//            DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] the first server has camera num=%d\n",__FUNCTION__,tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum);
-//            qDebug()<<"DEBUG_UI_NOMAL_PRINT the first server has camera num="<<tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum<<__FUNCTION__<<__LINE__<<endl;
+            DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] the first server has camera num=%d\n",__FUNCTION__,tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum);
 
             for (j = 0; j < tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum; j++)
             {
@@ -923,7 +951,6 @@ void recordPlayWidget::getTrainConfig()    	//获取车型配置文件，初始�
                 item = QString::number(1+j);
                 item += tr("号");
                 ui->cameraSelectionComboBox->addItem(item);
-//                qDebug()<<"DEBUG_UI_NOMAL_PRINT tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum ="<<i<<"=:"<<tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum<<__FUNCTION__<<__LINE__<<endl;
 
             }
         }
@@ -1050,13 +1077,49 @@ void recordPlayWidget::triggerSetDownloadProcessBarValueSignal(int iValue)	//触
 
 void recordPlayWidget::pageShowCtrl()  //每次切换到当前页面，则更新查询起始和结束时间控件显示
 {
+    char timestr[128] = {0};
+    int iYear = 0, iMonth= 0, iDay = 0;
+    QString string = "";
     QDateTime time = QDateTime::currentDateTime();
+    snprintf(timestr, sizeof(timestr), "%4d-%02d-%02d %02d:%02d:%02d", time.date().year(), time.date().month(), time.date().day(), time.time().hour(), time.time().minute(), time.time().second());
+    string = QString(QLatin1String(timestr)) ;
+    ui->endTimeLabel->setText(string);		 //结束时间控件初始显示当前系统时间
 
-    ui->StartdateEdit->setDate(time.date());
-    ui->EnddateEdit->setDate(time.date());
-    int value = QTime::currentTime().hour();
-     ui->EndcomboBox->setCurrentIndex(value);
-//    ui->EndtimeEdit->setTime(time.time());
+    memset(&timestr, 0, sizeof(timestr));
+    iYear = time.date().year();
+    iMonth = time.date().month();
+    iDay = time.date().day()-1;
+    if (0 == iDay)
+    {
+        iMonth = time.date().month()-1;
+        if (0 == iMonth)
+        {
+            iMonth = 12;
+            iYear = time.date().year() - 1;
+        }
+        if (1 == iMonth || 3 == iMonth || 5 == iMonth || 7 == iMonth || 8 == iMonth || 10 == iMonth || 12 == iMonth)
+        {
+            iDay = 31;
+        }
+        else if (4 == iMonth || 6 == iMonth || 9 == iMonth || 11 == iMonth)
+        {
+            iDay = 30;
+        }
+        else
+        {
+            if((0 == iYear%4 && 0 == iYear%100)||(0 == iYear%400))
+            {
+                iDay = 29;
+            }
+            else
+            {
+                iDay = 28;
+            }
+        }
+    }
+    snprintf(timestr, sizeof(timestr), "%4d-%02d-%02d %02d:%02d:%02d", iYear, iMonth, iDay, time.time().hour(), time.time().minute(), time.time().second());
+    string = QString(QLatin1String(timestr)) ;
+    ui->startTimeLabel->setText(string);     //起始时间控件初始显示当前系统时间前一天
 
 }
 
@@ -1121,7 +1184,7 @@ void recordPlayWidget::recordPlayLastOneSlot()
 {
     int iRow = 0, iDex = 0;
 
-//    DebugPrint(DEBUG_UI_OPTION_PRINT, "recordPlayWidget lastOne play PushButton pressed!\n");
+    DebugPrint(DEBUG_UI_OPTION_PRINT, "recordPlayWidget lastOne play PushButton pressed!\n");
 
     if (ui->recordFileTableWidget->rowCount() <= 0 || NULL == m_cmpHandle)
     {
@@ -1162,7 +1225,7 @@ void recordPlayWidget::recordPlayNextOneSlot()
 
     int iDex = 0, iRow = 0;
 
-//    DebugPrint(DEBUG_UI_OPTION_PRINT, "recordPlayWidget nextOne play PushButton pressed!\n");
+    DebugPrint(DEBUG_UI_OPTION_PRINT, "recordPlayWidget nextOne play PushButton pressed!\n");
 
     if (ui->recordFileTableWidget->rowCount() <= 0 || NULL == m_cmpHandle)
     {
@@ -1215,14 +1278,13 @@ void recordPlayWidget::carNoChangeSlot()   //车厢号切换信号响应槽函�
     int i = 0, idex = ui->carSeletionComboBox->currentIndex();    //获取当前车厢选择下拉框的索引
     QString item = "";
     T_TRAIN_CONFIG tTrainConfigInfo;
-//    DebugPrint(DEBUG_UI_OPTION_PRINT, "recordPlayWidget change server carriage No!\n");
+    DebugPrint(DEBUG_UI_OPTION_PRINT, "recordPlayWidget change server carriage No!\n");
 
     memset(&tTrainConfigInfo, 0, sizeof(T_TRAIN_CONFIG));
     STATE_GetCurrentTrainConfigInfo(&tTrainConfigInfo);
     ui->cameraSelectionComboBox->setCurrentIndex(-1);
     ui->cameraSelectionComboBox->clear();
 
-    qDebug()<<"*****---carNoChangeSlot--=:"<<idex<<tTrainConfigInfo.tNvrServerInfo[idex].iPvmsCameraNum<<__FUNCTION__<<__LINE__<<endl;
     for (i = 0; i < tTrainConfigInfo.tNvrServerInfo[idex].iPvmsCameraNum; i++)        //根据不同车厢位置的NVR服务器的摄像机数量个数跟新摄像机选择下拉框
     {
         item = "";
@@ -1255,10 +1317,67 @@ void recordPlayWidget::recordSelectionSlot(QTableWidgetItem *item)
 
 }
 
+void recordPlayWidget::openStartTimeSetWidgetSlot()
+{
+    QString timeStr = ui->startTimeLabel->text();
+    char acTimeStr[256] = {0};
+    int iYear = 0, iMonth = 0, iDay = 0, iHour = 0, iMin = 0, iSec = 0;
+
+    DebugPrint(DEBUG_UI_OPTION_PRINT, "recordPlayWidget startTimeSetPushButton pressed!\n");
+    strcpy(acTimeStr, timeStr.toLatin1().data());
+    if (strlen(acTimeStr) != 0)
+    {
+        DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] timeStr:%s!\n", __FUNCTION__, acTimeStr);
+        sscanf(acTimeStr, "%4d-%02d-%02d %02d:%02d:%02d", &iYear, &iMonth, &iDay, &iHour, &iMin, &iSec);
+        DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] %d-%d-%d %d:%d:%d!\n", __FUNCTION__, iYear, iMonth, iDay, iHour, iMin, iSec);
+    }
+    timeSetWidget->setGeometry(280, 50, timeSetWidget->width(), timeSetWidget->height());
+    g_iDateEditNo = 1;
+    timeSetWidget->setTimeLabelText(iYear, iMonth, iDay, iHour, iMin, iSec);
+    timeSetWidget->show();
+
+}
+void recordPlayWidget::openStopTimeSetWidgetSlot()
+{
+    QString timeStr = ui->endTimeLabel->text();
+    char acTimeStr[256] = {0};
+    int iYear = 0, iMonth = 0, iDay = 0, iHour = 0, iMin = 0, iSec = 0;
+
+    DebugPrint(DEBUG_UI_OPTION_PRINT, "recordPlayWidget stopTimeSetPushButton pressed!\n");
+    strcpy(acTimeStr, timeStr.toLatin1().data());
+    if (strlen(acTimeStr) != 0)
+    {
+        DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] timeStr:%s!\n", __FUNCTION__, acTimeStr);
+        sscanf(acTimeStr, "%4d-%02d-%02d %02d:%02d:%02d", &iYear, &iMonth, &iDay, &iHour, &iMin, &iSec);
+        DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] %d-%d-%d %d:%d:%d!\n", __FUNCTION__, iYear, iMonth, iDay, iHour, iMin, iSec);
+    }
+    timeSetWidget->setGeometry(280, 90, timeSetWidget->width(), timeSetWidget->height());
+    g_iDateEditNo = 2;
+    timeSetWidget->setTimeLabelText(iYear, iMonth, iDay, iHour, iMin, iSec);
+    timeSetWidget->show();
+
+
+}
+
+void recordPlayWidget::timeSetRecvMsg(QString year, QString month, QString day, QString hour, QString min, QString sec)     //响应时间设置控件信号，更新起始、结束时间显示label的显示文本
+{
+    char timestr[128] = {0};
+    snprintf(timestr, sizeof(timestr), "%s-%s-%s %s:%s:%s", year.toStdString().data(), month.toStdString().data(), day.toStdString().data(),
+            hour.toStdString().data(), min.toStdString().data(), sec.toStdString().data());
+    QString string = QString(QLatin1String(timestr)) ;
+    if (1 == g_iDateEditNo)
+    {
+        ui->startTimeLabel->setText(string);
+    }
+    else if (2 == g_iDateEditNo)
+    {
+        ui->endTimeLabel->setText(string);
+    }
+}
 void recordPlayWidget::recordPlaySlot(QTableWidgetItem *item)    //录像文件双击信号响应槽函数，播放录像视频
 {
     int iRow = 0, iDex = 0;
-//    DebugPrint(DEBUG_UI_OPTION_PRINT, "recordPlayWidget record play pressed!\n");
+    DebugPrint(DEBUG_UI_OPTION_PRINT, "recordPlayWidget record play pressed!\n");
 
     setPlayButtonStyleSheet();
 
@@ -1358,7 +1477,6 @@ void *slideValueSetThread(void *param)    //播放进度条刷新线程
               {
 //                  iDuration = CMP_GetPlayRange(recordPlaypage->m_cmpHandle);
                   iDuration =  CMP_GetPlayRange(recordPlaypage->m_cmpHandle);
-//                  qDebug()<<"****111******iDuration="<<iDuration<<__LINE__<<endl;
 
                   if (iDuration > 0)
                   {
@@ -1370,12 +1488,12 @@ void *slideValueSetThread(void *param)    //播放进度条刷新线程
               if (iDuration > 0)
               {
                   recordPlaypage->m_iPlayRange = iDuration;
-//                  DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s-%d] m_iPlayRange=%d!\n",__FUNCTION__, __LINE__, recordPlaypage->m_iPlayRange);
+                  DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s-%d] m_iPlayRange=%d!\n",__FUNCTION__, __LINE__, recordPlaypage->m_iPlayRange);
               }
               else
               {
                   recordPlaypage->m_iPlayRange = 600;
-//                  DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s-%d] m_iPlayRange=%d!\n",__FUNCTION__, __LINE__, recordPlaypage->m_iPlayRange);
+                  DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s-%d] m_iPlayRange=%d!\n",__FUNCTION__, __LINE__, recordPlaypage->m_iPlayRange);
               }
               recordPlaypage->m_playSlider->setRange(0, recordPlaypage->m_iPlayRange);
               recordPlaypage->triggerSetRangeLabelSignal();
@@ -1386,12 +1504,11 @@ void *slideValueSetThread(void *param)    //播放进度条刷新线程
               pthread_mutex_lock(&g_sliderValueSetMutex);
 //              recordPlaypage->m_iSliderValue = CMP_GetCurrentPlayTime(recordPlaypage->m_cmpHandle);
               recordPlaypage->m_iSliderValue = CMP_GetPlayTime(recordPlaypage->m_cmpHandle);
-//              qDebug()<<"**********value="<<recordPlaypage->m_iSliderValue<<__LINE__<<endl;
               recordPlaypage->triggerSetSliderValueSignal(recordPlaypage->m_iSliderValue);
               pthread_mutex_unlock(&g_sliderValueSetMutex);
               if (recordPlaypage->m_iSliderValue >= recordPlaypage->m_iPlayRange)   //进度到100%，表示该段录像回放完毕，关闭播放窗口
               {
-//                  DebugPrint(DEBUG_UI_NOMAL_PRINT, "recordPlayWidget record play end!close play window\n");
+                  DebugPrint(DEBUG_UI_NOMAL_PRINT, "recordPlayWidget record play end!close play window\n");
                   recordPlaypage->triggerCloseRecordPlaySignal();
               }
           }
@@ -1456,14 +1573,14 @@ void recordPlayWidget::recordPlayCtrl(int iRow, int iDex)
     if (0 == m_threadId)    //保证播放进度条刷新线程只创建一次
     {
         m_iThreadRunFlag = 1;
-//        DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] create slideValueSet thread begin!\n",__FUNCTION__);
+        DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] create slideValueSet thread begin!\n",__FUNCTION__);
         pthread_create(&m_threadId, NULL, slideValueSetThread, (void *)this);    //创建线程
 
         if (0 == m_threadId)
         {
-//            DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] create slideValueSet thread error\n", __FUNCTION__);
+            DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] create slideValueSet thread error\n", __FUNCTION__);
         }
-//        DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] create slideValueSet thread end!\n",__FUNCTION__);
+        DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] create slideValueSet thread end!\n",__FUNCTION__);
     }
 
     memset(&tLogInfo, 0, sizeof(T_LOG_INFO));
@@ -1493,7 +1610,7 @@ int recordPlayWidget::pmsgCtrl(PMSG_HANDLE pHandle, unsigned char ucMsgCmd, char
             else
             {
                 short *iDuration = (short *)pcMsgData;
-//                DebugPrint(DEBUG_PMSG_DATA_PRINT, "recordPlay Widget get pmsg response cmd 0x%x data:%d\n", ucMsgCmd,*iDuration);
+                DebugPrint(DEBUG_PMSG_DATA_PRINT, "recordPlay Widget get pmsg response cmd 0x%x data:%d\n", ucMsgCmd,*iDuration);
                 m_iPlayRange = htons(*iDuration);
                 break;
             }
@@ -1502,7 +1619,7 @@ int recordPlayWidget::pmsgCtrl(PMSG_HANDLE pHandle, unsigned char ucMsgCmd, char
         {
             pcToken = &pcMsgData[2];
             iMsgDataLen = iMsgDataLen-2;  //先得到真正录像文件信息的内容长度，前两个字节表示分包序号
-//            DebugPrint(DEBUG_PMSG_DATA_PRINT, "recordPlay Widget get pmsg response cmd 0x%x data:\n%s\n", ucMsgCmd,pcToken);
+            DebugPrint(DEBUG_PMSG_DATA_PRINT, "recordPlay Widget get pmsg response cmd 0x%x data:\n%s\n", ucMsgCmd,pcToken);
 
             if (NULL == pcToken || iMsgDataLen <= 0)
             {

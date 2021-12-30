@@ -35,9 +35,8 @@ void *blackScreenMonitorThread(void *param)
 
         if (g_iMonitorNum >= BLACKSCREN_MONITOR_TIME)
         {
-//            DebugPrint(DEBUG_UI_NOMAL_PRINT, "black screen monitor time out,trigger black screen signal!\n");
+            DebugPrint(DEBUG_UI_NOMAL_PRINT, "black screen monitor time out,trigger black screen signal!\n");
             iBlackScreenFlag = STATE_GetBlackScreenFlag();
-//            qDebug()<<"********************blackScreenMonitorThread***---:"<<iBlackScreenFlag<<__FUNCTION__<<__LINE__<<endl;
             if (1 == iBlackScreenFlag)   //根据配置文件的配置决定是否触发黑屏信号
             {
                 myApplication->triggerBlackScreenSignal();   //5分钟界面没操作，触发黑屏信号
@@ -46,7 +45,6 @@ void *blackScreenMonitorThread(void *param)
         }
         else if (g_iMonitorNum >= MOUSE_MONITOR_TIME)
         {
-//            qDebug()<<"********************triggerMouseHideSignal***---:"<<iBlackScreenFlag<<__FUNCTION__<<__LINE__<<endl;
             myApplication->triggerMouseHideSignal();    //10秒界面没操作，隐藏鼠标
         }
 
@@ -118,7 +116,7 @@ void MyApplication::triggerMouseHideSignal()
 void MyApplication::blackScreenSignalCtrl()
 {
 //    QWSServer::sendKeyEvent(0x01000003, Qt::Key_Escape, Qt::NoModifier, true, false);  //发送一个模拟键盘ESC键，以免messagebox未关闭导致黑屏后无法单击退出黑屏
-//    DebugPrint(DEBUG_UI_NOMAL_PRINT, "black screen show!\n");
+    DebugPrint(DEBUG_UI_NOMAL_PRINT, "black screen show!\n");
     this->m_blackScreenWidget->show();
 }
 
@@ -135,7 +133,7 @@ void MyApplication::alarmHappenSignalCtrl()     //报警触发信号处理，退
     g_iMonitorNum = 0;
     if (m_blackScreenWidget->isHidden() != 1)
     {
-//        DebugPrint(DEBUG_UI_NOMAL_PRINT, "alarm happen,black screen hide!\n");
+        DebugPrint(DEBUG_UI_NOMAL_PRINT, "alarm happen,black screen hide!\n");
         m_blackScreenWidget->hide();
     }
     m_iAlarmFlag = 1;

@@ -23,8 +23,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 CONFIG += c++11
 
-#QMAKE_CFLAGS += -strip
-#QMAKE_CXXFLAGS += -strip
+QMAKE_CFLAGS += $(STRIP) $(TAR_FILE)
+QMAKE_CXXFLAGS += $(STRIP) $(TAR_FILE)
 
 #QMAKE_CFLAGS += -g -O0
 #QMAKE_CXXFLAGS += -g -O0
@@ -39,13 +39,13 @@ SOURCES += \
     ckeyboard.cpp \
     cmplayer.cpp \
     ctcppisclient.c \
-    debugout/debug.c \
-    led.c \
+    debug.c \
     main.cpp \
     MyApplication.cpp \
     choicelogindevwidget.cpp \
     loginwidget.cpp \
     mutex.cpp \
+    mypushbutton.cpp \
     pvmsmenuwidget.cpp \
     pvmsmonitorwidget.cpp \
     qmessagedialog.cpp \
@@ -65,22 +65,17 @@ SOURCES += \
     rtsp/rtspComm.c \
     shm.cpp \
     state.cpp \
-#    timeset.cpp \
     gb2312_utf8.c \
     log.c \
     pmsgcli.c \
     presetpasswdconfirm.cpp \
     myslider.cpp \
-#    qplayer.cpp \
-#    useredit.cpp \
-#    useradd.cpp \
-#    usermanage.cpp \
     ftpApi.c \
     rs485serv.c \
+    timeset.cpp \
     vdec.cpp \
     waitloginwidget.cpp \
     usergroupmanage.cpp
-#    usermanageconfig.cpp
 
 HEADERS += \
     MyApplication.h \
@@ -88,11 +83,11 @@ HEADERS += \
     ckeyboard.h \
     cmplayer.h \
     ctcppisclient.h \
-    debugout/debug.h \
+    debug.h \
     define.h \
-    led.h \
     loginwidget.h \
     mutex.h \
+    mypushbutton.h \
     pvmsmenuwidget.h \
     pvmsmonitorwidget.h \
     qmessagedialog.h \
@@ -101,7 +96,6 @@ HEADERS += \
     devmanagewidget.h \
     devupdatewidget.h \
     alarmwidget.h \
-#    debug.h \
     fileConfig.h \
     gb2312_utf8.h \
     log.h \
@@ -118,20 +112,15 @@ HEADERS += \
     rtsp/types.h \
     shm.h \
     state.h \
-#    timeset.h \
+    timeset.h \
     types.h \
     presetpasswdconfirm.h \
     myslider.h \
-#    qplayer.h \
-#    useredit.h \
-#    useradd.h \
-#    usermanage.h \
     ftpApi.h \
     rs485serv.h \
     vdec.h \
     waitloginwidget.h \
     usergroupmanage.h
-#    usermanageconfig.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -154,6 +143,7 @@ FORMS += \
     devupdatewidget.ui \
     alarmwidget.ui \
     presetpasswdconfirm.ui \
+    timeset.ui \
     useredit.ui \
     useradd.ui \
     usermanage.ui \

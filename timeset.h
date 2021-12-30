@@ -1,32 +1,33 @@
-﻿#ifndef TIMESET_H
+#ifndef TIMESET_H
 #define TIMESET_H
 
 #include <QWidget>
 
 namespace Ui {
-class timeSet;
+class timeset;
 }
 
-class timeSet : public QWidget
+class timeset : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit timeSet(QWidget *parent = 0);
-    ~timeSet();
-	void setTimeLabelText(int year, int month, int day, int hour, int min, int sec);
+    explicit timeset(QWidget *parent = nullptr);
+    ~timeset();
+    void setTimeLabelText(int year, int month, int day, int hour, int min, int sec);
 
 public slots:
     void cancleButtonClick();
     void okButtonClick();
-    void stButtonClick();   
+    void stButtonClick();
 
 signals:
     void timeSetSendMsg(QString year, QString month, QString day, QString hour, QString min, QString sec);
     void cancleMsg();
 
+
 private:
-    Ui::timeSet *ui;
+    Ui::timeset *ui;
 };
 
 #endif // TIMESET_H

@@ -1,6 +1,7 @@
 #include "inteanalywidget.h"
 #include "ui_inteanalywidget.h"
 #include <QLineEdit>
+#include <QDateTime>
 #define PVMSPAGETYPE  2    //此页面类型，2表示受电弓监控页面
 
 static int g_iDNum = 0;
@@ -9,9 +10,53 @@ inteAnalyWidget::inteAnalyWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::inteAnalyWidget)
 {
+    char timestr[128] = {0};
+    int iYear = 0, iMonth= 0, iDay = 0;
+    QString string = "";
     ui->setupUi(this);
     this->setWindowFlags(Qt::FramelessWindowHint);
 
+    QDateTime time = QDateTime::currentDateTime();
+    snprintf(timestr, sizeof(timestr), "%4d-%02d-%02d %02d:%02d:%02d", time.date().year(), time.date().month(), time.date().day(), time.time().hour(), time.time().minute(), time.time().second());
+    string = QString(QLatin1String(timestr)) ;
+    ui->endTimeLabel->setText(string);		 //结束时间控件初始显示当前系统时间
+
+    memset(&timestr, 0, sizeof(timestr));
+    iYear = time.date().year();
+    iMonth = time.date().month();
+    iDay = time.date().day()-1;
+    if (0 == iDay)
+    {
+        iMonth = time.date().month()-1;
+        if (0 == iMonth)
+        {
+            iMonth = 12;
+            iYear = time.date().year() - 1;
+        }
+        if (1 == iMonth || 3 == iMonth || 5 == iMonth || 7 == iMonth || 8 == iMonth || 10 == iMonth || 12 == iMonth)
+        {
+            iDay = 31;
+        }
+        else if (4 == iMonth || 6 == iMonth || 9 == iMonth || 11 == iMonth)
+        {
+            iDay = 30;
+        }
+        else
+        {
+            if((0 == iYear%4 && 0 == iYear%100)||(0 == iYear%400))
+            {
+                iDay = 29;
+            }
+            else
+            {
+                iDay = 28;
+            }
+        }
+    }
+
+    snprintf(timestr, sizeof(timestr), "%4d-%02d-%02d %02d:%02d:%02d", iYear, iMonth, iDay, time.time().hour(), time.time().minute(), time.time().second());
+    string = QString(QLatin1String(timestr)) ;
+    ui->startTimeLabel->setText(string);     //起始时间控件初始显示当前系统时间前一天
 
     //recordFileTableWidget
 
@@ -40,36 +85,6 @@ inteAnalyWidget::inteAnalyWidget(QWidget *parent) :
     connect(ui->canselPushButton, SIGNAL(clicked()), this, SLOT(registOutButtonClick()));
     connect(ui->alarmPushButton, SIGNAL(clicked(bool)), this, SLOT(alarmPushButoonClickSlot()));   //报警按钮按键信号响应打开报警信息界面
 
-
-    ui->StartdateEdit->setCalendarPopup(true);
-    ui->StartdateEdit->setLocale(QLocale::Chinese);
-    ui->StartdateEdit->setDateTime(QDateTime::currentDateTime());
-
-
-    ui->EnddateEdit->setCalendarPopup(true);
-    ui->EnddateEdit->setLocale(QLocale::Chinese);
-    ui->EnddateEdit->setDateTime(QDateTime::currentDateTime());
-
-//    ui->EndtimeEdit->setDateTime(QDateTime::currentDateTime());
-
-//    ui->StarttimeEdit->setDateTime(QDateTime::currentDateTime());
-
-//    ui->StartdateEdit->dumpObjectTree();
-//    QLineEdit* lEdit = ui->StartdateEdit->findChild<QLineEdit*>();
-//    if(lEdit)
-//        lEdit->setReadOnly(true);
-
-
-
-//    ui->EnddateEdit->dumpObjectTree();
-//    QLineEdit* lEdit2 = ui->EnddateEdit->findChild<QLineEdit*>();
-//    if(lEdit2)
-//        lEdit2->setReadOnly(true);
-
-    int value = QTime::currentTime().hour();
-    ui->EndcomboBox->setCurrentIndex(value);
-    ui->StartcomboBox->setCurrentIndex(0);
-
     m_alarmHappenTimer = NULL;
 
 
@@ -83,13 +98,49 @@ inteAnalyWidget::~inteAnalyWidget()
 
 void inteAnalyWidget::pageShowCtrl()  //每次切换到当前页面，则更新查询起始和结束时间控件显示
 {
+    char timestr[128] = {0};
+    int iYear = 0, iMonth= 0, iDay = 0;
+    QString string = "";
     QDateTime time = QDateTime::currentDateTime();
+    snprintf(timestr, sizeof(timestr), "%4d-%02d-%02d %02d:%02d:%02d", time.date().year(), time.date().month(), time.date().day(), time.time().hour(), time.time().minute(), time.time().second());
+    string = QString(QLatin1String(timestr)) ;
+    ui->endTimeLabel->setText(string);		 //结束时间控件初始显示当前系统时间
 
-    ui->StartdateEdit->setDate(time.date());
-    ui->EnddateEdit->setDate(time.date());
-    int value = QTime::currentTime().hour();
-     ui->EndcomboBox->setCurrentIndex(value);
-//    ui->EndtimeEdit->setTime(time.time());
+    memset(&timestr, 0, sizeof(timestr));
+    iYear = time.date().year();
+    iMonth = time.date().month();
+    iDay = time.date().day()-1;
+    if (0 == iDay)
+    {
+        iMonth = time.date().month()-1;
+        if (0 == iMonth)
+        {
+            iMonth = 12;
+            iYear = time.date().year() - 1;
+        }
+        if (1 == iMonth || 3 == iMonth || 5 == iMonth || 7 == iMonth || 8 == iMonth || 10 == iMonth || 12 == iMonth)
+        {
+            iDay = 31;
+        }
+        else if (4 == iMonth || 6 == iMonth || 9 == iMonth || 11 == iMonth)
+        {
+            iDay = 30;
+        }
+        else
+        {
+            if((0 == iYear%4 && 0 == iYear%100)||(0 == iYear%400))
+            {
+                iDay = 29;
+            }
+            else
+            {
+                iDay = 28;
+            }
+        }
+    }
+    snprintf(timestr, sizeof(timestr), "%4d-%02d-%02d %02d:%02d:%02d", iYear, iMonth, iDay, time.time().hour(), time.time().minute(), time.time().second());
+    string = QString(QLatin1String(timestr)) ;
+    ui->startTimeLabel->setText(string);     //起始时间控件初始显示当前系统时间前一天
 
 }
 

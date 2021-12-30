@@ -1095,7 +1095,7 @@ INT32 RtspSendRequest (PT_RTSP_CONN ptRtspConn)
                     iRtpLen = pcData[2];
                     iRtpLen = (data1 << 8) | (data2 & 0xFF);//(iRtpLen << 8) | pcData[3];
 
-                    RTSP_DEBUG(DEBUG_RTSP, "[%s:%d] iRtpLen=%d\n", __FUNCTION__, __LINE__, iRtpLen + 4);
+//                    RTSP_DEBUG(DEBUG_RTSP, "[%s:%d] iRtpLen=%d\n", __FUNCTION__, __LINE__, iRtpLen + 4);
                     if (iLeaveLen < (iRtpLen + 4))
                     {
                         memcpy(pcLeaveBuf, &pcBuf[iOffset], iLeaveLen);
