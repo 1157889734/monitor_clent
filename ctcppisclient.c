@@ -1,5 +1,7 @@
 #include "ctcppisclient.h"
-
+#include "log.h"
+#include "debug.h"
+#include "stdlib.h"
 #define RECV_BUF_LEN 1024
 
 int g_iIsPBD = 0;
@@ -388,7 +390,6 @@ void *PisProcessThread(void *arg)
             snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "server %s disconnected", ptPmsgConnInfo->acIpAddr);
             LOG_WriteLog(&tLogInfo);
             iHearCount = 0;
-//            printf("*************DestroyPisTcpSocket***********\n");
 
         }
 
@@ -399,6 +400,17 @@ void *PisProcessThread(void *arg)
     {
         DestroyPisTcpSocket(iSocket);
         ptPmsgConnInfo->iSockfd = -1;
+    }
+    if (pcRecvBuf)
+    {
+        free(pcRecvBuf);
+        pcRecvBuf = NULL;
+    }
+
+    if (pcLeaveBuf)
+    {
+        free(pcLeaveBuf);
+        pcLeaveBuf = NULL;
     }
 
     return NULL;
@@ -445,6 +457,12 @@ void ParsePisYCInfo(Msg_RecvPISYCInfo  RecvPISInfo)
     char tranNum[16]={0};
     time_t uiTime = 0;
     struct tm *tvTimeValue;
+    T_TIME_INFO tTimeInfo;
+    time_t localTime = 0,pisTime = 0;
+    struct tm tmVal;
+    T_LOG_INFO tLogInfo;
+
+    short iYear = 0;
 
     time(&uiTime);
     tvTimeValue = localtime(&uiTime);
@@ -461,13 +479,49 @@ void ParsePisYCInfo(Msg_RecvPISYCInfo  RecvPISInfo)
     ptPisInfo->tTime.i8Hour =  RecvPISInfo.Time[0];
     ptPisInfo->tTime.i8Min =  RecvPISInfo.Time[1];
     ptPisInfo->tTime.i8Sec =  RecvPISInfo.Time[2];
-//    if(RecvPISInfo.Effective == 1)
+
+
+    memset(&tTimeInfo, 0, sizeof(tTimeInfo));
+    tTimeInfo.year =  ptPisInfo->tTime.i16Year;
+    tTimeInfo.mon = ptPisInfo->tTime.i8Mon;
+    tTimeInfo.day = ptPisInfo->tTime.i8day;
+    tTimeInfo.hour = ptPisInfo->tTime.i8Hour;
+    tTimeInfo.min = ptPisInfo->tTime.i8Min;
+    tTimeInfo.sec = ptPisInfo->tTime.i8Sec;
+
+
+    iYear = ptPisInfo->tTime.i16Year;
+    printf("********iYear=%d---tTimeInfo.hour=%d---tTimeInfo.min=%d--tTimeInfo.sec=%d\n",iYear,tTimeInfo.hour,tTimeInfo.min,tTimeInfo.sec);
+
+    localTime = time(NULL);
+    tmVal.tm_year = iYear - 1900;
+    tmVal.tm_mon = tTimeInfo.mon - 1;
+    tmVal.tm_mday = tTimeInfo.day;
+    tmVal.tm_hour = tTimeInfo.hour;
+    tmVal.tm_min = tTimeInfo.min;
+    tmVal.tm_sec = tTimeInfo.sec;
+    pisTime = mktime(&tmVal);
+
+    if (abs(localTime - pisTime) > 3)
     {
-        ptPisInfo->wSpeed = RecvPISInfo.Speed;
+        snprintf(acStr, sizeof(acStr), "date %02d%02d%02d%02d%4d.%02d", ptPisInfo->tTime.i8Mon, ptPisInfo->tTime.i8day, ptPisInfo->tTime.i8Hour, ptPisInfo->tTime.i8Sec,iYear, ptPisInfo->tTime.i8Min);
+        system(acStr);
+        system("hwclock -w");
+
+        /*系统校时记录日志*/
+        memset(&tLogInfo, 0, sizeof(T_LOG_INFO));
+        tLogInfo.iLogType = 0;
+        snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "set local time %4d-%02d-%02d %02d:%02d:%02d", iYear, ptPisInfo->tTime.i8Mon, ptPisInfo->tTime.i8day, ptPisInfo->tTime.i8Hour, ptPisInfo->tTime.i8Min, ptPisInfo->tTime.i8Sec);
+        LOG_WriteLog(&tLogInfo);
+
     }
+
+
+
+    ptPisInfo->wSpeed = RecvPISInfo.Speed;
+
     BYTE testInfo[2]={0};
     memcpy(testInfo,&RecvPISInfo.Speed,2);
-//    printf("*000000testInfo value 1:0x%x  2:0x%x\n",testInfo[0],testInfo[1]);
 
     strncpy(ptPisInfo->cTrainNum,RecvPISInfo.TrainNumber1,sizeof(RecvPISInfo.TrainNumber1));
     strncpy(ptPisInfo->cTrainNum+4,RecvPISInfo.TrainNumber2,sizeof(RecvPISInfo.TrainNumber2));
@@ -475,23 +529,14 @@ void ParsePisYCInfo(Msg_RecvPISYCInfo  RecvPISInfo)
 
     int uiTmp = RecvPISInfo.Mileage[0] << 24 | RecvPISInfo.Mileage[1] << 16 | RecvPISInfo.Mileage[2] << 8 | RecvPISInfo.Mileage[3];
     short sDistance = (uiTmp/1000) & 0xffff;            //里程    ？？？？？
-//    printf("**1111111111**1111****sDistance=%d\n",sDistance);
 
-    ptPisInfo->wDistance = uiTmp;
-//    ptPisInfo->wDistance = RecvPISInfo.Mileage;
-//    strncpy(ptPisInfo->cTrainNum,(char *)RecvPISInfo.TrainNumber,sizeof (ptPisInfo->cTrainNum));
-
-//    snprintf(tranNum, sizeof(tranNum), "%03d", (int)RecvPISInfo.BeginStation);
-
-
+    ptPisInfo->wDistance = sDistance;
 
     snprintf(acTmp, sizeof(acTmp), "%03d", (int)RecvPISInfo.BeginStation[0]);
-//    printf("**************11111111111111=acTmp%s----RecvPISInfo.BeginStation[0]=%d\n",acTmp,RecvPISInfo.BeginStation[0]);
     STATE_GetStationName(acTmp1, sizeof(acTmp1), acTmp);
     memset(acTmp, 0, sizeof(acTmp));
     snprintf(acTmp, sizeof(acTmp), "%03d", (int)RecvPISInfo.EndStation[0]);
     STATE_GetStationName(acTmp2, sizeof(acTmp2), acTmp);
-//    printf("**************22222222222222=acTmp%s-----RecvPISInfo.EndStation[0]=%d\n",acTmp,RecvPISInfo.EndStation[0]);
 
     snprintf(ptPisInfo->cIntervalInfo, sizeof(ptPisInfo->cIntervalInfo), "%s-%s", acTmp1, acTmp2);
 
@@ -508,10 +553,28 @@ void ParsePisYCInfo(Msg_RecvPISYCInfo  RecvPISInfo)
             P_Handle = STATE_GetNvrServerPmsgHandle(i);
             ptPisInfo->CarriageNumber =tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO;
             ptPisInfo->PantoPos = (8 +j);
+
+            iRet = PMSG_SendPmsgData(P_Handle, CLI_SERV_MSG_TYPE_CHECK_TIME, (char *)&tTimeInfo, sizeof(T_TIME_INFO));    //发送校时命令
+            if (iRet < 0)
+            {
+                DebugPrint(DEBUG_UI_ERROR_PRINT, "PMSG_SendPmsgData CLI_SERV_MSG_TYPE_CHECK_TIME error!iRet=%d\n",iRet);
+            }
+            else
+            {
+                memset(&tLogInfo, 0, sizeof(T_LOG_INFO));
+                tLogInfo.iLogType = 0;
+                snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "notify server %d Time Check OK, %4d-%02d-%02d %02d:%02d:%02d!", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO,
+                    iYear, ptPisInfo->tTime.i8Mon, ptPisInfo->tTime.i8day, ptPisInfo->tTime.i8Hour, ptPisInfo->tTime.i8Min,  ptPisInfo->tTime.i8Sec);
+                LOG_WriteLog(&tLogInfo);
+            }
+
+
             iRet = PMSG_SendPmsgData(P_Handle, TX_MSG_ADDTEXT, (char *)ptPisInfo, sizeof (T_PIS_MSG_INFO));
             if (iRet < 0)
             {
-                printf("send--error\n");
+
+                DebugPrint(DEBUG_PMSG_ERROR_PRINT, "PMSG_SendPmsgData CLI_SERV_MSG_TYPE_CHECK_TIME error!iRet=%d---i=%d\n",iRet,i);
+
             }
         }
     }
@@ -523,36 +586,71 @@ void ParsePisYCInfo(Msg_RecvPISYCInfo  RecvPISInfo)
 void ParsePisInfo(Msg_RecvPISInfo  RecvPISInfo)
 {
     char acTmp[32] = {0}, acTmp1[32] = {0}, acTmp2[32] = {0}, acStr[256] = {0};
+    T_TIME_INFO tTimeInfo;
+    time_t localTime = 0,pisTime = 0;
+    struct tm tmVal;
+    T_LOG_INFO tLogInfo;
+
+    int iYear = 0;
 
     PT_PIS_MSG_INFO ptPisInfo= NULL;
     if(ptPisInfo == NULL)
          ptPisInfo = (PT_PIS_MSG_INFO)malloc(sizeof(T_PIS_MSG_INFO));
 
-    ptPisInfo->tTime.i16Year = htons(RecvPISInfo.dateTime.Year);
+    ptPisInfo->tTime.i16Year = RecvPISInfo.dateTime.Year;
     ptPisInfo->tTime.i8Mon =  RecvPISInfo.dateTime.Month;
     ptPisInfo->tTime.i8day =  RecvPISInfo.dateTime.Day;
     ptPisInfo->tTime.i8Hour =  RecvPISInfo.dateTime.Hour;
     ptPisInfo->tTime.i8Min =  RecvPISInfo.dateTime.Minute;
     ptPisInfo->tTime.i8Sec =  RecvPISInfo.dateTime.Second;
 
+
+
+    memset(&tTimeInfo, 0, sizeof(tTimeInfo));
+    tTimeInfo.year =  ptPisInfo->tTime.i16Year;
+    tTimeInfo.mon = ptPisInfo->tTime.i8Mon;
+    tTimeInfo.day = ptPisInfo->tTime.i8day;
+    tTimeInfo.hour = ptPisInfo->tTime.i8Hour;
+    tTimeInfo.min = ptPisInfo->tTime.i8Min;
+    tTimeInfo.sec = ptPisInfo->tTime.i8Sec;
+
+
+    iYear = htons(ptPisInfo->tTime.i16Year);
+
+    localTime = time(NULL);
+    tmVal.tm_year = iYear - 1900;
+    tmVal.tm_mon = tTimeInfo.mon - 1;
+    tmVal.tm_mday = tTimeInfo.day;
+    tmVal.tm_hour = tTimeInfo.hour;
+    tmVal.tm_min = tTimeInfo.min;
+    tmVal.tm_sec = tTimeInfo.sec;
+    pisTime = mktime(&tmVal);
+
+    if (abs(localTime - pisTime) > 3)
+    {
+        snprintf(acStr, sizeof(acStr), "date %02d%02d%02d%02d%4d.%02d", ptPisInfo->tTime.i8Mon, ptPisInfo->tTime.i8day, ptPisInfo->tTime.i8Hour, ptPisInfo->tTime.i8Sec,iYear, ptPisInfo->tTime.i8Min);
+        system(acStr);
+        system("hwclock -w");
+
+        /*系统校时记录日志*/
+        memset(&tLogInfo, 0, sizeof(T_LOG_INFO));
+        tLogInfo.iLogType = 0;
+        snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "set local time %4d-%02d-%02d %02d:%02d:%02d", iYear, ptPisInfo->tTime.i8Mon, ptPisInfo->tTime.i8day, ptPisInfo->tTime.i8Hour, ptPisInfo->tTime.i8Min, ptPisInfo->tTime.i8Sec);
+        LOG_WriteLog(&tLogInfo);
+
+    }
+
+
     ptPisInfo->wSpeed = RecvPISInfo.Speed;
-//    BYTE testInfo[2]={0};
-//    memcpy(testInfo,&RecvPISInfo.Speed,2);
-//    printf("*testInfo value 1:0x%x  2:0x%x\n",testInfo[0],testInfo[1]);
 
-    short uiTmp = RecvPISInfo.Mileage[0] << 8 | RecvPISInfo.Mileage[1];
-//    short sDistance = (uiTmp/1000) & 0xffff;            //里程
-
-    ptPisInfo->wDistance = uiTmp;
+    ptPisInfo->wDistance = (RecvPISInfo.Mileage)/1000;
     strncpy(ptPisInfo->cTrainNum,(char *)RecvPISInfo.TrainNumber,sizeof (ptPisInfo->cTrainNum));
 
     snprintf(acTmp, sizeof(acTmp), "%03d", (int)RecvPISInfo.IntervalInfo[2]);
     STATE_GetStationName(acTmp1, sizeof(acTmp1), acTmp);
     memset(acTmp, 0, sizeof(acTmp));
-//    printf("**************11111111111111=acTmp%s\n",acTmp);
     snprintf(acTmp, sizeof(acTmp), "%03d", (int)RecvPISInfo.IntervalInfo[5]);
     STATE_GetStationName(acTmp2, sizeof(acTmp2), acTmp);
-//    printf("**************22222222222222=acTmp%s\n",acTmp);
 
     snprintf(ptPisInfo->cIntervalInfo, sizeof(ptPisInfo->cIntervalInfo), "%s-%s", acTmp1, acTmp2);
 
@@ -569,10 +667,25 @@ void ParsePisInfo(Msg_RecvPISInfo  RecvPISInfo)
             P_Handle = STATE_GetNvrServerPmsgHandle(i);
             ptPisInfo->CarriageNumber =tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO;
             ptPisInfo->PantoPos = (8 +j);
+
+            iRet = PMSG_SendPmsgData(P_Handle, CLI_SERV_MSG_TYPE_CHECK_TIME, (char *)&tTimeInfo, sizeof(T_TIME_INFO));    //发送校时命令
+            if (iRet < 0)
+            {
+                DebugPrint(DEBUG_UI_ERROR_PRINT, "PMSG_SendPmsgData CLI_SERV_MSG_TYPE_CHECK_TIME error!iRet=%d\n",iRet);
+            }
+            else
+            {
+                memset(&tLogInfo, 0, sizeof(T_LOG_INFO));
+                tLogInfo.iLogType = 0;
+                snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "notify server %d Time Check OK, %4d-%02d-%02d %02d:%02d:%02d!", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO,
+                    iYear, ptPisInfo->tTime.i8Mon, ptPisInfo->tTime.i8day, ptPisInfo->tTime.i8Hour, ptPisInfo->tTime.i8Min,  ptPisInfo->tTime.i8Sec);
+                LOG_WriteLog(&tLogInfo);
+            }
+
             iRet = PMSG_SendPmsgData(P_Handle, TX_MSG_ADDTEXT, (char *)ptPisInfo, sizeof (T_PIS_MSG_INFO));
             if (iRet < 0)
             {
-                printf("send--error\n");
+                DebugPrint(DEBUG_PMSG_ERROR_PRINT, "PMSG_SendPmsgData CLI_SERV_MSG_TYPE_CHECK_TIME error!iRet=%d---i=%d\n",iRet,i);
             }
         }
     }
@@ -582,36 +695,74 @@ void ParsePisInfo(Msg_RecvPISInfo  RecvPISInfo)
 void ParsePisInfoEx(Msg_RecvPISInfoEx RecvPISInfo)
 {
     char acTmp[32] = {0}, acTmp1[32] = {0}, acTmp2[32] = {0}, acStr[256] = {0};
+    T_TIME_INFO tTimeInfo;
+    time_t localTime = 0,pisTime = 0;
+    struct tm tmVal;
+    T_LOG_INFO tLogInfo;
+    int iYear = 0;
+
 
     PT_PIS_MSG_INFO ptPisInfo= NULL;
     if(ptPisInfo == NULL)
          ptPisInfo = (PT_PIS_MSG_INFO)malloc(sizeof(T_PIS_MSG_INFO));
 
-    ptPisInfo->tTime.i16Year = htons(RecvPISInfo.dateTime.Year);
+    ptPisInfo->tTime.i16Year = (RecvPISInfo.dateTime.Year);
     ptPisInfo->tTime.i8Mon =  RecvPISInfo.dateTime.Month;
     ptPisInfo->tTime.i8day =  RecvPISInfo.dateTime.Day;
     ptPisInfo->tTime.i8Hour =  RecvPISInfo.dateTime.Hour;
     ptPisInfo->tTime.i8Min =  RecvPISInfo.dateTime.Minute;
     ptPisInfo->tTime.i8Sec =  RecvPISInfo.dateTime.Second;
 
-    ptPisInfo->wSpeed = RecvPISInfo.Speed;
 
-    short uiTmp = RecvPISInfo.Mileage[0] << 8 | RecvPISInfo.Mileage[1];
-//    printf("****1111****uiTmp=%d\n",uiTmp);
-//    short sDistance = (uiTmp/1000) & 0xffff;            //里程
-//    printf("*****2222***sDistance=%d\n",sDistance);
 
-    ptPisInfo->wDistance = uiTmp;
+    memset(&tTimeInfo, 0, sizeof(tTimeInfo));
+    tTimeInfo.year =  ptPisInfo->tTime.i16Year;
+    tTimeInfo.mon = ptPisInfo->tTime.i8Mon;
+    tTimeInfo.day = ptPisInfo->tTime.i8day;
+    tTimeInfo.hour = ptPisInfo->tTime.i8Hour;
+    tTimeInfo.min = ptPisInfo->tTime.i8Min;
+    tTimeInfo.sec = ptPisInfo->tTime.i8Sec;
+
+
+    iYear = htons(ptPisInfo->tTime.i16Year);
+
+    localTime = time(NULL);
+    tmVal.tm_year = iYear - 1900;
+    tmVal.tm_mon = tTimeInfo.mon - 1;
+    tmVal.tm_mday = tTimeInfo.day;
+    tmVal.tm_hour = tTimeInfo.hour;
+    tmVal.tm_min = tTimeInfo.min;
+    tmVal.tm_sec = tTimeInfo.sec;
+    pisTime = mktime(&tmVal);
+
+    if (abs(localTime - pisTime) > 3)
+    {
+        snprintf(acStr, sizeof(acStr), "date %02d%02d%02d%02d%4d.%02d", ptPisInfo->tTime.i8Mon, ptPisInfo->tTime.i8day, ptPisInfo->tTime.i8Hour, ptPisInfo->tTime.i8Sec,iYear, ptPisInfo->tTime.i8Min);
+        system(acStr);
+        system("hwclock -w");
+
+        printf("**********date=%s\n",acStr);
+        /*系统校时记录日志*/
+        memset(&tLogInfo, 0, sizeof(T_LOG_INFO));
+        tLogInfo.iLogType = 0;
+        snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "set local time %4d-%02d-%02d %02d:%02d:%02d", iYear, ptPisInfo->tTime.i8Mon, ptPisInfo->tTime.i8day, ptPisInfo->tTime.i8Hour, ptPisInfo->tTime.i8Min, ptPisInfo->tTime.i8Sec);
+        LOG_WriteLog(&tLogInfo);
+
+    }
+
+
+    ptPisInfo->wSpeed =RecvPISInfo.Speed;
+
+
+    ptPisInfo->wDistance = (RecvPISInfo.Mileage)/1000;
     strncpy(ptPisInfo->cTrainNum,(char *)RecvPISInfo.TrainNumber,sizeof (ptPisInfo->cTrainNum));
 
 
     snprintf(acTmp, sizeof(acTmp), "%03d", (int)RecvPISInfo.BeginStation[0]);
     STATE_GetStationName(acTmp1, sizeof(acTmp1), acTmp);
     memset(acTmp, 0, sizeof(acTmp));
-//    printf("**************11111111111111=acTmp%s\n",acTmp);
     snprintf(acTmp, sizeof(acTmp), "%03d", (int)RecvPISInfo.EndStation[0]);
     STATE_GetStationName(acTmp2, sizeof(acTmp2), acTmp);
-//    printf("**************22222222222222=acTmp%s\n",acTmp);
 
     snprintf(ptPisInfo->cIntervalInfo, sizeof(ptPisInfo->cIntervalInfo), "%s-%s", acTmp1, acTmp2);
 
@@ -628,15 +779,28 @@ void ParsePisInfoEx(Msg_RecvPISInfoEx RecvPISInfo)
             P_Handle = STATE_GetNvrServerPmsgHandle(i);
             ptPisInfo->CarriageNumber =tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO;
             ptPisInfo->PantoPos = (8 +j);
+
+            iRet = PMSG_SendPmsgData(P_Handle, CLI_SERV_MSG_TYPE_CHECK_TIME, (char *)&tTimeInfo, sizeof(T_TIME_INFO));    //发送校时命令
+            if (iRet < 0)
+            {
+                DebugPrint(DEBUG_UI_ERROR_PRINT, "PMSG_SendPmsgData CLI_SERV_MSG_TYPE_CHECK_TIME error!iRet=%d\n",iRet);
+            }
+            else
+            {
+                memset(&tLogInfo, 0, sizeof(T_LOG_INFO));
+                tLogInfo.iLogType = 0;
+                snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "notify server %d Time Check OK, %4d-%02d-%02d %02d:%02d:%02d!", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO,
+                    iYear, ptPisInfo->tTime.i8Mon, ptPisInfo->tTime.i8day, ptPisInfo->tTime.i8Hour, ptPisInfo->tTime.i8Min,  ptPisInfo->tTime.i8Sec);
+                LOG_WriteLog(&tLogInfo);
+            }
+
             iRet = PMSG_SendPmsgData(P_Handle, TX_MSG_ADDTEXT, (char *)ptPisInfo, sizeof (T_PIS_MSG_INFO));
             if (iRet < 0)
             {
-                printf("send--error\n");
+                DebugPrint(DEBUG_PMSG_ERROR_PRINT, "PMSG_SendPmsgData CLI_SERV_MSG_TYPE_CHECK_TIME error!iRet=%d---i=%d\n",iRet,i);
             }
         }
     }
-
-
 
 }
 

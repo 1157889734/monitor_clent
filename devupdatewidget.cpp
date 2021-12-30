@@ -1211,17 +1211,17 @@ void devUpdateWidget::configFileImportSlot()
 
         if(access("/media/usb0/monitorCfg/C3SysConfig.ini",F_OK) == 0)
         {
-            system("cp /media/usb0/monitorCfg/C3SysConfig.ini /home/data/monitorCfg/C3SysConfig.ini");
+            system("cp /media/usb0/monitorCfg/C3SysConfig.ini /home/data/monitorCfg/");
 
         }
         if(access("/media/usb0/monitorCfg/Station.ini",F_OK) == 0)
         {
-            system("cp /media/usb0/monitorCfg/Station.ini /home/data/monitorCfg/Station.ini");
+            system("cp /media/usb0/monitorCfg/Station.ini /home/data/monitorCfg/");
 
         }
         if(access("/media/usb0/monitorCfg/cfg",F_OK) == 0)
         {
-            system("cp /media/usb0/monitorCfg/cfg /home/data/monitorCfg/cfg");
+            system("cp /media/usb0/monitorCfg/cfg/* /home/data/monitorCfg/cfg/ -R");
         }
 
 //        system("cp /media/usb0/Station.ini /home/data/monitorCfg/Station.ini");
