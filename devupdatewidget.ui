@@ -1326,9 +1326,9 @@ color: rgb(0, 0, 0);</string>
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>70</y>
-       <width>21</width>
-       <height>22</height>
+       <y>65</y>
+       <width>30</width>
+       <height>30</height>
       </rect>
      </property>
      <property name="text">
@@ -1342,9 +1342,9 @@ color: rgb(0, 0, 0);</string>
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>120</y>
-       <width>21</width>
-       <height>22</height>
+       <y>115</y>
+       <width>30</width>
+       <height>30</height>
       </rect>
      </property>
      <property name="text">

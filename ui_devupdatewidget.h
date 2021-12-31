@@ -503,11 +503,11 @@ public:
         label_11->setFont(font);
         setManalTimeRadioButton = new QRadioButton(groupBox_3);
         setManalTimeRadioButton->setObjectName(QString::fromUtf8("setManalTimeRadioButton"));
-        setManalTimeRadioButton->setGeometry(QRect(10, 70, 21, 22));
+        setManalTimeRadioButton->setGeometry(QRect(10, 65, 30, 30));
         setManalTimeRadioButton->setChecked(false);
         setSysTimeRadioButton = new QRadioButton(groupBox_3);
         setSysTimeRadioButton->setObjectName(QString::fromUtf8("setSysTimeRadioButton"));
-        setSysTimeRadioButton->setGeometry(QRect(10, 120, 21, 22));
+        setSysTimeRadioButton->setGeometry(QRect(10, 115, 30, 30));
         setSysTimeRadioButton->setChecked(true);
         groupBox_4 = new QGroupBox(deviceManagewidget);
         groupBox_4->setObjectName(QString::fromUtf8("groupBox_4"));

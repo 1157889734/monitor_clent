@@ -1289,7 +1289,7 @@ void recordPlayWidget::carNoChangeSlot()   //车厢号切换信号响应槽函�
     {
         item = "";
         item = QString::number(1+i);
-        item += tr("号摄像机");
+        item += tr("号");
         ui->cameraSelectionComboBox->addItem(item);
     }
 
