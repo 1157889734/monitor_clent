@@ -520,29 +520,14 @@ void ParsePisYCInfo(Msg_RecvPISYCInfo  RecvPISInfo)
 
     ptPisInfo->wSpeed = RecvPISInfo.Speed;
 
-//    BYTE testInfo[2]={0};
-//    memcpy(testInfo,&RecvPISInfo.Speed,2);
-
     strncpy(ptPisInfo->cTrainNum,RecvPISInfo.TrainNumber1,sizeof(RecvPISInfo.TrainNumber1));
     strncpy(ptPisInfo->cTrainNum+4,RecvPISInfo.TrainNumber2,sizeof(RecvPISInfo.TrainNumber2));
 
-
-//    int uiTmp = 0;// = RecvPISInfo.Mileage[0] | RecvPISInfo.Mileage[1] | RecvPISInfo.Mileage[2] | RecvPISInfo.Mileage[3];
-
-
-//    for (int i = 0; i <4; i++) {
-//        uiTmp += (RecvPISInfo.Mileage[i] & 0xFF) << (8 * (3 - i));
-//        // System.out.print(Integer.toBinaryString(intValue)+" ");
-//    }
-//    short sDistance = uiTmp;            //里程    ？？？？？
-//    printf("*********%d-----%x\n",sDistance,sDistance);
-//    ptPisInfo->wDistance = sDistance;
-
     int uiTmp = RecvPISInfo.Mileage[0] << 24 | RecvPISInfo.Mileage[1] << 16 | RecvPISInfo.Mileage[2] << 8 | RecvPISInfo.Mileage[3];
-    short sDistance = (uiTmp/1000) & 0xffff;            //里程    ？？？？？
-//    printf("**1111111111**1111****sDistance=%d\n",sDistance);
+    short sDistance = ((uiTmp)/1000) & 0xffff;            //里程    ？？？？？
 
-    ptPisInfo->wDistance = uiTmp;
+    ptPisInfo->wDistance = sDistance;
+
 
     snprintf(acTmp, sizeof(acTmp), "%03d", (int)RecvPISInfo.BeginStation[0]);
     STATE_GetStationName(acTmp1, sizeof(acTmp1), acTmp);
@@ -656,9 +641,8 @@ void ParsePisInfo(Msg_RecvPISInfo  RecvPISInfo)
     ptPisInfo->wSpeed = RecvPISInfo.Speed;
 
     short uiTmp = RecvPISInfo.Mileage[0] << 8 | RecvPISInfo.Mileage[1];
-//    short sDistance = (uiTmp/1000) & 0xffff;            //里程
+    ptPisInfo->wDistance =(uiTmp)/1000;
 
-    ptPisInfo->wDistance = uiTmp;
     strncpy(ptPisInfo->cTrainNum,(char *)RecvPISInfo.TrainNumber,sizeof (ptPisInfo->cTrainNum));
 
     snprintf(acTmp, sizeof(acTmp), "%03d", (int)RecvPISInfo.IntervalInfo[2]);
@@ -768,15 +752,10 @@ void ParsePisInfoEx(Msg_RecvPISInfoEx RecvPISInfo)
 
     ptPisInfo->wSpeed =RecvPISInfo.Speed;
 
-
     short uiTmp = RecvPISInfo.Mileage[0] << 8 | RecvPISInfo.Mileage[1];
-//    printf("****1111****uiTmp=%d\n",uiTmp);
-//    short sDistance = (uiTmp/1000) & 0xffff;            //里程
-//    printf("*****2222***sDistance=%d\n",sDistance);
+    ptPisInfo->wDistance = (uiTmp)/1000;
 
-    ptPisInfo->wDistance = uiTmp;
     strncpy(ptPisInfo->cTrainNum,(char *)RecvPISInfo.TrainNumber,sizeof (ptPisInfo->cTrainNum));
-
 
     snprintf(acTmp, sizeof(acTmp), "%03d", (int)RecvPISInfo.BeginStation[0]);
     STATE_GetStationName(acTmp1, sizeof(acTmp1), acTmp);
