@@ -1286,53 +1286,17 @@ color: rgb(0, 0, 0);</string>
       <string/>
      </property>
     </widget>
-    <widget class="QLabel" name="label_8">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>120</y>
-       <width>67</width>
-       <height>17</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>12</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>系统校时</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_11">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>70</y>
-       <width>67</width>
-       <height>17</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>12</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>手动校时</string>
-     </property>
-    </widget>
     <widget class="QRadioButton" name="setManalTimeRadioButton">
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>20</x>
        <y>65</y>
-       <width>30</width>
+       <width>91</width>
        <height>30</height>
       </rect>
      </property>
      <property name="text">
-      <string/>
+      <string>手动校时</string>
      </property>
      <property name="checked">
       <bool>false</bool>
@@ -1341,14 +1305,14 @@ color: rgb(0, 0, 0);</string>
     <widget class="QRadioButton" name="setSysTimeRadioButton">
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>20</x>
        <y>115</y>
-       <width>30</width>
+       <width>81</width>
        <height>30</height>
       </rect>
      </property>
      <property name="text">
-      <string/>
+      <string>系统校时</string>
      </property>
      <property name="checked">
       <bool>true</bool>
