@@ -991,7 +991,7 @@ QPushButton:pressed
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton{
-background-image: url(:/monres/in.bmp);
+background-image: url(:/monres/daoru.bmp);
 border-color: rgb(255, 255, 255);
 border-width: 1px;
 border-style: solid;}

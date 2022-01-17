@@ -869,6 +869,7 @@ qrc_res.cpp: res.qrc \
 		monres/carriageequip1.bmp \
 		monres/fast.bmp \
 		monres/saveing.bmp \
+		monres/daoru.bmp \
 		monres/lighton.jpg \
 		monres/PantoIntell1.bmp \
 		monres/stop.bmp \
@@ -4118,6 +4119,7 @@ ckeyboard.o: ckeyboard.cpp ckeyboard.h \
 cmplayer.o: cmplayer.cpp mutex.h \
 		vdec.h \
 		types.h \
+		debug.h \
 		rtsp/rtspApi.h \
 		rtsp/rtspComm.h \
 		cmplayer.h \
@@ -4266,7 +4268,8 @@ ctcppisclient.o: ctcppisclient.c ctcppisclient.h \
 		log.h \
 		types.h \
 		state.h \
-		pmsgcli.h
+		pmsgcli.h \
+		debug.h
 	$(CC) -c $(CFLAGS) $(INCPATH) -o ctcppisclient.o ctcppisclient.c
 
 debug.o: debug.c debug.h
@@ -7056,7 +7059,7 @@ ourMD5.o: rtsp/ourMD5.c rtsp/ourMD5.h
 rtcp.o: rtsp/rtcp.c rtsp/types.h \
 		rtsp/rtspComm.h \
 		rtsp/rtsp.h \
-		../debugout/debug.h \
+		debug.h \
 		rtsp/mutex.h \
 		rtsp/rtcp.h
 	$(CC) -c $(CFLAGS) $(INCPATH) -o rtcp.o rtsp/rtcp.c
@@ -7064,7 +7067,7 @@ rtcp.o: rtsp/rtcp.c rtsp/types.h \
 rtp.o: rtsp/rtp.c rtsp/types.h \
 		rtsp/rtspComm.h \
 		rtsp/rtsp.h \
-		../debugout/debug.h \
+		debug.h \
 		rtsp/mutex.h \
 		rtsp/rtp.h
 	$(CC) -c $(CFLAGS) $(INCPATH) -o rtp.o rtsp/rtp.c
@@ -7073,7 +7076,7 @@ rtsp.o: rtsp/rtsp.c rtsp/mutex.h \
 		rtsp/types.h \
 		rtsp/rtspComm.h \
 		rtsp/rtsp.h \
-		../debugout/debug.h \
+		debug.h \
 		rtsp/rtp.h \
 		rtsp/rtcp.h \
 		rtsp/Base64EncDec.h
@@ -7083,7 +7086,7 @@ rtspApi.o: rtsp/rtspApi.c rtsp/mutex.h \
 		rtsp/types.h \
 		rtsp/rtspComm.h \
 		rtsp/rtsp.h \
-		../debugout/debug.h \
+		debug.h \
 		rtsp/rtp.h \
 		rtsp/rtcp.h \
 		rtsp/rtspApi.h \
@@ -7702,6 +7705,7 @@ timeset.o: timeset.cpp timeset.h \
 vdec.o: vdec.cpp vdec.h \
 		mutex.h \
 		types.h \
+		debug.h \
 		shm.h \
 		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QWidget \
 		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qwidget.h \

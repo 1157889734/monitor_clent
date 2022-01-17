@@ -524,7 +524,7 @@ void ParsePisYCInfo(Msg_RecvPISYCInfo  RecvPISInfo)
     strncpy(ptPisInfo->cTrainNum+4,RecvPISInfo.TrainNumber2,sizeof(RecvPISInfo.TrainNumber2));
 
     int uiTmp = RecvPISInfo.Mileage[0] << 24 | RecvPISInfo.Mileage[1] << 16 | RecvPISInfo.Mileage[2] << 8 | RecvPISInfo.Mileage[3];
-    short sDistance = ((uiTmp)/1000) & 0xffff;            //里程    ？？？？？
+    short sDistance = uiTmp;            //里程    ？？？？？
 
     ptPisInfo->wDistance = sDistance;
 
@@ -640,8 +640,8 @@ void ParsePisInfo(Msg_RecvPISInfo  RecvPISInfo)
 
     ptPisInfo->wSpeed = RecvPISInfo.Speed;
 
-    short uiTmp = RecvPISInfo.Mileage[0] << 8 | RecvPISInfo.Mileage[1];
-    ptPisInfo->wDistance =(uiTmp)/1000;
+//    short uiTmp = RecvPISInfo.Mileage[0] << 8 | RecvPISInfo.Mileage[1];
+    ptPisInfo->wDistance =RecvPISInfo.Mileage;
 
     strncpy(ptPisInfo->cTrainNum,(char *)RecvPISInfo.TrainNumber,sizeof (ptPisInfo->cTrainNum));
 
@@ -752,8 +752,9 @@ void ParsePisInfoEx(Msg_RecvPISInfoEx RecvPISInfo)
 
     ptPisInfo->wSpeed =RecvPISInfo.Speed;
 
-    short uiTmp = RecvPISInfo.Mileage[0] << 8 | RecvPISInfo.Mileage[1];
-    ptPisInfo->wDistance = (uiTmp)/1000;
+//    short uiTmp = RecvPISInfo.Mileage[0] << 8 | RecvPISInfo.Mileage[1];
+
+    ptPisInfo->wDistance = RecvPISInfo.Mileage;
 
     strncpy(ptPisInfo->cTrainNum,(char *)RecvPISInfo.TrainNumber,sizeof (ptPisInfo->cTrainNum));
 

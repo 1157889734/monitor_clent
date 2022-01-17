@@ -266,6 +266,7 @@ void usergroupManage::update_database_function()
     }
 
     ui->passwdlineEdit->clear();
+    ui->usernamelineEdit->setFocus();
     ui->usernamelineEdit->clear();
     ui->surelineEdit->clear();
 }

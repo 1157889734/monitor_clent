@@ -182,7 +182,7 @@ int main(int argc, char *argv[])
 
     QObject::connect(g_loginPage,SIGNAL(gotoPvmsMenuPageSignal()),g_pvmsMenuPage,SLOT(showPageSlot()));
 
-    QObject::connect(g_pvmsMenuPage, SIGNAL(registOutSignal()), g_choiceLoginDevPage, SLOT(showPageSlot()));       //受电弓监控主菜单页面的注销信号连接登录页面的页面显示槽
+    QObject::connect(g_pvmsMenuPage, SIGNAL(registOutSignal()), g_loginPage, SLOT(showPageSlot()));       //受电弓监控主菜单页面的注销信号连接登录页面的页面显示槽
 
     QObject::connect(g_pvmsMenuPage, SIGNAL(registOutSignal()), g_loginPage, SLOT(clearSlot()));       //受电弓监控主菜单页面的注销信号连接登录页面的页面显示槽
 

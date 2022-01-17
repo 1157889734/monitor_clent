@@ -847,9 +847,10 @@ void recordPlayWidget::recordDownloadSlot()
         STATE_GetCurrentTrainConfigInfo(&tTrainConfigInfo);
         snprintf(acIpAddr, sizeof(acIpAddr), "192.168.%d.81", 100+tTrainConfigInfo.tNvrServerInfo[idex].iCarriageNO);
 
-
-        m_tFtpHandle[idex] = FTP_CreateConnect(acIpAddr, FTP_SERVER_PORT, PftpProc);
-
+        if(m_tFtpHandle[idex] == 0)
+        {
+            m_tFtpHandle[idex] = FTP_CreateConnect(acIpAddr, FTP_SERVER_PORT, PftpProc);
+        }
         if (0 == m_tFtpHandle[idex])
         {
             DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] connect to ftp server:%s error!\n", __FUNCTION__, acIpAddr);

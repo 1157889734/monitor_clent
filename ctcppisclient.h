@@ -88,7 +88,7 @@ typedef struct  _Msg_RecvPISInfoEx
     TimeInfo	dateTime;					    //时间
     INT16        Speed;						    // 速度
     INT8        TrainNumber[11];				    // 车次
-    INT8        Mileage[2];					    // 区间里程数
+    INT16        Mileage;					    // 区间里程数
     INT8		BeginStation[3];
     INT8		EndStation[3];
     INT8        IntervalInfo[24];               // 区间信息
@@ -101,7 +101,7 @@ typedef struct  _Msg_RecvPISInfo
     TimeInfo	dateTime;					    //时间
     INT16        Speed;						    // 速度
     INT8        TrainNumber[7];				    // 车次
-    INT8        Mileage[2];					    // 区间里程数
+    INT16        Mileage;					    // 区间里程数
     INT8        IntervalInfo[30];               // 区间信息
 }__attribute__((packed))Msg_RecvPISInfo;
 

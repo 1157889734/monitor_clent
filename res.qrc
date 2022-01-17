@@ -251,5 +251,6 @@
         <file>monres/checked.bmp</file>
         <file>monres/unchecked.bmp</file>
         <file>monres/user.bmp</file>
+        <file>monres/daoru.bmp</file>
     </qresource>
 </RCC>
