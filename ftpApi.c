@@ -1112,25 +1112,24 @@ void *FTP_DownloadDataRecvThread(void *param)
 						    {
 						    	FD_CLR(ptFtpConnectionInfo->data_socket, &ptFtpConnectionInfo->readSet);
 						    	FTP_CloseClientDataSocket(ptFtpConnectionInfo);
-
+                                DebugPrint(DEBUG_ERROR_PRINT, "11recv err,iRecvLen=%d\n",iRecvLen);
+                                iPos = -3; //暂定回调进度-3，表示告知数据接收失败
 						    }
-                            DebugPrint(DEBUG_ERROR_PRINT, "recv err,iRecvLen=%d\n",iRecvLen);
-                            iPos = -3; //暂定回调进度-3，表示告知数据接收失败
+
 					        break;
 					    }
 						if(ptFtpConnectionInfo->data_socket > 0)
 					    {
 					    	FD_CLR(ptFtpConnectionInfo->data_socket, &ptFtpConnectionInfo->readSet);
 					    	FTP_CloseClientDataSocket(ptFtpConnectionInfo);
-                            DebugPrint(DEBUG_ERROR_PRINT, "recv err,iRecvLen=%d\n",iRecvLen);
-                            iPos = -3; //暂定回调进度-3，表示告知数据接收失败
-                            break;
+                            DebugPrint(DEBUG_ERROR_PRINT, "22recv err,iRecvLen=%d\n",iRecvLen);
 					    }
+                            break;
 
 					}
 			        else
 			        {
-                        DebugPrint(DEBUG_ERROR_PRINT, "recv err,iRecvLen=%d\n",iRecvLen);
+                        DebugPrint(DEBUG_ERROR_PRINT, "33recv err,iRecvLen=%d\n",iRecvLen);
 			            iPos = -3; //暂定回调进度-3，表示告知数据接收失败
 			            break;
 			        }
@@ -1440,6 +1439,7 @@ int FTP_FileDownLoad(PFTP_HANDLE pFtpHandle)
 {
 	int iRet = 0;
 	PT_FTP_CONNECTION_INFO ptFtpConnectionInfo = (PT_FTP_CONNECTION_INFO)pFtpHandle;
+//    pthread_detach(pthread_self());
 
     if (NULL == ptFtpConnectionInfo)
     {
