@@ -25,6 +25,7 @@ public:
     void init_datavase();
     void ShowKeyboardSlots(int nShow);
     int addFlag;
+    QString username;
 
 
 signals:

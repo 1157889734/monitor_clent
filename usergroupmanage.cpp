@@ -227,6 +227,7 @@ void usergroupManage::on_addpushButton_clicked()
     ui->usernamelineEdit->clear();
     ui->surelineEdit->clear();
     ui->usernamelineEdit->setFocus();
+
     addFlag = 1;
 }
 
@@ -266,7 +267,7 @@ void usergroupManage::update_database_function()
     }
 
     ui->passwdlineEdit->clear();
-    ui->usernamelineEdit->setFocus();
+//    ui->usernamelineEdit->setFocus();
     ui->usernamelineEdit->clear();
     ui->surelineEdit->clear();
 }
@@ -339,7 +340,19 @@ void usergroupManage::on_savepushButton_clicked()
                    msgBox.exec();
                    return;
                }
+               qDebug()<<username<<value_name<<__LINE__;
                QString sql;
+               if(username != value_name)
+               {
+                 static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("禁止修改用户名!")));
+                 msgBox.setWindowFlags(Qt::FramelessWindowHint);
+                 msgBox.setStandardButtons(QMessageBox::Yes);
+                 msgBox.button(QMessageBox::Yes)->setText("OK");
+                 msgBox.exec();
+                 db.close();
+                 return;
+               }
+
                sql = QString("update tab set passwd = ('%1') where username = ('%2')")
                   .arg(value_passwd).arg(value_name);
               bool ok = query.exec(sql);
@@ -591,7 +604,8 @@ void usergroupManage::table_choose_fuction(QTableWidgetItem *item)
     QTableWidgetItem *mitem = items.at(0);
     QString text = mitem->text(); //获取内容
     ui->usernamelineEdit->setText(text);
-    ui->usernamelineEdit->setFocusPolicy(Qt::NoFocus);
+    username = ui->usernamelineEdit->text();
+//    ui->usernamelineEdit->setFocusPolicy(Qt::NoFocus);
     ui->passwdlineEdit->clear();
     ui->surelineEdit->clear();
 }
