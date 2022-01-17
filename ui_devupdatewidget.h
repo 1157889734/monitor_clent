@@ -223,7 +223,7 @@ public:
         trainTypeSetComboBox->setFont(font);
         presetReturnTimeSetLineEdit = new QLineEdit(devUpdateWidget);
         presetReturnTimeSetLineEdit->setObjectName(QString::fromUtf8("presetReturnTimeSetLineEdit"));
-        presetReturnTimeSetLineEdit->setGeometry(QRect(790, 80, 141, 31));
+        presetReturnTimeSetLineEdit->setGeometry(QRect(780, 80, 151, 31));
         presetReturnTimeSetLineEdit->setFont(font);
         presetReturnTimeSetLineEdit->setReadOnly(false);
         alarmPushButton = new QPushButton(devUpdateWidget);
@@ -289,7 +289,7 @@ public:
         carriageSelectionComboBox = new QComboBox(deviceManagewidget);
         carriageSelectionComboBox->setObjectName(QString::fromUtf8("carriageSelectionComboBox"));
         carriageSelectionComboBox->setEnabled(true);
-        carriageSelectionComboBox->setGeometry(QRect(580, 265, 121, 24));
+        carriageSelectionComboBox->setGeometry(QRect(580, 270, 121, 24));
         carriageSelectionComboBox->setFont(font);
         carriageSelectionComboBox->setMinimumContentsLength(0);
         cameraSelectionComboBox = new QComboBox(deviceManagewidget);

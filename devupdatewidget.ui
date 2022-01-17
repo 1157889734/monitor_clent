@@ -454,9 +454,9 @@ background-color: rgb(255, 255, 255);</string>
   <widget class="QLineEdit" name="presetReturnTimeSetLineEdit">
    <property name="geometry">
     <rect>
-     <x>790</x>
+     <x>780</x>
      <y>80</y>
-     <width>141</width>
+     <width>151</width>
      <height>31</height>
     </rect>
    </property>
@@ -658,7 +658,7 @@ QPushButton:pressed
     <property name="geometry">
      <rect>
       <x>580</x>
-      <y>265</y>
+      <y>270</y>
       <width>121</width>
       <height>24</height>
      </rect>
