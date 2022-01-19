@@ -524,7 +524,7 @@ void ParsePisYCInfo(Msg_RecvPISYCInfo  RecvPISInfo)
     strncpy(ptPisInfo->cTrainNum+4,RecvPISInfo.TrainNumber2,sizeof(RecvPISInfo.TrainNumber2));
 
     int uiTmp = RecvPISInfo.Mileage[0] << 24 | RecvPISInfo.Mileage[1] << 16 | RecvPISInfo.Mileage[2] << 8 | RecvPISInfo.Mileage[3];
-    INT16 sDistance = htons(uiTmp);            //里程    ？？？？？
+    INT16 sDistance = htonl(uiTmp);            //里程    ？？？？？
 
     ptPisInfo->wDistance = sDistance;
 

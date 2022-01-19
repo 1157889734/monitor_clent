@@ -266,7 +266,7 @@ public:
         configFileDisplayLineEdit->setFont(font);
         brightnessLineEdit = new QLineEdit(deviceManagewidget);
         brightnessLineEdit->setObjectName(QString::fromUtf8("brightnessLineEdit"));
-        brightnessLineEdit->setGeometry(QRect(565, 315, 90, 30));
+        brightnessLineEdit->setGeometry(QRect(570, 315, 90, 30));
         brightnessLineEdit->setFont(font);
         carriageLabel = new QLabel(deviceManagewidget);
         carriageLabel->setObjectName(QString::fromUtf8("carriageLabel"));
@@ -299,7 +299,7 @@ public:
         cameraSelectionComboBox->setFont(font);
         contrastLineEdit = new QLineEdit(deviceManagewidget);
         contrastLineEdit->setObjectName(QString::fromUtf8("contrastLineEdit"));
-        contrastLineEdit->setGeometry(QRect(875, 315, 90, 30));
+        contrastLineEdit->setGeometry(QRect(880, 315, 90, 30));
         contrastLineEdit->setFont(font);
         label_9 = new QLabel(deviceManagewidget);
         label_9->setObjectName(QString::fromUtf8("label_9"));
@@ -327,7 +327,7 @@ public:
         comboBox->setFont(font);
         saturationLineEdit = new QLineEdit(deviceManagewidget);
         saturationLineEdit->setObjectName(QString::fromUtf8("saturationLineEdit"));
-        saturationLineEdit->setGeometry(QRect(720, 315, 90, 30));
+        saturationLineEdit->setGeometry(QRect(725, 315, 90, 30));
         saturationLineEdit->setFont(font);
         imageParamSetPushButton = new QPushButton(deviceManagewidget);
         imageParamSetPushButton->setObjectName(QString::fromUtf8("imageParamSetPushButton"));
@@ -343,7 +343,7 @@ public:
 "{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}"));
         saturationLabel = new QLabel(deviceManagewidget);
         saturationLabel->setObjectName(QString::fromUtf8("saturationLabel"));
-        saturationLabel->setGeometry(QRect(660, 315, 52, 24));
+        saturationLabel->setGeometry(QRect(665, 315, 52, 24));
         saturationLabel->setFont(font);
         saturationLabel->setStyleSheet(QString::fromUtf8(""));
         brightnessLabel = new QLabel(deviceManagewidget);
@@ -375,7 +375,7 @@ public:
         cameraLabel->setStyleSheet(QString::fromUtf8(""));
         contrastLabel = new QLabel(deviceManagewidget);
         contrastLabel->setObjectName(QString::fromUtf8("contrastLabel"));
-        contrastLabel->setGeometry(QRect(815, 315, 52, 24));
+        contrastLabel->setGeometry(QRect(820, 315, 52, 24));
         contrastLabel->setFont(font);
         contrastLabel->setStyleSheet(QString::fromUtf8(""));
         configFileImportPushButton = new QPushButton(deviceManagewidget);

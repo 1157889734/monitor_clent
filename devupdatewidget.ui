@@ -584,7 +584,7 @@ QPushButton:pressed
    <widget class="QLineEdit" name="brightnessLineEdit">
     <property name="geometry">
      <rect>
-      <x>565</x>
+      <x>570</x>
       <y>315</y>
       <width>90</width>
       <height>30</height>
@@ -699,7 +699,7 @@ QPushButton:pressed
    <widget class="QLineEdit" name="contrastLineEdit">
     <property name="geometry">
      <rect>
-      <x>875</x>
+      <x>880</x>
       <y>315</y>
       <width>90</width>
       <height>30</height>
@@ -796,7 +796,7 @@ QPushButton:pressed
    <widget class="QLineEdit" name="saturationLineEdit">
     <property name="geometry">
      <rect>
-      <x>720</x>
+      <x>725</x>
       <y>315</y>
       <width>90</width>
       <height>30</height>
@@ -842,7 +842,7 @@ QPushButton:pressed
    <widget class="QLabel" name="saturationLabel">
     <property name="geometry">
      <rect>
-      <x>660</x>
+      <x>665</x>
       <y>315</y>
       <width>52</width>
       <height>24</height>
@@ -954,7 +954,7 @@ QPushButton:pressed
    <widget class="QLabel" name="contrastLabel">
     <property name="geometry">
      <rect>
-      <x>815</x>
+      <x>820</x>
       <y>315</y>
       <width>52</width>
       <height>24</height>
