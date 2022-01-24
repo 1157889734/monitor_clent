@@ -869,6 +869,7 @@ void recordPlayWidget::recordDownloadSlot()
                     {
                         snprintf(acSaveFileName, sizeof(acSaveFileName), "%s%s", "/home/data/u/", parseFileName(m_acFilePath[row]));
                     }
+
                     DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] add download file:%s!\n", __FUNCTION__, m_acFilePath[row]);
                     iRet = FTP_AddDownLoadFile(m_tFtpHandle[idex], m_acFilePath[row], acSaveFileName);
                     if (iRet < 0)

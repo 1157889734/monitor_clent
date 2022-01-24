@@ -1077,15 +1077,15 @@ void *FTP_DownloadDataRecvThread(void *param)
 								}
 			                	break;
 			                }
-
 			                iFileSize += iRet;
 			                if (ptFtpConnectionInfo->DownloadFileSize > 0)
 			                {
 								iPos = iFileSize*100/ptFtpConnectionInfo->DownloadFileSize;
-								if (iPos >= 0)
+                                if (iPos > 0)
 								{	
 									if (iPos == 100)
 									{
+                                        usleep(200*1000);
 						        		break;
 						        	} 
 						        	else
@@ -1153,6 +1153,7 @@ void *FTP_DownloadDataRecvThread(void *param)
 			fsync(fileno(fp));
 			fclose(fp);
 		    fp = NULL;
+            system("sync");
 		FAIL:
 		    if ((100 == iPos) || (-1 == iPos) || (-2 == iPos) || (-3 == iPos))
 		    {
