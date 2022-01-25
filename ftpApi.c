@@ -1001,7 +1001,17 @@ void *FTP_DownloadDataRecvThread(void *param)
 		    	FTP_CloseClientDataSocket(ptFtpConnectionInfo);
 		    }
 	        ptFtpConnectionInfo->data_socket=FTP_CreateClientDataSocket();
-	        
+            if(ptFtpConnectionInfo->data_socket < 0)
+            {
+                DebugPrint(DEBUG_ERROR_PRINT, "\nptFtpConnectionInfo->data_socket < 0 \n");
+                FD_CLR(ptFtpConnectionInfo->data_socket, &ptFtpConnectionInfo->readSet);
+                FTP_CloseClientDataSocket(ptFtpConnectionInfo);
+                fclose(fp);
+                fp = NULL;
+                iPos = -3;  //暂定回调进度-3，表示告知数据接收失败
+                goto FAIL;
+            }
+
 		    if (connect(ptFtpConnectionInfo->data_socket, (struct sockaddr*)&data_client_ip, sizeof(struct sockaddr_in)) <0) 
 		    {
                 DebugPrint(DEBUG_ERROR_PRINT, "\ndata_link not link to ftp \n");
@@ -1085,7 +1095,6 @@ void *FTP_DownloadDataRecvThread(void *param)
 								{	
 									if (iPos == 100)
 									{
-                                        usleep(200*1000);
 						        		break;
 						        	} 
 						        	else

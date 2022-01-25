@@ -23,6 +23,7 @@
 #define MAX_RECORD_SEACH_NUM 10000
 #define MAX_RECFILE_PATH_LEN 256
 
+extern int g_downloadFlag;
 
 
 namespace Ui {
