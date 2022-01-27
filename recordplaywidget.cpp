@@ -451,7 +451,7 @@ void recordPlayWidget::playMinusStepSlot()
 
 void recordPlayWidget::downloadProcessBarDisplaySlot(int iEnableFlag)   //是否显示文件下载进度条，iEnableFlag为1，显示，为0不显示
 {
-    if ((0 == iEnableFlag) && (0 == ui->fileDownloadProgressBar->isHidden()))
+    if ((0 == iEnableFlag)/* && (0 == ui->fileDownloadProgressBar->isHidden())*/)
     {
 
         if(ui->fileDownloadProgressBar->isVisible() == true)
@@ -471,7 +471,7 @@ void recordPlayWidget::downloadProcessBarDisplaySlot(int iEnableFlag)   //是否
 
 
     }
-    else if ((1 == iEnableFlag) && (1 == ui->fileDownloadProgressBar->isHidden()))
+    else if ((1 == iEnableFlag) /*&& (1 == ui->fileDownloadProgressBar->isHidden())*/)
     {
 
         if(ui->fileDownloadProgressBar->isVisible() == false)
@@ -538,8 +538,11 @@ void recordPlayWidget::setDownloadProcessBarValueSlot(int iValue)   //设置文�
 
     if (100 == iValue)   //iValue=100,下载结束，销毁ftp连接
     {
+        ui->fileDownloadProgressBar->hide();
         FTP_DestoryConnect(m_tFtpHandle[m_iFtpServerIdex]);
         m_tFtpHandle[m_iFtpServerIdex] = 0;
+        return;
+
     }
 
 }
