@@ -2,9 +2,11 @@
 #include "ui_inteanalywidget.h"
 #include <QLineEdit>
 #include <QDateTime>
+#include "debug.h"
 #define PVMSPAGETYPE  2    //此页面类型，2表示受电弓监控页面
 
 static int g_iDNum = 0;
+int g_intenaiDateEditNo = 0;      //要显示时间的不同控件的编号
 
 inteAnalyWidget::inteAnalyWidget(QWidget *parent) :
     QWidget(parent),
@@ -15,6 +17,15 @@ inteAnalyWidget::inteAnalyWidget(QWidget *parent) :
     QString string = "";
     ui->setupUi(this);
     this->setWindowFlags(Qt::FramelessWindowHint);
+
+    timeSetWidget = new timeset(this);
+    timeSetWidget->hide();
+
+    connect(timeSetWidget, SIGNAL(timeSetSendMsg(QString,QString,QString,QString,QString,QString)), this, SLOT(timeSetRecvMsg(QString,QString,QString,QString,QString,QString)));  //时间设置窗体控件设置信号响应
+
+    connect(ui->startTimeSetPushButton, SIGNAL(clicked(bool)), this, SLOT(openStartTimeSetWidgetSlot()));   //开始时间设置按钮按键信号响应
+    connect(ui->startTimeSetPushButton_2, SIGNAL(clicked(bool)), this, SLOT(openStopTimeSetWidgetSlot()));  //结束时间设置按钮按键信号响应
+
 
     QDateTime time = QDateTime::currentDateTime();
     snprintf(timestr, sizeof(timestr), "%4d-%02d-%02d %02d:%02d:%02d", time.date().year(), time.date().month(), time.date().day(), time.time().hour(), time.time().minute(), time.time().second());
@@ -93,6 +104,9 @@ inteAnalyWidget::inteAnalyWidget(QWidget *parent) :
 
 inteAnalyWidget::~inteAnalyWidget()
 {
+    delete timeSetWidget;
+    timeSetWidget = NULL;
+
     delete ui;
 }
 
@@ -141,6 +155,67 @@ void inteAnalyWidget::pageShowCtrl()  //每次切换到当前页面，则更新�
     snprintf(timestr, sizeof(timestr), "%4d-%02d-%02d %02d:%02d:%02d", iYear, iMonth, iDay, time.time().hour(), time.time().minute(), time.time().second());
     string = QString(QLatin1String(timestr)) ;
     ui->startTimeLabel->setText(string);     //起始时间控件初始显示当前系统时间前一天
+
+}
+
+void inteAnalyWidget::timeSetRecvMsg(QString year, QString month, QString day, QString hour, QString min, QString sec)     //响应时间设置控件信号，更新起始、结束时间显示label的显示文本
+{
+    char timestr[128] = {0};
+    snprintf(timestr, sizeof(timestr), "%s-%s-%s %s:%s:%s", year.toStdString().data(), month.toStdString().data(), day.toStdString().data(),
+            hour.toStdString().data(), min.toStdString().data(), sec.toStdString().data());
+    QString string = QString(QLatin1String(timestr)) ;
+    if (1 == g_intenaiDateEditNo)
+    {
+        ui->startTimeLabel->setText(string);
+    }
+    else if (2 == g_intenaiDateEditNo)
+    {
+        ui->endTimeLabel->setText(string);
+    }
+}
+
+
+void inteAnalyWidget::openStartTimeSetWidgetSlot()
+{
+    QString timeStr = ui->startTimeLabel->text();
+    char acTimeStr[256] = {0};
+    int iYear = 0, iMonth = 0, iDay = 0, iHour = 0, iMin = 0, iSec = 0;
+
+    DebugPrint(DEBUG_UI_OPTION_PRINT, "recordPlayWidget startTimeSetPushButton pressed!\n");
+    strcpy(acTimeStr, timeStr.toLatin1().data());
+    if (strlen(acTimeStr) != 0)
+    {
+        DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] timeStr:%s!\n", __FUNCTION__, acTimeStr);
+        sscanf(acTimeStr, "%4d-%02d-%02d %02d:%02d:%02d", &iYear, &iMonth, &iDay, &iHour, &iMin, &iSec);
+        DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] %d-%d-%d %d:%d:%d!\n", __FUNCTION__, iYear, iMonth, iDay, iHour, iMin, iSec);
+    }
+    timeSetWidget->setGeometry(290, 65, timeSetWidget->width(), timeSetWidget->height());
+    g_intenaiDateEditNo = 1;
+    timeSetWidget->setTimeLabelText(iYear, iMonth, iDay, iHour, iMin, iSec);
+    timeSetWidget->show();
+
+}
+
+
+void inteAnalyWidget::openStopTimeSetWidgetSlot()
+{
+    QString timeStr = ui->endTimeLabel->text();
+    char acTimeStr[256] = {0};
+    int iYear = 0, iMonth = 0, iDay = 0, iHour = 0, iMin = 0, iSec = 0;
+
+    DebugPrint(DEBUG_UI_OPTION_PRINT, "recordPlayWidget stopTimeSetPushButton pressed!\n");
+    strcpy(acTimeStr, timeStr.toLatin1().data());
+    if (strlen(acTimeStr) != 0)
+    {
+        DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] timeStr:%s!\n", __FUNCTION__, acTimeStr);
+        sscanf(acTimeStr, "%4d-%02d-%02d %02d:%02d:%02d", &iYear, &iMonth, &iDay, &iHour, &iMin, &iSec);
+        DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] %d-%d-%d %d:%d:%d!\n", __FUNCTION__, iYear, iMonth, iDay, iHour, iMin, iSec);
+    }
+    timeSetWidget->setGeometry(290, 105, timeSetWidget->width(), timeSetWidget->height());
+    g_intenaiDateEditNo = 2;
+    timeSetWidget->setTimeLabelText(iYear, iMonth, iDay, iHour, iMin, iSec);
+    timeSetWidget->show();
+
 
 }
 

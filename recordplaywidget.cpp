@@ -496,6 +496,8 @@ void recordPlayWidget::setDownloadProcessBarValueSlot(int iValue)   //设置文�
 {
     if (-1 == iValue) //iValue=-1时,表示被告知U盘已拔出,销毁FTP连接并弹框提示
     {
+        ui->fileDownloadProgressBar->hide();
+
         FTP_DestoryConnect(m_tFtpHandle[m_iFtpServerIdex]);
         m_tFtpHandle[m_iFtpServerIdex] = 0;
 
@@ -509,6 +511,8 @@ void recordPlayWidget::setDownloadProcessBarValueSlot(int iValue)   //设置文�
 
     if (-2 == iValue) //iValue=-2时,表示被告知U盘写入失败,销毁FTP连接并弹框提示
     {
+        ui->fileDownloadProgressBar->hide();
+
         FTP_DestoryConnect(m_tFtpHandle[m_iFtpServerIdex]);
         m_tFtpHandle[m_iFtpServerIdex] = 0;
 
@@ -522,6 +526,8 @@ void recordPlayWidget::setDownloadProcessBarValueSlot(int iValue)   //设置文�
 
     if (-3 == iValue) //iValue=-3时,表示被告知数据接收失败,销毁FTP连接并弹框提示
     {
+        ui->fileDownloadProgressBar->hide();
+
         FTP_DestoryConnect2(m_tFtpHandle[m_iFtpServerIdex]);
         m_tFtpHandle[m_iFtpServerIdex] = 0;
 

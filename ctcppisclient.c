@@ -9,6 +9,9 @@ int g_iIsPBD = 0;
 char g_strTrainNumber;
 int g_iCarriageNums;
 
+pthread_mutex_t g_pistypeSetMutex;
+
+
 typedef struct _T_TIME
 {
     INT16 i16Year;  //年
@@ -144,7 +147,7 @@ void *PisProcessThread(void *arg)
     unsigned char *pcMsgBuf = NULL;
     int iBufLen = RECV_BUF_LEN;
     int iPreLeaveLen = 0, iLeaveLen = 0, iRecvLen = 0;
-
+    int g_pistype = 0;
 //    unsigned char pcRecvBuf[RECV_BUF_LEN];
     int iSocket = 0;
     int iOffset = 0;
@@ -247,7 +250,9 @@ void *PisProcessThread(void *arg)
 
                 iLeaveLen = iRecvLen + iPreLeaveLen;
                 iOffset = 0;
-
+                pthread_mutex_lock(&g_pistypeSetMutex);
+                g_pistype = g_iIsPBD;
+                pthread_mutex_unlock(&g_pistypeSetMutex);
 
                 while (iRecvLen > 0)
                 {
@@ -267,7 +272,7 @@ void *PisProcessThread(void *arg)
 //                    {
 //                        break;
 //                    }
-                    if(g_iIsPBD == 0)
+                    if(g_pistype == 0)
                     {
                         TCP_PIS_HEADER tcp_pis_header;
                         memcpy(&tcp_pis_header,pcRecvBuf,sizeof(TCP_PIS_HEADER));
@@ -289,7 +294,7 @@ void *PisProcessThread(void *arg)
                         }
 
                     }
-                    else if(g_iIsPBD == 1)
+                    else if(g_pistype == 1)
                     {
                         TCP_HEADER tcp_header;
                         memcpy(&tcp_header,pcRecvBuf,sizeof(TCP_HEADER));
@@ -326,7 +331,7 @@ void *PisProcessThread(void *arg)
                         }
 
                     }
-                    else if(g_iIsPBD == 2)
+                    else if(g_pistype == 2)
                     {
                         Clent_PIS_HANDLE m_Clinet_Pis_Phandle=0;
                         TCP_HEADER tcp_header;

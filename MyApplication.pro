@@ -26,8 +26,8 @@ CONFIG += c++11
 QMAKE_CFLAGS += $(STRIP) $(TAR_FILE)
 QMAKE_CXXFLAGS += $(STRIP) $(TAR_FILE)
 
-#QMAKE_CFLAGS += -g -O0
-#QMAKE_CXXFLAGS += -g -O0
+#QMAKE_CFLAGS += -g
+#QMAKE_CXXFLAGS += -g
 
 INCLUDEPATH += $$PWD/include
 INCLUDEPATH += /home/cftc/toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/rockchip/

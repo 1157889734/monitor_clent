@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_inteAnalyWidget_t {
-    QByteArrayData data[10];
-    char stringdata0[162];
+    QByteArrayData data[19];
+    char stringdata0[258];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -41,14 +41,26 @@ QT_MOC_LITERAL(5, 65, 20), // "registOutButtonClick"
 QT_MOC_LITERAL(6, 86, 24), // "alarmPushButoonClickSlot"
 QT_MOC_LITERAL(7, 111, 15), // "alarmHappenSlot"
 QT_MOC_LITERAL(8, 127, 19), // "alarmHappenCtrlSlot"
-QT_MOC_LITERAL(9, 147, 14) // "alarmClearSlot"
+QT_MOC_LITERAL(9, 147, 14), // "alarmClearSlot"
+QT_MOC_LITERAL(10, 162, 14), // "timeSetRecvMsg"
+QT_MOC_LITERAL(11, 177, 4), // "year"
+QT_MOC_LITERAL(12, 182, 5), // "month"
+QT_MOC_LITERAL(13, 188, 3), // "day"
+QT_MOC_LITERAL(14, 192, 4), // "hour"
+QT_MOC_LITERAL(15, 197, 3), // "min"
+QT_MOC_LITERAL(16, 201, 3), // "sec"
+QT_MOC_LITERAL(17, 205, 26), // "openStartTimeSetWidgetSlot"
+QT_MOC_LITERAL(18, 232, 25) // "openStopTimeSetWidgetSlot"
 
     },
     "inteAnalyWidget\0registOutSignal\0\0page\0"
     "alarmPushButoonClickSignal\0"
     "registOutButtonClick\0alarmPushButoonClickSlot\0"
     "alarmHappenSlot\0alarmHappenCtrlSlot\0"
-    "alarmClearSlot"
+    "alarmClearSlot\0timeSetRecvMsg\0year\0"
+    "month\0day\0hour\0min\0sec\0"
+    "openStartTimeSetWidgetSlot\0"
+    "openStopTimeSetWidgetSlot"
 };
 #undef QT_MOC_LITERAL
 
@@ -58,7 +70,7 @@ static const uint qt_meta_data_inteAnalyWidget[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
+      10,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -66,15 +78,18 @@ static const uint qt_meta_data_inteAnalyWidget[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   49,    2, 0x06 /* Public */,
-       4,    0,   52,    2, 0x06 /* Public */,
+       1,    1,   64,    2, 0x06 /* Public */,
+       4,    0,   67,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       5,    0,   53,    2, 0x0a /* Public */,
-       6,    0,   54,    2, 0x0a /* Public */,
-       7,    0,   55,    2, 0x0a /* Public */,
-       8,    0,   56,    2, 0x0a /* Public */,
-       9,    0,   57,    2, 0x0a /* Public */,
+       5,    0,   68,    2, 0x0a /* Public */,
+       6,    0,   69,    2, 0x0a /* Public */,
+       7,    0,   70,    2, 0x0a /* Public */,
+       8,    0,   71,    2, 0x0a /* Public */,
+       9,    0,   72,    2, 0x0a /* Public */,
+      10,    6,   73,    2, 0x0a /* Public */,
+      17,    0,   86,    2, 0x0a /* Public */,
+      18,    0,   87,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Int,    3,
@@ -84,6 +99,9 @@ static const uint qt_meta_data_inteAnalyWidget[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString,   11,   12,   13,   14,   15,   16,
     QMetaType::Void,
     QMetaType::Void,
 
@@ -103,6 +121,9 @@ void inteAnalyWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 4: _t->alarmHappenSlot(); break;
         case 5: _t->alarmHappenCtrlSlot(); break;
         case 6: _t->alarmClearSlot(); break;
+        case 7: _t->timeSetRecvMsg((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3])),(*reinterpret_cast< QString(*)>(_a[4])),(*reinterpret_cast< QString(*)>(_a[5])),(*reinterpret_cast< QString(*)>(_a[6]))); break;
+        case 8: _t->openStartTimeSetWidgetSlot(); break;
+        case 9: _t->openStopTimeSetWidgetSlot(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -153,13 +174,13 @@ int inteAnalyWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 10)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 10;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 7)
+        if (_id < 10)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 7;
+        _id -= 10;
     }
     return _id;
 }

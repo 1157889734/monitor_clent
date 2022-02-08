@@ -3821,116 +3821,7 @@ ui_presetpasswdconfirm.h: presetpasswdconfirm.ui \
 	/home/cftc/toolchain/host/bin/uic presetpasswdconfirm.ui -o ui_presetpasswdconfirm.h
 
 ui_timeset.h: timeset.ui \
-		../../toolchain/host/bin/uic \
-		mypushbutton.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QPushButton \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qpushbutton.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qtwidgetsglobal.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtguiglobal.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qglobal.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qconfig-bootstrapped.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qconfig.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qtcore-config.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qsystemdetection.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qprocessordetection.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qcompilerdetection.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qtypeinfo.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qsysinfo.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qlogging.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qflags.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qatomic.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qbasicatomic.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qatomic_bootstrap.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qgenericatomic.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qatomic_cxx11.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qatomic_msvc.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qglobalstatic.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qmutex.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qnumeric.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qversiontagging.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtgui-config.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qtwidgets-config.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qabstractbutton.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qicon.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qsize.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qnamespace.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qmargins.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qlist.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qalgorithms.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qiterator.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qrefcount.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qarraydata.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qhashfunctions.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qstring.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qchar.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qbytearray.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qstringliteral.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qstringalgorithms.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qstringview.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qstringbuilder.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qpair.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qvector.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qcontainertools_impl.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qpoint.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qbytearraylist.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qstringlist.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qregexp.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qstringmatcher.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpixmap.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpaintdevice.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qwindowdefs.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qobjectdefs.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qobjectdefs_impl.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qwindowdefs_win.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qrect.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qcolor.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qrgb.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qrgba64.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qsharedpointer.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qshareddata.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qhash.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qsharedpointer_impl.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qobject.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qcoreevent.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qscopedpointer.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qmetatype.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qvarlengtharray.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qcontainerfwd.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qobject_impl.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qimage.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpixelformat.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtransform.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qmatrix.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpolygon.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qregion.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qdatastream.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qiodevice.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qline.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpainterpath.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qkeysequence.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qwidget.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpalette.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qbrush.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qfont.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qfontmetrics.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qfontinfo.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qsizepolicy.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qcursor.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qevent.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qvariant.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qmap.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qdebug.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qtextstream.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qlocale.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qset.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qcontiguouscache.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qurl.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qurlquery.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qfile.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qfiledevice.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qvector2d.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtouchdevice.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/QMouseEvent
+		../../toolchain/host/bin/uic
 	/home/cftc/toolchain/host/bin/uic timeset.ui -o ui_timeset.h
 
 ui_useredit.h: useredit.ui \
@@ -6860,8 +6751,15 @@ devupdatewidget.o: devupdatewidget.cpp devupdatewidget.h \
 		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qtabbar.h \
 		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qrubberband.h \
 		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QTableWidget \
-		ctcppisclient.h \
+		recordplaywidget.h \
+		myslider.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/QMouseEvent \
+		cmplayer.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QHBoxLayout \
 		log.h \
+		ftpApi.h \
+		debug.h \
+		ctcppisclient.h \
 		ui_devupdatewidget.h \
 		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QApplication \
 		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qapplication.h \
@@ -6888,8 +6786,7 @@ devupdatewidget.o: devupdatewidget.cpp devupdatewidget.h \
 		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QDir \
 		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QProcess \
 		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qprocess.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QList \
-		debug.h
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QList
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o devupdatewidget.o devupdatewidget.cpp
 
 alarmwidget.o: alarmwidget.cpp alarmwidget.h \
@@ -7692,14 +7589,13 @@ timeset.o: timeset.cpp timeset.h \
 		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QLabel \
 		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qlabel.h \
 		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qframe.h \
-		mypushbutton.h \
 		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QPushButton \
 		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qpushbutton.h \
 		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qabstractbutton.h \
 		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qicon.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/QMouseEvent \
 		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QDateTime \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qdatetime.h
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qdatetime.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o timeset.o timeset.cpp
 
 vdec.o: vdec.cpp vdec.h \

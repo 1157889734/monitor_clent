@@ -29,6 +29,8 @@ static int g_iVNum = 0;
 #define NVR_RESTART_PORT 11001
 QButtonGroup *g_buttonGroup1 = NULL, *g_buttonGroup2 = NULL ,*g_buttonGroup3 = NULL;
 
+pthread_mutex_t g_pisSetMutex;
+
 char* parseFileNameFromPath(char *pcSrcStr)     //根据导入文件路径全名解析得到单纯的导入文件名
 {
     char *pcTmp = NULL;
@@ -158,6 +160,7 @@ devUpdateWidget::devUpdateWidget(QWidget *parent) :
 
 devUpdateWidget::~devUpdateWidget()
 {
+
     if (gusergroupManage != NULL)
     {
         delete gusergroupManage;
@@ -175,6 +178,8 @@ devUpdateWidget::~devUpdateWidget()
 
     delete timeSetWidget;
     timeSetWidget = NULL;
+
+    pthread_mutex_destroy(&g_pisSetMutex);
 
 
     delete ui;
@@ -337,7 +342,7 @@ void devUpdateWidget::openTimeSetWidgetSlot()
         sscanf(acTimeStr, "%4d-%02d-%02d %02d:%02d:%02d", &iYear, &iMonth, &iDay, &iHour, &iMin, &iSec);
         DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] %d-%d-%d %d:%d:%d!\n", __FUNCTION__, iYear, iMonth, iDay, iHour, iMin, iSec);
     }
-    timeSetWidget->setGeometry(450, 257, timeSetWidget->width(), timeSetWidget->height());
+    timeSetWidget->setGeometry(390, 185, timeSetWidget->width(), timeSetWidget->height());
     timeSetWidget->setTimeLabelText(iYear, iMonth, iDay, iHour, iMin, iSec);
     timeSetWidget->show();
 
@@ -624,7 +629,13 @@ void devUpdateWidget::setPisSetting()
     }
     else
     {
-        g_iIsPBD = ui->PISSetcomboBox->currentIndex();
+        pthread_mutex_lock(&g_pisSetMutex);
+        if(g_iIsPBD != ui->PISSetcomboBox->currentIndex())
+        {
+            g_iIsPBD = ui->PISSetcomboBox->currentIndex();
+        }
+        pthread_mutex_unlock(&g_pisSetMutex);
+
 
     }
 
@@ -1157,6 +1168,17 @@ void devUpdateWidget::downLoadLogSlot()
     }
     else
     {
+        if(g_downloadFlag == 1)
+        {
+            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget::%s %d g_downloadFlag!\n",__FUNCTION__,__LINE__);
+            static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("下载过程，禁止更新!")));
+            msgBox.setWindowFlags(Qt::FramelessWindowHint);
+            msgBox.setStandardButtons(QMessageBox::Yes);
+            msgBox.button(QMessageBox::Yes)->setText("OK");
+            msgBox.exec();
+            return;
+
+        }
 
         if (access("/home/data/u/", F_OK) < 0)
         {
