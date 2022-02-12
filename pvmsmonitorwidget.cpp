@@ -527,7 +527,7 @@ void *monitorThread(void *param)     //实时监控线程，对通道轮询、�
         /*检测设备状态*/
         if ((tGetDevStateCurTime - tGetDevStateOldTime) >= GET_DEVSTATE_MONITOR_TIME)
         {
-            DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget monitor thread get device state timeOut!\n");
+//            DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget monitor thread get device state timeOut!\n");
             pvmsMonitorPage->triggerGetDevStateSignal();
             tGetDevStateOldTime = tGetDevStateCurTime;
 
@@ -536,7 +536,7 @@ void *monitorThread(void *param)     //实时监控线程，对通道轮询、�
         /*检测系统时间*/
         if ((tSetTimeCurTime - tSetTimeOldTime) >= SET_TIME_MONITOR_TIME)
         {
-            DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget monitor thread set devUpdatePage time timeOut!\n");
+//            DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget monitor thread set devUpdatePage time timeOut!\n");
             pvmsMonitorPage->triggerSetTimeSignal();
             tSetTimeOldTime = tSetTimeCurTime;
 
@@ -1676,9 +1676,9 @@ void pvmsMonitorWidget::recordPlayCtrlSlot()
 
 void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
 {
-    const char * rtsp_url[] = {
-                "rtsp://admin:admin123@192.168.104.201", "rtsp://192.168.104.200",
-                "rtsp://admin:admin123@192.168.104.201", "rtsp://192.168.104.200"};
+//    const char * rtsp_url[] = {
+//                "rtsp://admin:admin123@192.168.104.201", "rtsp://192.168.104.200",
+//                "rtsp://admin:admin123@192.168.104.201", "rtsp://192.168.104.200"};
     int preindex=0,nextindex=0;
     int curindex = iCh;
     preindex = curindex==0?m_iCameraNum-1:curindex-1;
@@ -1915,7 +1915,7 @@ void pvmsMonitorWidget::videoChannelCtrl()
 
 void pvmsMonitorWidget::closePlayWin()
 {
-    T_CMP_PACKET tPkt;
+//    T_CMP_PACKET tPkt;
 
     if (m_threadId != 0)
     {
@@ -1947,7 +1947,7 @@ void pvmsMonitorWidget::closePlayWin()
 
 void pvmsMonitorWidget::alarmHappenSlot()
 {
-    T_CMP_PACKET tPkt;
+//    T_CMP_PACKET tPkt;
     if ((1 == m_iFullScreenFlag) && (m_playWin != NULL))  //有报警发生时退出全屏
     {
         struct sysinfo s_info;
@@ -2031,7 +2031,7 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
 {
 
     int iRet = 0;
-    T_CMP_PACKET tPkt;
+//    T_CMP_PACKET tPkt;
     static int iPollFlag = 0;
 
     if (event->type()==QEvent::MouseButtonPress || event->type()==QEvent::MouseMove) //判断界面操作
@@ -2461,7 +2461,7 @@ void pvmsMonitorWidget::systimeSetSlot()
 
 void pvmsMonitorWidget::blackScreenCtrlSlot()     //黑屏触发信号处理，如果处于全屏时则退出全屏，m_iBlackScreenFlag标志置1，全屏监控暂时无效
 {
-    T_CMP_PACKET tPkt;
+//    T_CMP_PACKET tPkt;
     if ((1 == m_iFullScreenFlag) && (m_playWin != NULL))
     {
         struct sysinfo s_info;

@@ -342,7 +342,7 @@ void devUpdateWidget::openTimeSetWidgetSlot()
         sscanf(acTimeStr, "%4d-%02d-%02d %02d:%02d:%02d", &iYear, &iMonth, &iDay, &iHour, &iMin, &iSec);
         DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] %d-%d-%d %d:%d:%d!\n", __FUNCTION__, iYear, iMonth, iDay, iHour, iMin, iSec);
     }
-    timeSetWidget->setGeometry(390, 185, timeSetWidget->width(), timeSetWidget->height());
+    timeSetWidget->setGeometry(425, 160, timeSetWidget->width(), timeSetWidget->height());
     timeSetWidget->setTimeLabelText(iYear, iMonth, iDay, iHour, iMin, iSec);
     timeSetWidget->show();
 
@@ -1149,8 +1149,8 @@ void devUpdateWidget::devRebootSlot()
 
 void devUpdateWidget::downLoadLogSlot()
 {
-    int iRet = 0;
-    char *pcfileName = NULL;
+//    int iRet = 0;
+//    char *pcfileName = NULL;
     char acUserType[64] = {0};
 
     DebugPrint(DEBUG_UI_OPTION_PRINT, "devUpdateWidget configFileImport button pressed!\n");
@@ -1224,7 +1224,7 @@ void devUpdateWidget::downLoadLogSlot()
 void devUpdateWidget::configFileImportSlot()
 {
 
-    int iRet = 0;
+//    int iRet = 0;
     char *pcfileName = NULL;
     char acUserType[64] = {0};
 

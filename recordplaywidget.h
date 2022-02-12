@@ -52,6 +52,8 @@ public:
     pthread_t m_threadId;      //刷新进度条线程ID
     int m_iThreadRunFlag;    //刷新进度条线程运行标识
     int m_iFtpServerIdex;    //当前ftp服务器索引编号
+    int g_fistSelctFlag;
+    int recordPlayFlag;
     PFTP_HANDLE m_tFtpHandle[MAX_SERVER_NUM];  //FTP句柄
 
     void pageShowCtrl();
@@ -64,6 +66,7 @@ public:
     void triggerCloseRecordPlaySignal();
     void triggerDownloadProcessBarDisplaySignal(int iEnableFlag);   //触发是否显示文件下载进度条的信号，iEnableFlag为1，显示，为0不显示
     void triggerSetDownloadProcessBarValueSignal(int iValue);   //触发设置文件下载进度条的值的信号
+    void setPlayButtonStyleSheet();
 
 
 public slots:
@@ -89,6 +92,7 @@ public slots:
     void carNoChangeSlot();
 
     void manualSwitchVideoEndSlot();
+    void manualtableSwitchVideoEndSlot();
 
 
     void recordSelectionSlot(QTableWidgetItem *item);
@@ -132,7 +136,6 @@ private:
     int m_iTotalLen;
     char m_acFilePath[MAX_RECORD_SEACH_NUM][MAX_RECFILE_PATH_LEN];   //记录查询到的录像文件路径全名
     PMSG_HANDLE m_Phandle[MAX_SERVER_NUM];    //服务器PMSG通信句柄
-    void setPlayButtonStyleSheet();
     void getTrainConfig();     //获取车型配置信息
 
     QTimer *m_VideoSwitchTimer;
