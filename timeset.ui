@@ -25,6 +25,12 @@
    <property name="text">
     <string>+</string>
    </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+   <property name="autoRepeatDelay">
+    <number>1500</number>
+   </property>
   </widget>
   <widget class="QLabel" name="label_3">
    <property name="geometry">
@@ -108,6 +114,12 @@ border-style: solid;</string>
    </property>
    <property name="text">
     <string>+</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+   <property name="autoRepeatDelay">
+    <number>1500</number>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_8">
@@ -258,6 +270,12 @@ border-style: solid;</string>
      <height>16</height>
     </size>
    </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+   <property name="autoRepeatDelay">
+    <number>1500</number>
+   </property>
   </widget>
   <widget class="QPushButton" name="pushButton_2_1">
    <property name="geometry">
@@ -270,6 +288,12 @@ border-style: solid;</string>
    </property>
    <property name="text">
     <string>-</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+   <property name="autoRepeatDelay">
+    <number>1500</number>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_3_1">
@@ -284,6 +308,12 @@ border-style: solid;</string>
    <property name="text">
     <string>-</string>
    </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+   <property name="autoRepeatDelay">
+    <number>1500</number>
+   </property>
   </widget>
   <widget class="QPushButton" name="pushButton_4_1">
    <property name="geometry">
@@ -296,6 +326,12 @@ border-style: solid;</string>
    </property>
    <property name="text">
     <string>-</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+   <property name="autoRepeatDelay">
+    <number>1500</number>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_5_1">
@@ -310,6 +346,12 @@ border-style: solid;</string>
    <property name="text">
     <string>-</string>
    </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+   <property name="autoRepeatDelay">
+    <number>1500</number>
+   </property>
   </widget>
   <widget class="QPushButton" name="pushButton_6_1">
    <property name="geometry">
@@ -322,6 +364,12 @@ border-style: solid;</string>
    </property>
    <property name="text">
     <string>-</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+   <property name="autoRepeatDelay">
+    <number>1500</number>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_1">
@@ -342,6 +390,12 @@ border-style: solid;</string>
      <height>16</height>
     </size>
    </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+   <property name="autoRepeatDelay">
+    <number>1500</number>
+   </property>
   </widget>
   <widget class="QPushButton" name="pushButton_2">
    <property name="geometry">
@@ -354,6 +408,12 @@ border-style: solid;</string>
    </property>
    <property name="text">
     <string>+</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+   <property name="autoRepeatDelay">
+    <number>1500</number>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_3">
@@ -368,6 +428,12 @@ border-style: solid;</string>
    <property name="text">
     <string>+</string>
    </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+   <property name="autoRepeatDelay">
+    <number>1500</number>
+   </property>
   </widget>
   <widget class="QPushButton" name="pushButton_4">
    <property name="geometry">
@@ -380,6 +446,12 @@ border-style: solid;</string>
    </property>
    <property name="text">
     <string>+</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+   <property name="autoRepeatDelay">
+    <number>1500</number>
    </property>
   </widget>
   <zorder>label</zorder>

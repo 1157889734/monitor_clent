@@ -139,7 +139,7 @@ private:
     void getTrainConfig();     //获取车型配置信息
 
     QTimer *m_VideoSwitchTimer;
-
+    QTimer *m_tableVideoSwitchTimer;
     int m_iRecordIdex;
     QTimer *m_recordTabelWidgetFillTimer;
     T_WND_INFO                     m_RealMonitorVideos;

@@ -144,6 +144,7 @@ devUpdateWidget::devUpdateWidget(QWidget *parent) :
 
     /*创建时间设置子窗体，默认隐藏*/
     timeSetWidget = new timeset(this);
+    timeSetWidget->setWindowModality(Qt::ApplicationModal);
     timeSetWidget->hide();
     connect(timeSetWidget, SIGNAL(timeSetSendMsg(QString,QString,QString,QString,QString,QString)), this, SLOT(timeSetRecvMsg(QString,QString,QString,QString,QString,QString)));  //时间设置窗体控件设置信号响应
     connect(ui->timeSetPushButton_2, SIGNAL(clicked(bool)), this, SLOT(openTimeSetWidgetSlot()));

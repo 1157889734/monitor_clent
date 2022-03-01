@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_recordPlayWidget_t {
-    QByteArrayData data[59];
-    char stringdata0[1060];
+    QByteArrayData data[60];
+    char stringdata0[1090];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -72,25 +72,26 @@ QT_MOC_LITERAL(36, 684, 16), // "playPlusStepSlot"
 QT_MOC_LITERAL(37, 701, 17), // "playMinusStepSlot"
 QT_MOC_LITERAL(38, 719, 15), // "carNoChangeSlot"
 QT_MOC_LITERAL(39, 735, 24), // "manualSwitchVideoEndSlot"
-QT_MOC_LITERAL(40, 760, 19), // "recordSelectionSlot"
-QT_MOC_LITERAL(41, 780, 14), // "recordPlaySlot"
-QT_MOC_LITERAL(42, 795, 14), // "timeSetRecvMsg"
-QT_MOC_LITERAL(43, 810, 4), // "year"
-QT_MOC_LITERAL(44, 815, 5), // "month"
-QT_MOC_LITERAL(45, 821, 3), // "day"
-QT_MOC_LITERAL(46, 825, 4), // "hour"
-QT_MOC_LITERAL(47, 830, 3), // "min"
-QT_MOC_LITERAL(48, 834, 3), // "sec"
-QT_MOC_LITERAL(49, 838, 18), // "playSliderMoveSlot"
-QT_MOC_LITERAL(50, 857, 8), // "iPosTime"
-QT_MOC_LITERAL(51, 866, 19), // "playSliderPressSlot"
-QT_MOC_LITERAL(52, 886, 22), // "setPlaySliderValueSlot"
-QT_MOC_LITERAL(53, 909, 29), // "downloadProcessBarDisplaySlot"
-QT_MOC_LITERAL(54, 939, 30), // "setDownloadProcessBarValueSlot"
-QT_MOC_LITERAL(55, 970, 19), // "closeRecordPlaySlot"
-QT_MOC_LITERAL(56, 990, 25), // "recordTableWidgetFillSlot"
-QT_MOC_LITERAL(57, 1016, 25), // "recordTableWidgetFillFunc"
-QT_MOC_LITERAL(58, 1042, 17) // "setRangeLabelSlot"
+QT_MOC_LITERAL(40, 760, 29), // "manualtableSwitchVideoEndSlot"
+QT_MOC_LITERAL(41, 790, 19), // "recordSelectionSlot"
+QT_MOC_LITERAL(42, 810, 14), // "recordPlaySlot"
+QT_MOC_LITERAL(43, 825, 14), // "timeSetRecvMsg"
+QT_MOC_LITERAL(44, 840, 4), // "year"
+QT_MOC_LITERAL(45, 845, 5), // "month"
+QT_MOC_LITERAL(46, 851, 3), // "day"
+QT_MOC_LITERAL(47, 855, 4), // "hour"
+QT_MOC_LITERAL(48, 860, 3), // "min"
+QT_MOC_LITERAL(49, 864, 3), // "sec"
+QT_MOC_LITERAL(50, 868, 18), // "playSliderMoveSlot"
+QT_MOC_LITERAL(51, 887, 8), // "iPosTime"
+QT_MOC_LITERAL(52, 896, 19), // "playSliderPressSlot"
+QT_MOC_LITERAL(53, 916, 22), // "setPlaySliderValueSlot"
+QT_MOC_LITERAL(54, 939, 29), // "downloadProcessBarDisplaySlot"
+QT_MOC_LITERAL(55, 969, 30), // "setDownloadProcessBarValueSlot"
+QT_MOC_LITERAL(56, 1000, 19), // "closeRecordPlaySlot"
+QT_MOC_LITERAL(57, 1020, 25), // "recordTableWidgetFillSlot"
+QT_MOC_LITERAL(58, 1046, 25), // "recordTableWidgetFillFunc"
+QT_MOC_LITERAL(59, 1072, 17) // "setRangeLabelSlot"
 
     },
     "recordPlayWidget\0alarmPushButoonClickSignal\0"
@@ -113,6 +114,7 @@ QT_MOC_LITERAL(58, 1042, 17) // "setRangeLabelSlot"
     "recordPlayLastOneSlot\0recordPlayNextOneSlot\0"
     "playPlusStepSlot\0playMinusStepSlot\0"
     "carNoChangeSlot\0manualSwitchVideoEndSlot\0"
+    "manualtableSwitchVideoEndSlot\0"
     "recordSelectionSlot\0recordPlaySlot\0"
     "timeSetRecvMsg\0year\0month\0day\0hour\0"
     "min\0sec\0playSliderMoveSlot\0iPosTime\0"
@@ -130,7 +132,7 @@ static const uint qt_meta_data_recordPlayWidget[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      44,   14, // methods
+      45,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -138,52 +140,53 @@ static const uint qt_meta_data_recordPlayWidget[] = {
       11,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,  234,    2, 0x06 /* Public */,
-       3,    1,  235,    2, 0x06 /* Public */,
-       5,    1,  238,    2, 0x06 /* Public */,
-       7,    0,  241,    2, 0x06 /* Public */,
-       8,    1,  242,    2, 0x06 /* Public */,
-      11,    0,  245,    2, 0x06 /* Public */,
-      12,    1,  246,    2, 0x06 /* Public */,
-      14,    1,  249,    2, 0x06 /* Public */,
-      16,    1,  252,    2, 0x06 /* Public */,
-      17,    0,  255,    2, 0x06 /* Public */,
-      18,    0,  256,    2, 0x06 /* Public */,
+       1,    0,  239,    2, 0x06 /* Public */,
+       3,    1,  240,    2, 0x06 /* Public */,
+       5,    1,  243,    2, 0x06 /* Public */,
+       7,    0,  246,    2, 0x06 /* Public */,
+       8,    1,  247,    2, 0x06 /* Public */,
+      11,    0,  250,    2, 0x06 /* Public */,
+      12,    1,  251,    2, 0x06 /* Public */,
+      14,    1,  254,    2, 0x06 /* Public */,
+      16,    1,  257,    2, 0x06 /* Public */,
+      17,    0,  260,    2, 0x06 /* Public */,
+      18,    0,  261,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      19,    0,  257,    2, 0x0a /* Public */,
-      20,    0,  258,    2, 0x0a /* Public */,
-      21,    0,  259,    2, 0x0a /* Public */,
-      22,    0,  260,    2, 0x0a /* Public */,
-      23,    0,  261,    2, 0x0a /* Public */,
-      24,    0,  262,    2, 0x0a /* Public */,
-      25,    0,  263,    2, 0x0a /* Public */,
-      26,    0,  264,    2, 0x0a /* Public */,
-      27,    0,  265,    2, 0x0a /* Public */,
-      28,    0,  266,    2, 0x0a /* Public */,
-      29,    0,  267,    2, 0x0a /* Public */,
-      30,    0,  268,    2, 0x0a /* Public */,
-      31,    0,  269,    2, 0x0a /* Public */,
-      32,    0,  270,    2, 0x0a /* Public */,
-      33,    0,  271,    2, 0x0a /* Public */,
-      34,    0,  272,    2, 0x0a /* Public */,
-      35,    0,  273,    2, 0x0a /* Public */,
-      36,    0,  274,    2, 0x0a /* Public */,
-      37,    0,  275,    2, 0x0a /* Public */,
-      38,    0,  276,    2, 0x0a /* Public */,
-      39,    0,  277,    2, 0x0a /* Public */,
-      40,    1,  278,    2, 0x0a /* Public */,
-      41,    1,  281,    2, 0x0a /* Public */,
-      42,    6,  284,    2, 0x0a /* Public */,
-      49,    1,  297,    2, 0x0a /* Public */,
-      51,    1,  300,    2, 0x0a /* Public */,
-      52,    1,  303,    2, 0x0a /* Public */,
-      53,    1,  306,    2, 0x0a /* Public */,
-      54,    1,  309,    2, 0x0a /* Public */,
-      55,    0,  312,    2, 0x0a /* Public */,
-      56,    0,  313,    2, 0x0a /* Public */,
-      57,    0,  314,    2, 0x0a /* Public */,
-      58,    0,  315,    2, 0x0a /* Public */,
+      19,    0,  262,    2, 0x0a /* Public */,
+      20,    0,  263,    2, 0x0a /* Public */,
+      21,    0,  264,    2, 0x0a /* Public */,
+      22,    0,  265,    2, 0x0a /* Public */,
+      23,    0,  266,    2, 0x0a /* Public */,
+      24,    0,  267,    2, 0x0a /* Public */,
+      25,    0,  268,    2, 0x0a /* Public */,
+      26,    0,  269,    2, 0x0a /* Public */,
+      27,    0,  270,    2, 0x0a /* Public */,
+      28,    0,  271,    2, 0x0a /* Public */,
+      29,    0,  272,    2, 0x0a /* Public */,
+      30,    0,  273,    2, 0x0a /* Public */,
+      31,    0,  274,    2, 0x0a /* Public */,
+      32,    0,  275,    2, 0x0a /* Public */,
+      33,    0,  276,    2, 0x0a /* Public */,
+      34,    0,  277,    2, 0x0a /* Public */,
+      35,    0,  278,    2, 0x0a /* Public */,
+      36,    0,  279,    2, 0x0a /* Public */,
+      37,    0,  280,    2, 0x0a /* Public */,
+      38,    0,  281,    2, 0x0a /* Public */,
+      39,    0,  282,    2, 0x0a /* Public */,
+      40,    0,  283,    2, 0x0a /* Public */,
+      41,    1,  284,    2, 0x0a /* Public */,
+      42,    1,  287,    2, 0x0a /* Public */,
+      43,    6,  290,    2, 0x0a /* Public */,
+      50,    1,  303,    2, 0x0a /* Public */,
+      52,    1,  306,    2, 0x0a /* Public */,
+      53,    1,  309,    2, 0x0a /* Public */,
+      54,    1,  312,    2, 0x0a /* Public */,
+      55,    1,  315,    2, 0x0a /* Public */,
+      56,    0,  318,    2, 0x0a /* Public */,
+      57,    0,  319,    2, 0x0a /* Public */,
+      58,    0,  320,    2, 0x0a /* Public */,
+      59,    0,  321,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -220,11 +223,12 @@ static const uint qt_meta_data_recordPlayWidget[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void, 0x80000000 | 9,   10,
     QMetaType::Void, 0x80000000 | 9,   10,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString,   43,   44,   45,   46,   47,   48,
-    QMetaType::Void, QMetaType::Int,   50,
-    QMetaType::Void, QMetaType::Int,   50,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString,   44,   45,   46,   47,   48,   49,
+    QMetaType::Void, QMetaType::Int,   51,
+    QMetaType::Void, QMetaType::Int,   51,
     QMetaType::Void, QMetaType::Int,   13,
     QMetaType::Void, QMetaType::Int,   15,
     QMetaType::Void, QMetaType::Int,   13,
@@ -274,18 +278,19 @@ void recordPlayWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int
         case 29: _t->playMinusStepSlot(); break;
         case 30: _t->carNoChangeSlot(); break;
         case 31: _t->manualSwitchVideoEndSlot(); break;
-        case 32: _t->recordSelectionSlot((*reinterpret_cast< QTableWidgetItem*(*)>(_a[1]))); break;
-        case 33: _t->recordPlaySlot((*reinterpret_cast< QTableWidgetItem*(*)>(_a[1]))); break;
-        case 34: _t->timeSetRecvMsg((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3])),(*reinterpret_cast< QString(*)>(_a[4])),(*reinterpret_cast< QString(*)>(_a[5])),(*reinterpret_cast< QString(*)>(_a[6]))); break;
-        case 35: _t->playSliderMoveSlot((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 36: _t->playSliderPressSlot((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 37: _t->setPlaySliderValueSlot((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 38: _t->downloadProcessBarDisplaySlot((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 39: _t->setDownloadProcessBarValueSlot((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 40: _t->closeRecordPlaySlot(); break;
-        case 41: _t->recordTableWidgetFillSlot(); break;
-        case 42: _t->recordTableWidgetFillFunc(); break;
-        case 43: _t->setRangeLabelSlot(); break;
+        case 32: _t->manualtableSwitchVideoEndSlot(); break;
+        case 33: _t->recordSelectionSlot((*reinterpret_cast< QTableWidgetItem*(*)>(_a[1]))); break;
+        case 34: _t->recordPlaySlot((*reinterpret_cast< QTableWidgetItem*(*)>(_a[1]))); break;
+        case 35: _t->timeSetRecvMsg((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3])),(*reinterpret_cast< QString(*)>(_a[4])),(*reinterpret_cast< QString(*)>(_a[5])),(*reinterpret_cast< QString(*)>(_a[6]))); break;
+        case 36: _t->playSliderMoveSlot((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 37: _t->playSliderPressSlot((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 38: _t->setPlaySliderValueSlot((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 39: _t->downloadProcessBarDisplaySlot((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 40: _t->setDownloadProcessBarValueSlot((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 41: _t->closeRecordPlaySlot(); break;
+        case 42: _t->recordTableWidgetFillSlot(); break;
+        case 43: _t->recordTableWidgetFillFunc(); break;
+        case 44: _t->setRangeLabelSlot(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -399,13 +404,13 @@ int recordPlayWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 44)
+        if (_id < 45)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 44;
+        _id -= 45;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 44)
+        if (_id < 45)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 44;
+        _id -= 45;
     }
     return _id;
 }

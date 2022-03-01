@@ -163,6 +163,7 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
 
      timeSetWidget = new timeset(this);
      timeSetWidget->setWindowFlags(timeSetWidget->windowFlags() | Qt::FramelessWindowHint| Qt::Dialog);
+     timeSetWidget->setWindowModality(Qt::ApplicationModal);
 
      timeSetWidget->hide();
 

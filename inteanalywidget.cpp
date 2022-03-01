@@ -20,6 +20,7 @@ inteAnalyWidget::inteAnalyWidget(QWidget *parent) :
 
     timeSetWidget = new timeset(this);
     timeSetWidget->hide();
+    timeSetWidget->setWindowModality(Qt::ApplicationModal);
 
     connect(timeSetWidget, SIGNAL(timeSetSendMsg(QString,QString,QString,QString,QString,QString)), this, SLOT(timeSetRecvMsg(QString,QString,QString,QString,QString,QString)));  //时间设置窗体控件设置信号响应
 
