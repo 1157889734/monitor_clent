@@ -1134,7 +1134,7 @@ void pvmsMonitorWidget::cameraSwitchSlot()
         if (CAMERA_ON == m_tCameraInfo[m_iCameraPlayNo].iCameraSwitchState)
         {
             DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget close camera!\n");
-            QString  strr = QString("%1%2%3").arg("是否关闭").arg(m_iCameraPlayNo+1).arg("号受电弓摄像机?");
+            QString  strr = QString("%1%2").arg("是否关闭").arg("受电弓摄像机?");
             static QMessageBox msgBox(QMessageBox::Question,QString(tr("")),QString(strr));
             msgBox.setWindowFlags(Qt::FramelessWindowHint);
             msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
@@ -1163,7 +1163,7 @@ void pvmsMonitorWidget::cameraSwitchSlot()
         else
         {
 
-            QString  strr = QString("%1%2%3").arg("是否开启").arg(m_iCameraPlayNo+1).arg("号受电弓摄像机?");
+            QString  strr = QString("%1%2").arg("是否开启").arg("受电弓摄像机?");
             static QMessageBox msgBox(QMessageBox::Question,QString(tr("")),QString(strr));
             msgBox.setWindowFlags(Qt::FramelessWindowHint);
             msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
@@ -1250,7 +1250,7 @@ void pvmsMonitorWidget::fillLightSwitchSlot()
     /*发送开关补光灯的消息给服务器，消息内容为2个字节，第一个字节表示操作类型:开启还是关闭补光灯，第二个字节表示受电弓摄像机位置号*/
     if (FILLLIGHT_ON == m_tCameraInfo[m_iCameraPlayNo].iFillLightSwitchState)
     {
-        QString  strr = QString("%1%2%3").arg("关闭").arg(m_iCameraPlayNo+1).arg("号受电弓摄像机闪光灯?");
+        QString  strr = QString("%1%2").arg("是否关闭").arg("受电弓摄像机闪光灯?");
         static QMessageBox msgBox(QMessageBox::Question,QString(tr("")),QString(strr));
         msgBox.setWindowFlags(Qt::FramelessWindowHint);
         msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
@@ -1271,7 +1271,7 @@ void pvmsMonitorWidget::fillLightSwitchSlot()
     }
     else
     {
-        QString  strr = QString("%1%2%3").arg("开启").arg(m_iCameraPlayNo+1).arg("号受电弓摄像机闪光灯?");
+        QString  strr = QString("%1%2").arg("是否开启").arg("受电弓摄像机闪光灯?");
         static QMessageBox msgBox(QMessageBox::Question,QString(tr("")),QString(strr));
         msgBox.setWindowFlags(Qt::FramelessWindowHint);
         msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);

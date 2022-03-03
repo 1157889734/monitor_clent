@@ -1533,13 +1533,103 @@ int RtspConnect(PT_RTSP_CONN ptRtspConn, const char *pcUri)
         return -1;
     }
 
+    ServAddr.sin_family = AF_INET;
+    ServAddr.sin_addr.s_addr = inet_addr(ptRtspConn->acServHost);
+    ServAddr.sin_port = htons((UINT16)(ptRtspConn->iRtspPort));
+
+
+    int timeout = 500;
+       u_long mode = 1;
+       struct timeval tm;
+       tm.tv_sec = 0;
+       tm.tv_usec = 700;
+
+//       timeval tm={0/*!<s*/,700/*!<ms*/};
+       fd_set rset;
+       fd_set wset;
+       iRet=ioctl(ptRtspConn->iRtspSocket, FIONBIO, &mode);
+       if(iRet)
+       {
+           RTSP_Close(ptRtspConn->iRtspSocket);
+           ptRtspConn->iRtspSocket = -1;
+           return -1;
+       }
+
+       iRet=connect(ptRtspConn->iRtspSocket, (struct sockaddr *)&ServAddr, sizeof(ServAddr));/*!<成功返回0，但在非阻塞情况下，一般为-1*/
+       if(iRet!=0)
+       {
+           iRet=errno;
+           if(EAGAIN==iRet||EINPROGRESS ==iRet)/*!<如果Resource temporarily unavailable.10035*/
+           {
+               FD_ZERO(&rset);
+               FD_ZERO(&wset);
+               FD_SET(ptRtspConn->iRtspSocket, &rset);
+               FD_SET(ptRtspConn->iRtspSocket, &wset);
+
+               iRet=select(ptRtspConn->iRtspSocket+1, &rset, &wset, NULL, &tm) ;
+               if(iRet<0)
+               {
+                   RTSP_Close(ptRtspConn->iRtspSocket);
+                   ptRtspConn->iRtspSocket = -1;
+                   return -2;
+               }
+               else if(iRet==0)/*!<Time Out*/
+               {
+                   RTSP_Close(ptRtspConn->iRtspSocket);
+                   ptRtspConn->iRtspSocket = -1;
+                   return -3;
+               }
+               else
+               {
+
+                   if(FD_ISSET(ptRtspConn->iRtspSocket,&wset))/*!<如果可写，说明连接好*/
+                   {
+                       mode = 0;
+                       iRet=ioctl(ptRtspConn->iRtspSocket, FIONBIO, &mode);
+                       if(iRet)
+                       {
+                           RTSP_Close(ptRtspConn->iRtspSocket);
+                           ptRtspConn->iRtspSocket = -1;
+                           return -4;
+                       }
+
+                       /*!<正确退出*/
+                       return 0;
+                   }
+                   else
+                   {
+
+                       /*!<不可写*/
+                       RTSP_Close(ptRtspConn->iRtspSocket);
+                       ptRtspConn->iRtspSocket = -1;
+                       return -5;
+                   }
+
+               }
+           }
+           else
+           {
+               /*!<网络出现其他错误*/
+
+               RTSP_Close(ptRtspConn->iRtspSocket);
+               ptRtspConn->iRtspSocket = -1;
+               return -6;
+           }
+       }
+       else
+       {
+           return 0;
+       }
+       return 0;
+#if 0
+
     //set timeout
 #ifdef WIN
     int timeout = 5000;
 
 #else
-	struct timeval timeout;
-    timeout.tv_sec = 5;
+    struct timeval timeout;
+    timeout.tv_sec = 2;
     timeout.tv_usec = 0;
 
 #endif
@@ -1558,6 +1648,9 @@ int RtspConnect(PT_RTSP_CONN ptRtspConn, const char *pcUri)
         return -4;
     }
 
+
+
+
     ServAddr.sin_family = AF_INET;
     ServAddr.sin_addr.s_addr = inet_addr(ptRtspConn->acServHost);
     ServAddr.sin_port = htons((UINT16)(ptRtspConn->iRtspPort));
@@ -1572,6 +1665,7 @@ int RtspConnect(PT_RTSP_CONN ptRtspConn, const char *pcUri)
     }
 
     return 0;
+ #endif
 }
 
 int RtspRequestOptions(PT_RTSP_CONN ptRtspConn)
