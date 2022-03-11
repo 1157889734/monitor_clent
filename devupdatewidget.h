@@ -21,6 +21,8 @@ namespace Ui {
 class devUpdateWidget;
 }
 
+class QFileDialog;
+
 class devUpdateWidget : public QWidget
 {
     Q_OBJECT
@@ -92,6 +94,9 @@ private:
     QString m_contrastText;
     usergroupManage *gusergroupManage;
 
+
+
+    QFileDialog *m_pFileDialog ;
 
 };
 

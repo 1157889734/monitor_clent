@@ -96,6 +96,7 @@ devUpdateWidget::devUpdateWidget(QWidget *parent) :
 
     connect(ui->clientRebootPushButton, SIGNAL(clicked(bool)), this, SLOT(devRebootSlot()));
 
+
     g_buttonGroup1 = new QButtonGroup();      //轮询时间设置单选按钮组成一组，以保证改组中的单选框同时只能选一个，同时与以下其他类别的单选框之间互不影响
     g_buttonGroup1->addButton(ui->pollingTimeSetRadioButton,1);
     g_buttonGroup1->addButton(ui->pollingTimeSetRadioButton_2,2);
@@ -157,6 +158,12 @@ devUpdateWidget::devUpdateWidget(QWidget *parent) :
     setPollingTimeRadioButton();  //设置轮询时间单选按钮组的样式
     setPresetReturnTimeRadioButton(); //设置预置点返回时间单选按钮组的样式
 
+    m_pFileDialog=new QFileDialog;
+    m_pFileDialog->setWindowFlag(Qt::FramelessWindowHint);
+    m_pFileDialog->setDirectory("/home/data/u/");
+    m_pFileDialog->setFilter(QDir::Dirs);
+    m_pFileDialog->setFixedSize(800,600);
+    m_pFileDialog->hide();
 }
 
 devUpdateWidget::~devUpdateWidget()
@@ -400,8 +407,7 @@ void devUpdateWidget::systimeSlot()
             snprintf(acTimeStr, sizeof(acTimeStr), "date %02d%02d%02d%02d%4d.%02d", month, day, hour, minute,year, second);
             qDebug()<<"***********acTimeStr="<<acTimeStr<<__LINE__;
             system(acTimeStr);
-            system("hwclock -w");
-
+            system("hwclock -w -f /dev/rtc1");
 
             /*系统校时记录日志*/
             memset(&tLogInfo, 0, sizeof(T_LOG_INFO));
@@ -804,10 +810,12 @@ void devUpdateWidget::userManageSlot()  //点击用户管理按钮响应函数�
 }
 
 
+
 void devUpdateWidget::configFileSelectionSlot()
 {
-
     QString filename = "";
+    char *pcfileName = NULL;
+
     char acUserType[64] = {0};
 
     DebugPrint(DEBUG_UI_OPTION_PRINT, "devUpdateWidget configFileSelection button pressed!\n");
@@ -864,18 +872,9 @@ void devUpdateWidget::configFileSelectionSlot()
                 }
             }
 
-            char *pcfileName = NULL;
+            m_pFileDialog->exec();
 
-
-            QFileDialog *dialog = new QFileDialog;
-            dialog->setAttribute(Qt::WA_DeleteOnClose);
-            dialog->setWindowFlag(Qt::FramelessWindowHint);
-            dialog->setDirectory("/home/data/u/");
-            dialog->setFilter(QDir::Dirs);
-            dialog->setFixedSize(800,600);
-            dialog->show();
-
-            QDir file = dialog->directory();
+            QDir file = m_pFileDialog->directory();
             QDir *dir = NULL;
             if(dir ==NULL)
             {
@@ -885,16 +884,15 @@ void devUpdateWidget::configFileSelectionSlot()
             QList<QFileInfo> *fileInfo=new QList<QFileInfo>(dir->entryInfoList(filter));
            for(int i = 0;i<fileInfo->count(); i++)
            {
-//               qDebug()<<fileInfo->at(i).filePath();
-//               qDebug()<<fileInfo->at(i).fileName();
+
                if(fileInfo->at(i).fileName() == "monitorCfg")
                {
                     filename =fileInfo->at(i).filePath();
 
                }
            }
-//           qDebug()<<"***********filename="<<filename<<__LINE__;
-//            filename = QFileDialog::getOpenFileName(this, "打开文件", "/home/data/u/", "ini文件(*.ini)");
+
+
             if (!filename.isNull())
             {
                 ui->configFileDisplayLineEdit->setText(filename);
@@ -971,15 +969,9 @@ void devUpdateWidget::configUpdateFileSLOT()
                 }
             }
 
-            QFileDialog *dialog = new QFileDialog;
-            dialog->setAttribute(Qt::WA_DeleteOnClose);
-            dialog->setWindowFlag(Qt::FramelessWindowHint);
-            dialog->setDirectory("/home/data/u/");
-            dialog->setFilter(QDir::Files);
-            dialog->setFixedSize(800,600);
-            dialog->show();
+            m_pFileDialog->exec();
 
-            QDir file = dialog->directory();
+            QDir file = m_pFileDialog->directory();
             QDir *dir = NULL;
             if(dir ==NULL)
             {

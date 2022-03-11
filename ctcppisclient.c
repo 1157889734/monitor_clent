@@ -511,7 +511,7 @@ void ParsePisYCInfo(Msg_RecvPISYCInfo  RecvPISInfo)
     {
         snprintf(acStr, sizeof(acStr), "date %02d%02d%02d%02d%4d.%02d", ptPisInfo->tTime.i8Mon, ptPisInfo->tTime.i8day, ptPisInfo->tTime.i8Hour, ptPisInfo->tTime.i8Sec,iYear, ptPisInfo->tTime.i8Min);
         system(acStr);
-        system("hwclock -w");
+        system("hwclock -w -f /dev/rtc1");
 
 //        /*系统校时记录日志*/
 //        memset(&tLogInfo, 0, sizeof(T_LOG_INFO));
@@ -632,7 +632,7 @@ void ParsePisInfo(Msg_RecvPISInfo  RecvPISInfo)
     {
         snprintf(acStr, sizeof(acStr), "date %02d%02d%02d%02d%4d.%02d", ptPisInfo->tTime.i8Mon, ptPisInfo->tTime.i8day, ptPisInfo->tTime.i8Hour, ptPisInfo->tTime.i8Sec,iYear, ptPisInfo->tTime.i8Min);
         system(acStr);
-        system("hwclock -w");
+        system("hwclock -w -f /dev/rtc1");
 
 //        /*系统校时记录日志*/
 //        memset(&tLogInfo, 0, sizeof(T_LOG_INFO));
@@ -743,7 +743,7 @@ void ParsePisInfoEx(Msg_RecvPISInfoEx RecvPISInfo)
     {
         snprintf(acStr, sizeof(acStr), "date %02d%02d%02d%02d%4d.%02d", ptPisInfo->tTime.i8Mon, ptPisInfo->tTime.i8day, ptPisInfo->tTime.i8Hour, ptPisInfo->tTime.i8Sec,iYear, ptPisInfo->tTime.i8Min);
         system(acStr);
-        system("hwclock -w");
+        system("hwclock -w -f /dev/rtc1");
 
 //        printf("**********date=%s\n",acStr);
 //        /*系统校时记录日志*/

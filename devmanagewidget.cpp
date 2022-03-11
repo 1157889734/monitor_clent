@@ -268,7 +268,7 @@ void devManageWidget::pisMsgCtrl(char *pcMsgData)
     {
         snprintf(acStr, sizeof(acStr), "date %02d%02d%02d%02d%4d.%02d", ptPisMsgInfo->i8Mon, ptPisMsgInfo->i8day, ptPisMsgInfo->i8Hour, ptPisMsgInfo->i8Sec,iYear, ptPisMsgInfo->i8Min);
         system(acStr);
-        system("hwclock -w");
+        system("hwclock -w -f /dev/rtc1");
 
         /*系统校时记录日志*/
         memset(&tLogInfo, 0, sizeof(T_LOG_INFO));

@@ -696,6 +696,7 @@ void recordPlayWidget::recordQuerySlot()
     iServerIdex = ui->carSeletionComboBox->currentIndex();
     iCameraIdex = ui->cameraSelectionComboBox->currentIndex();
 
+    int iDiscTime = 0;
     if (m_Phandle[iServerIdex])
     {
         T_NVR_SEARCH_RECORD tRecordSeach;
@@ -721,6 +722,28 @@ void recordPlayWidget::recordQuerySlot()
         tRecordSeach.tEndTime.i8Hour = hour;
         tRecordSeach.tEndTime.i8Min = min;
         tRecordSeach.tEndTime.i8Sec = sec;
+
+
+        iDiscTime = (tRecordSeach.tEndTime.i16Year - tRecordSeach.tStartTime.i16Year)*366*24*3600
+            +(tRecordSeach.tEndTime.i8Mon - tRecordSeach.tStartTime.i8Mon)*30*24*3600
+            +(tRecordSeach.tEndTime.i8day - tRecordSeach.tStartTime.i8day)*24*3600
+            +(tRecordSeach.tEndTime.i8Hour - tRecordSeach.tStartTime.i8Hour)*3600
+            +(tRecordSeach.tEndTime.i8Min - tRecordSeach.tStartTime.i8Min)*60
+            +(tRecordSeach.tEndTime.i8Sec - tRecordSeach.tStartTime.i8Sec);
+
+
+
+        if(iDiscTime <= 0)
+        {
+            static QMessageBox box(QMessageBox::Warning,QString::fromUtf8("warning"),QString::fromUtf8("开始时间不能大于结束时间!"));
+            box.setWindowFlags(Qt::FramelessWindowHint);
+            box.setStandardButtons (QMessageBox::Ok);
+            box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
+            box.exec();
+            return;
+        }
+
+
 
         tRecordSeach.iCarriageNo = tTrainConfigInfo.tNvrServerInfo[iServerIdex].iCarriageNO;
         tRecordSeach.iIpcPos = 8+iCameraIdex;
