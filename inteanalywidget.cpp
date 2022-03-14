@@ -3,6 +3,8 @@
 #include <QLineEdit>
 #include <QDateTime>
 #include "debug.h"
+#include <arpa/inet.h>
+
 #define PVMSPAGETYPE  2    //此页面类型，2表示受电弓监控页面
 
 static int g_iDNum = 0;
@@ -26,7 +28,7 @@ inteAnalyWidget::inteAnalyWidget(QWidget *parent) :
 
     connect(ui->startTimeSetPushButton, SIGNAL(clicked(bool)), this, SLOT(openStartTimeSetWidgetSlot()));   //开始时间设置按钮按键信号响应
     connect(ui->startTimeSetPushButton_2, SIGNAL(clicked(bool)), this, SLOT(openStopTimeSetWidgetSlot()));  //结束时间设置按钮按键信号响应
-
+    connect(ui->searchPushButton,SIGNAL(clicked(bool)),this,SLOT(recordQuerySlot()));
 
     QDateTime time = QDateTime::currentDateTime();
     snprintf(timestr, sizeof(timestr), "%4d-%02d-%02d %02d:%02d:%02d", time.date().year(), time.date().month(), time.date().day(), time.time().hour(), time.time().minute(), time.time().second());
@@ -109,6 +111,42 @@ inteAnalyWidget::~inteAnalyWidget()
     timeSetWidget = NULL;
 
     delete ui;
+}
+
+void inteAnalyWidget::recordQuerySlot()
+{
+    int startyear = 0, startmon = 0, startday = 0, starthour = 0, startmin = 0, startsec = 0;
+
+    int endyear = 0, endmon = 0, endday = 0, endhour = 0, endmin = 0, endsec = 0;
+
+    int iDiscTime = 0;
+
+    T_NVR_SEARCH_RECORD tRecordSeach;
+    memset(&tRecordSeach, 0, sizeof(T_NVR_SEARCH_RECORD));
+    sscanf(ui->startTimeLabel->text().toLatin1().data(), "%4d-%2d-%2d %2d:%2d:%2d", &startyear, &startmon, &startday, &starthour, &startmin, &startsec);
+
+    sscanf(ui->endTimeLabel->text().toLatin1().data(), "%4d-%2d-%2d %2d:%2d:%2d", &endyear, &endmon, &endday, &endhour, &endmin, &endsec);
+
+
+
+    iDiscTime = (startyear - endyear)*366*24*3600
+        +(startmon - endmon)*30*24*3600
+        +(startday - endday)*24*3600
+        +(starthour - endhour)*3600
+        +(startmin - endmin)*60
+        +(startsec - endsec);
+
+    if(iDiscTime >= 0)
+    {
+        static QMessageBox box(QMessageBox::Warning,QString::fromUtf8("warning"),QString::fromUtf8("开始时间不能大于结束时间!"));
+        box.setWindowFlags(Qt::FramelessWindowHint);
+        box.setStandardButtons (QMessageBox::Ok);
+        box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
+        box.exec();
+        return;
+    }
+
+
 }
 
 void inteAnalyWidget::pageShowCtrl()  //每次切换到当前页面，则更新查询起始和结束时间控件显示

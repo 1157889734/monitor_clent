@@ -28,6 +28,8 @@ public slots:
     void timeSetRecvMsg(QString year, QString month, QString day, QString hour, QString min, QString sec);
     void openStartTimeSetWidgetSlot();
     void openStopTimeSetWidgetSlot();
+    void recordQuerySlot();
+
 
 signals:
     void registOutSignal(int page);     //注销信号，iType:表示执行注销的页面类型，这里应该为2，表示受电弓监控页面,

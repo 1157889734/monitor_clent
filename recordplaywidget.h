@@ -18,6 +18,7 @@
 #include "ftpApi.h"
 #include "timeset.h"
 #include "debug.h"
+#include <QThread>
 
 
 #define MAX_RECORD_SEACH_NUM 10000
@@ -143,6 +144,7 @@ private:
     int m_iRecordIdex;
     QTimer *m_recordTabelWidgetFillTimer;
     T_WND_INFO                     m_RealMonitorVideos;
+    QThread *m_pThread;
 
 
 };

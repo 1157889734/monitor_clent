@@ -671,8 +671,11 @@ void recordPlayWidget::setPlaySliderValueSlot(int iValue)    //实时刷新播�
 void recordPlayWidget::recordQuerySlot()
 {
     int iRet = 0, row = 0, iServerIdex = 0, iCameraIdex = 0, i = 0;
-    int year = 0, mon = 0, day = 0, hour = 0, min = 0, sec = 0;
-    short yr = 0;
+    int startyear = 0, startmon = 0, startday = 0, starthour = 0, startmin = 0, startsec = 0;
+    short startyr = 0;
+
+    int endyear = 0, endmon = 0, endday = 0, endhour = 0, endmin = 0, endsec = 0;
+    short endyr = 0;
     T_TRAIN_CONFIG tTrainConfigInfo;
     T_LOG_INFO tLogInfo;
 
@@ -701,39 +704,37 @@ void recordPlayWidget::recordQuerySlot()
     {
         T_NVR_SEARCH_RECORD tRecordSeach;
         memset(&tRecordSeach, 0, sizeof(T_NVR_SEARCH_RECORD));
-        sscanf(ui->startTimeLabel->text().toLatin1().data(), "%4d-%2d-%2d %2d:%2d:%2d", &year, &mon, &day, &hour, &min, &sec);
+        sscanf(ui->startTimeLabel->text().toLatin1().data(), "%4d-%2d-%2d %2d:%2d:%2d", &startyear, &startmon, &startday, &starthour, &startmin, &startsec);
 
 
-        yr = year;
-        tRecordSeach.tStartTime.i16Year = htons(yr);
-        tRecordSeach.tStartTime.i8Mon = mon;
-        tRecordSeach.tStartTime.i8day = day;
-        tRecordSeach.tStartTime.i8Hour = hour;
-        tRecordSeach.tStartTime.i8Min = min;
-        tRecordSeach.tStartTime.i8Sec = sec;
+        startyr = startyear;
+        tRecordSeach.tStartTime.i16Year = htons(startyr);
+        tRecordSeach.tStartTime.i8Mon = startmon;
+        tRecordSeach.tStartTime.i8day = startday;
+        tRecordSeach.tStartTime.i8Hour = starthour;
+        tRecordSeach.tStartTime.i8Min = startmin;
+        tRecordSeach.tStartTime.i8Sec = startsec;
 
-        sscanf(ui->endTimeLabel->text().toLatin1().data(), "%4d-%2d-%2d %2d:%2d:%2d", &year, &mon, &day, &hour, &min, &sec);
-
-
-        yr = year;
-        tRecordSeach.tEndTime.i16Year = htons(yr);
-        tRecordSeach.tEndTime.i8Mon = mon;
-        tRecordSeach.tEndTime.i8day = day;
-        tRecordSeach.tEndTime.i8Hour = hour;
-        tRecordSeach.tEndTime.i8Min = min;
-        tRecordSeach.tEndTime.i8Sec = sec;
+        sscanf(ui->endTimeLabel->text().toLatin1().data(), "%4d-%2d-%2d %2d:%2d:%2d", &endyear, &endmon, &endday, &endhour, &endmin, &endsec);
 
 
-        iDiscTime = (tRecordSeach.tEndTime.i16Year - tRecordSeach.tStartTime.i16Year)*366*24*3600
-            +(tRecordSeach.tEndTime.i8Mon - tRecordSeach.tStartTime.i8Mon)*30*24*3600
-            +(tRecordSeach.tEndTime.i8day - tRecordSeach.tStartTime.i8day)*24*3600
-            +(tRecordSeach.tEndTime.i8Hour - tRecordSeach.tStartTime.i8Hour)*3600
-            +(tRecordSeach.tEndTime.i8Min - tRecordSeach.tStartTime.i8Min)*60
-            +(tRecordSeach.tEndTime.i8Sec - tRecordSeach.tStartTime.i8Sec);
+        endyr = endyear;
+        tRecordSeach.tEndTime.i16Year = htons(endyr);
+        tRecordSeach.tEndTime.i8Mon = endmon;
+        tRecordSeach.tEndTime.i8day = endday;
+        tRecordSeach.tEndTime.i8Hour = endhour;
+        tRecordSeach.tEndTime.i8Min = endmin;
+        tRecordSeach.tEndTime.i8Sec = endsec;
 
 
+        iDiscTime = (startyear - endyear)*366*24*3600
+            +(startmon - endmon)*30*24*3600
+            +(startday - endday)*24*3600
+            +(starthour - endhour)*3600
+            +(startmin - endmin)*60
+            +(startsec - endsec);
 
-        if(iDiscTime <= 0)
+        if(iDiscTime >= 0)
         {
             static QMessageBox box(QMessageBox::Warning,QString::fromUtf8("warning"),QString::fromUtf8("开始时间不能大于结束时间!"));
             box.setWindowFlags(Qt::FramelessWindowHint);
@@ -742,8 +743,6 @@ void recordPlayWidget::recordQuerySlot()
             box.exec();
             return;
         }
-
-
 
         tRecordSeach.iCarriageNo = tTrainConfigInfo.tNvrServerInfo[iServerIdex].iCarriageNO;
         tRecordSeach.iIpcPos = 8+iCameraIdex;
@@ -773,6 +772,8 @@ void recordPlayWidget::recordQuerySlot()
         {
             m_recorQueryTimer = new QTimer(this);
         }
+
+
         m_recorQueryTimer->start(500);
         connect(m_recorQueryTimer,SIGNAL(timeout()), this,SLOT(recordQueryEndSlot()));
     }
@@ -855,6 +856,33 @@ void recordPlayWidget::recordDownloadSlot()
         return;
     }
 
+    if (access("/home/data/u/", F_OK) < 0)
+    {
+        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget not get USB device!\n");
+        static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
+        msgBox.setWindowFlags(Qt::FramelessWindowHint);
+        msgBox.setStandardButtons(QMessageBox::Yes);
+        msgBox.button(QMessageBox::Yes)->setText("OK");
+        msgBox.exec();
+
+        return;
+    }
+    else
+    {
+        if (0 == STATE_FindUsbDev())   //这里处理一个特殊情况:U盘拔掉是umount失败，/mnt/usb/u/路径还存在，但是实际U盘是没有再插上的
+        {
+            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget not get USB device!\n");
+            static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
+            msgBox.setWindowFlags(Qt::FramelessWindowHint);
+            msgBox.setStandardButtons(QMessageBox::Yes);
+            msgBox.button(QMessageBox::Yes)->setText("OK");
+            msgBox.exec();
+
+            return;
+        }
+    }
+
+
     if (ui->recordFileTableWidget->rowCount() > 0)
     {
         for (row = 0; row < ui->recordFileTableWidget->rowCount(); row++)    //先判断一次是否没有录像文件被选中，没有则弹框提示
@@ -883,31 +911,6 @@ void recordPlayWidget::recordDownloadSlot()
             return;
         }
 
-        if (access("/home/data/u/", F_OK) < 0)
-        {
-            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget not get USB device!\n");
-            static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
-            msgBox.setWindowFlags(Qt::FramelessWindowHint);
-            msgBox.setStandardButtons(QMessageBox::Yes);
-            msgBox.button(QMessageBox::Yes)->setText("OK");
-            msgBox.exec();
-
-            return;
-        }
-        else
-        {
-            if (0 == STATE_FindUsbDev())   //这里处理一个特殊情况:U盘拔掉是umount失败，/mnt/usb/u/路径还存在，但是实际U盘是没有再插上的
-            {
-                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget not get USB device!\n");
-                static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
-                msgBox.setWindowFlags(Qt::FramelessWindowHint);
-                msgBox.setStandardButtons(QMessageBox::Yes);
-                msgBox.button(QMessageBox::Yes)->setText("OK");
-                msgBox.exec();
-
-                return;
-            }
-        }
 
         idex = ui->carSeletionComboBox->currentIndex();
 

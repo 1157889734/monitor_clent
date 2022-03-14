@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QPushButton" name="pushButton_15">
+  <widget class="QPushButton" name="searchPushButton">
    <property name="geometry">
     <rect>
      <x>90</x>
@@ -686,7 +686,7 @@ border-style: solid;</string>
    </property>
   </widget>
   <zorder>label_11</zorder>
-  <zorder>pushButton_15</zorder>
+  <zorder>searchPushButton</zorder>
   <zorder>label_3</zorder>
   <zorder>label_6</zorder>
   <zorder>pushButton_17</zorder>
