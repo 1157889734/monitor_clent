@@ -23,7 +23,7 @@ QT_BEGIN_NAMESPACE
 class Ui_inteAnalyWidget
 {
 public:
-    QPushButton *pushButton_15;
+    QPushButton *searchPushButton;
     QComboBox *comboBox_4;
     QLabel *label_3;
     QComboBox *comboBox_3;
@@ -54,13 +54,13 @@ public:
         if (inteAnalyWidget->objectName().isEmpty())
             inteAnalyWidget->setObjectName(QString::fromUtf8("inteAnalyWidget"));
         inteAnalyWidget->resize(1024, 630);
-        pushButton_15 = new QPushButton(inteAnalyWidget);
-        pushButton_15->setObjectName(QString::fromUtf8("pushButton_15"));
-        pushButton_15->setGeometry(QRect(90, 240, 112, 32));
+        searchPushButton = new QPushButton(inteAnalyWidget);
+        searchPushButton->setObjectName(QString::fromUtf8("searchPushButton"));
+        searchPushButton->setGeometry(QRect(90, 240, 112, 32));
         QFont font;
         font.setPointSize(12);
-        pushButton_15->setFont(font);
-        pushButton_15->setStyleSheet(QString::fromUtf8("QPushButton{\n"
+        searchPushButton->setFont(font);
+        searchPushButton->setStyleSheet(QString::fromUtf8("QPushButton{\n"
 "background-image: url(:/monres/search.bmp);\n"
 "border-color: rgb(255, 255, 255);\n"
 "border-width: 1px;\n"
@@ -281,11 +281,11 @@ public:
 "border-style: solid;"));
         startTimeSetPushButton = new QPushButton(inteAnalyWidget);
         startTimeSetPushButton->setObjectName(QString::fromUtf8("startTimeSetPushButton"));
-        startTimeSetPushButton->setGeometry(QRect(270, 52, 21, 21));
+        startTimeSetPushButton->setGeometry(QRect(270, 52, 25, 25));
         startTimeSetPushButton->setStyleSheet(QString::fromUtf8("border-image: url(:/res/time_set.png);"));
         startTimeSetPushButton_2 = new QPushButton(inteAnalyWidget);
         startTimeSetPushButton_2->setObjectName(QString::fromUtf8("startTimeSetPushButton_2"));
-        startTimeSetPushButton_2->setGeometry(QRect(270, 92, 21, 21));
+        startTimeSetPushButton_2->setGeometry(QRect(270, 92, 25, 25));
         startTimeSetPushButton_2->setStyleSheet(QString::fromUtf8("border-image: url(:/res/time_set.png);"));
         startTimeLabel = new QLabel(inteAnalyWidget);
         startTimeLabel->setObjectName(QString::fromUtf8("startTimeLabel"));
@@ -297,7 +297,7 @@ public:
 "border-width: 1px;\n"
 "border-style: solid;"));
         label_11->raise();
-        pushButton_15->raise();
+        searchPushButton->raise();
         label_3->raise();
         label_6->raise();
         pushButton_17->raise();
@@ -330,7 +330,7 @@ public:
     void retranslateUi(QWidget *inteAnalyWidget)
     {
         inteAnalyWidget->setWindowTitle(QCoreApplication::translate("inteAnalyWidget", "Form", nullptr));
-        pushButton_15->setText(QString());
+        searchPushButton->setText(QString());
         comboBox_4->setItemText(0, QCoreApplication::translate("inteAnalyWidget", "\351\242\204\350\255\246", nullptr));
         comboBox_4->setItemText(1, QCoreApplication::translate("inteAnalyWidget", "\345\221\212\350\255\246", nullptr));
         comboBox_4->setItemText(2, QCoreApplication::translate("inteAnalyWidget", "\346\212\245\350\255\246", nullptr));

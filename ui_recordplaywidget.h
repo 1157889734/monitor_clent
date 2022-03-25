@@ -174,7 +174,7 @@ public:
         __qtablewidgetitem2->setBackground(QColor(255, 255, 255));
         recordFileTableWidget->setHorizontalHeaderItem(2, __qtablewidgetitem2);
         recordFileTableWidget->setObjectName(QString::fromUtf8("recordFileTableWidget"));
-        recordFileTableWidget->setGeometry(QRect(0, 250, 281, 291));
+        recordFileTableWidget->setGeometry(QRect(10, 250, 281, 291));
         recordFileTableWidget->setFont(font);
         recordFileTableWidget->setStyleSheet(QString::fromUtf8("border-style: none;\n"
 "background-color: rgb(255, 255, 255);\n"
@@ -417,7 +417,7 @@ public:
         label_12->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
         fileDownloadProgressBar = new QProgressBar(recordPlayWidget);
         fileDownloadProgressBar->setObjectName(QString::fromUtf8("fileDownloadProgressBar"));
-        fileDownloadProgressBar->setGeometry(QRect(0, 550, 271, 23));
+        fileDownloadProgressBar->setGeometry(QRect(10, 550, 271, 23));
         fileDownloadProgressBar->setStyleSheet(QString::fromUtf8("QProgressBar {\n"
 "	background-color: rgb(0, 193, 37);\n"
 "   border: 1px solid grey;\n"
@@ -447,7 +447,7 @@ public:
 "border-style: solid;"));
         startTimeSetPushButton = new QPushButton(recordPlayWidget);
         startTimeSetPushButton->setObjectName(QString::fromUtf8("startTimeSetPushButton"));
-        startTimeSetPushButton->setGeometry(QRect(260, 40, 21, 21));
+        startTimeSetPushButton->setGeometry(QRect(260, 40, 25, 25));
         startTimeSetPushButton->setStyleSheet(QString::fromUtf8("border-image: url(:/res/time_set.png);"));
         endTimeLabel = new QLabel(recordPlayWidget);
         endTimeLabel->setObjectName(QString::fromUtf8("endTimeLabel"));
@@ -460,7 +460,7 @@ public:
 "border-style: solid;"));
         stopTimeSetPushButton = new QPushButton(recordPlayWidget);
         stopTimeSetPushButton->setObjectName(QString::fromUtf8("stopTimeSetPushButton"));
-        stopTimeSetPushButton->setGeometry(QRect(260, 80, 21, 21));
+        stopTimeSetPushButton->setGeometry(QRect(260, 80, 25, 25));
         stopTimeSetPushButton->setStyleSheet(QString::fromUtf8("border-image: url(:/res/time_set.png);"));
         label_12->raise();
         label_5->raise();

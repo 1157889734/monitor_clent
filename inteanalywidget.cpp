@@ -136,7 +136,7 @@ void inteAnalyWidget::recordQuerySlot()
         +(startmin - endmin)*60
         +(startsec - endsec);
 
-    if(iDiscTime >= 0)
+    if(iDiscTime > 0)
     {
         static QMessageBox box(QMessageBox::Warning,QString::fromUtf8("warning"),QString::fromUtf8("开始时间不能大于结束时间!"));
         box.setWindowFlags(Qt::FramelessWindowHint);

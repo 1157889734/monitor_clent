@@ -751,7 +751,7 @@ void pvmsMenuWidget::menuButtonClick()
         m_devManagePage->hide();
         m_devUpdatePage->hide();
 
-        m_recordPlayPage->pageShowCtrl();
+//        m_recordPlayPage->pageShowCtrl();
 
 
         ui->pvmsMonitorMenuPushButton->setChecked(false);
@@ -815,7 +815,7 @@ void pvmsMenuWidget::menuButtonClick()
         m_recordPlayPage->closePlayWin();   //关闭录像回放界面的播放窗口
 		m_recordPlayPage->setPlayButtonStyleSheet();
 
-        m_inteAnalyPage->pageShowCtrl();
+//        m_inteAnalyPage->pageShowCtrl();
 
 
         ui->pvmsMonitorMenuPushButton->setChecked(false);

@@ -109,6 +109,7 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
     ui->recordFileTableWidget->horizontalHeader()->resizeSection(2,280);
 //    ui->recordFileTableWidget->resizeColumnToContents(2);
     ui->recordFileTableWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    ui->recordFileTableWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
     ui->playPushButton->setFocusPolicy(Qt::NoFocus);
     ui->stopPushButton->setFocusPolicy(Qt::NoFocus);
@@ -154,7 +155,7 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
     getTrainConfig();
 
     m_playWin = new QWidget(this);
-    m_playWin->setGeometry(290, 0, 730, 540);
+    m_playWin->setGeometry(295, 0, 725, 540);
     m_playWin->show();
     m_playWin->setStyleSheet("QWidget{background-color: rgb(0, 0, 0);}");
 
@@ -587,23 +588,24 @@ void recordPlayWidget::recordTableWidgetFillFunc()
 
         ui->recordFileTableWidget->insertRow(iParseIdex-1);//添加新的一行
 
-//        QTableWidgetItem *checkBox = new QTableWidgetItem();
-//        checkBox->setCheckState(Qt::Unchecked);
+        QTableWidgetItem *checkBox = new QTableWidgetItem();
+        checkBox->setSizeHint(QSize(40,40));
+        checkBox->setCheckState(Qt::Unchecked);
 
-//        ui->recordFileTableWidget->setItem(iParseIdex-1, 0, checkBox);
-//        ui->recordFileTableWidget->item(iParseIdex-1, 0)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
-        QWidget *checkWidget= new QWidget(this); //创建一个widget
+        ui->recordFileTableWidget->setItem(iParseIdex-1, 0, checkBox);
+        ui->recordFileTableWidget->item(iParseIdex-1, 0)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+//        QWidget *checkWidget= new QWidget; //创建一个widget
 
-        QCheckBox *checkBox = new QCheckBox(checkWidget);
-        checkBox->setChecked(Qt::Unchecked);
-        QHBoxLayout *hLayout = new QHBoxLayout(); //创建布局
-        hLayout->addWidget(checkBox); //添加checkbox
-        hLayout->setMargin(0); //设置边缘距离 否则会很难看
-        hLayout->setAlignment(checkBox, Qt::AlignCenter); //居中
-        checkWidget->setLayout(hLayout); //设置widget的布局
+//        QCheckBox *checkBox = new QCheckBox;
+//        checkBox->setChecked(Qt::Unchecked);
+//        QHBoxLayout *hLayout = new QHBoxLayout(); //创建布局
+//        hLayout->addWidget(checkBox); //添加checkbox
+//        hLayout->setMargin(0); //设置边缘距离 否则会很难看
+//        hLayout->setAlignment(checkBox, Qt::AlignCenter); //居中
+//        checkWidget->setLayout(hLayout); //设置widget的布局
 
-        checkBox->setStyleSheet(QString("QCheckBox {margin:3px;border:3px; border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid}QCheckBox::indicator {width: %1px; height: %1px;}").arg(30));
-        ui->recordFileTableWidget->setCellWidget(iParseIdex-1, 0, checkWidget);
+//        checkBox->setStyleSheet(QString("QCheckBox {margin:3px;border:3px; border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid}QCheckBox::indicator {width: %1px; height: %1px;}").arg(30));
+//        ui->recordFileTableWidget->setCellWidget(iParseIdex-1, 0, checkWidget);
 
 
         item = QString::number(iParseIdex);
@@ -734,7 +736,7 @@ void recordPlayWidget::recordQuerySlot()
             +(startmin - endmin)*60
             +(startsec - endsec);
 
-        if(iDiscTime >= 0)
+        if(iDiscTime > 0)
         {
             static QMessageBox box(QMessageBox::Warning,QString::fromUtf8("warning"),QString::fromUtf8("开始时间不能大于结束时间!"));
             box.setWindowFlags(Qt::FramelessWindowHint);
@@ -888,15 +890,20 @@ void recordPlayWidget::recordDownloadSlot()
         for (row = 0; row < ui->recordFileTableWidget->rowCount(); row++)    //先判断一次是否没有录像文件被选中，没有则弹框提示
         {
 
-            if(QWidget *w = ui->recordFileTableWidget->cellWidget(row,0))
+            if (ui->recordFileTableWidget->item(row, 0)->checkState() == Qt::Checked)
             {
-                QCheckBox *checkBox = (QCheckBox*)(w->children().at(0));
-
-                if(checkBox->checkState() == Qt::Checked)
-                {
-                   break;
-                }
+                break;
             }
+
+//            if(QWidget *w = ui->recordFileTableWidget->cellWidget(row,0))
+//            {
+//                QCheckBox *checkBox = (QCheckBox*)(w->children().at(0));
+
+//                if(checkBox->checkState() == Qt::Checked)
+//                {
+//                   break;
+//                }
+//            }
         }
 
         if (row == ui->recordFileTableWidget->rowCount())
@@ -942,10 +949,11 @@ void recordPlayWidget::recordDownloadSlot()
         for (row = 0; row < ui->recordFileTableWidget->rowCount(); row++)
         {
 
-            if(QWidget *w = ui->recordFileTableWidget->cellWidget(row,0))
+            if (ui->recordFileTableWidget->item(row, 0)->checkState() == Qt::Checked)
+//            if(QWidget *w = ui->recordFileTableWidget->cellWidget(row,0))
             {
-                QCheckBox *checkBox = (QCheckBox*)(w->children().at(0));
-                if(checkBox->checkState() == Qt::Checked)
+//                QCheckBox *checkBox = (QCheckBox*)(w->children().at(0));
+//                if(checkBox->checkState() == Qt::Checked)
                 {
                     if (parseFileName(m_acFilePath[row]) != NULL)
                     {
@@ -1582,6 +1590,7 @@ void recordPlayWidget::recordQueryCtrl(char *pcMsgData, int iMsgDataLen)
     }
     memcpy(m_pcRecordFileBuf+m_iTotalLen, pcMsgData, iMsgDataLen);
     m_iTotalLen += iMsgDataLen;
+
 
 }
 
