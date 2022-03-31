@@ -150,6 +150,15 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
         m_tFtpHandle[i] = 0;
     }
 
+    ui->carSeletionComboBox->setEditable(true);
+    ui->cameraSelectionComboBox->setEditable(true);
+
+    ui->carSeletionComboBox->setStyleSheet("QComboBox { min-height: 30px; min-width: 40px; }"
+            "QComboBox QAbstractItemView::item { min-height: 30px; min-width: 40px; }");
+
+    ui->cameraSelectionComboBox->setStyleSheet("QComboBox { min-height: 30px; min-width: 40px; }"
+            "QComboBox QAbstractItemView::item { min-height: 30px; min-width: 40px; }");
+
 
     setPlayButtonStyleSheet();
     getTrainConfig();
@@ -774,8 +783,6 @@ void recordPlayWidget::recordQuerySlot()
         {
             m_recorQueryTimer = new QTimer(this);
         }
-
-
         m_recorQueryTimer->start(500);
         connect(m_recorQueryTimer,SIGNAL(timeout()), this,SLOT(recordQueryEndSlot()));
     }
@@ -883,6 +890,20 @@ void recordPlayWidget::recordDownloadSlot()
             return;
         }
     }
+
+    if (ui->recordFileTableWidget->rowCount() <= 0)
+    {
+        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget not select record file to download!\n");
+        static QMessageBox msgBox(QMessageBox::Question,QString(tr("注意")),QString(tr("没有录像文件!")));
+        msgBox.setWindowFlags(Qt::FramelessWindowHint);
+        msgBox.setStandardButtons(QMessageBox::Yes);
+        msgBox.button(QMessageBox::Yes)->setText("OK");
+        msgBox.exec();
+
+        return;
+
+    }
+
 
 
     if (ui->recordFileTableWidget->rowCount() > 0)

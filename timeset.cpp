@@ -314,6 +314,15 @@ void timeset::stButtonClick()
         string += QString::number(num);
         ui->label_7->setText(string);
     }
+
+    if(ui->label_3->text().toInt() == 2)
+    {
+        if(ui->label_4->text().toInt() > 28)
+        {
+           ui->label_4->setText("28");
+        }
+    }
+
 }
 
 void timeset::setTimeLabelText(int year, int month, int day, int hour, int min, int sec)

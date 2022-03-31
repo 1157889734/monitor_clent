@@ -68,6 +68,7 @@ public:
         QFont font;
         font.setPointSize(12);
         cameraSelectionComboBox->setFont(font);
+        cameraSelectionComboBox->setFocusPolicy(Qt::NoFocus);
         label_5 = new QLabel(recordPlayWidget);
         label_5->setObjectName(QString::fromUtf8("label_5"));
         label_5->setGeometry(QRect(0, 110, 111, 33));
@@ -369,6 +370,7 @@ public:
         carSeletionComboBox->setObjectName(QString::fromUtf8("carSeletionComboBox"));
         carSeletionComboBox->setGeometry(QRect(55, 150, 81, 27));
         carSeletionComboBox->setFont(font);
+        carSeletionComboBox->setFocusPolicy(Qt::NoFocus);
         plusStepPushButton = new QPushButton(recordPlayWidget);
         plusStepPushButton->setObjectName(QString::fromUtf8("plusStepPushButton"));
         plusStepPushButton->setGeometry(QRect(950, 560, 68, 58));

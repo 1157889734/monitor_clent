@@ -872,6 +872,7 @@ void devUpdateWidget::configFileSelectionSlot()
                 }
             }
 
+            m_pFileDialog->setDirectory("/home/data/u/");
             m_pFileDialog->exec();
 
             QDir file = m_pFileDialog->directory();
@@ -969,6 +970,7 @@ void devUpdateWidget::configUpdateFileSLOT()
                 }
             }
 
+            m_pFileDialog->setDirectory("/home/data/u/");
             m_pFileDialog->exec();
 
             QDir file = m_pFileDialog->directory();
@@ -1237,6 +1239,32 @@ void devUpdateWidget::configFileImportSlot()
     }
     else
     {
+        if (access("/home/data/u/", F_OK) < 0)
+        {
+            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget::%s %d not get USB device!\n",__FUNCTION__,__LINE__);
+            static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
+            msgBox.setWindowFlags(Qt::FramelessWindowHint);
+            msgBox.setStandardButtons(QMessageBox::Yes);
+            msgBox.button(QMessageBox::Yes)->setText("OK");
+            msgBox.exec();
+
+            return;
+        }
+        else
+        {
+            if (0 == STATE_FindUsbDev())   //这里处理一个特殊情况:U盘拔掉时umount失败，/mnt/usb/u/路径还存在，但是实际U盘是没有再插上的
+            {
+                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget::%s %d not get USB device!\n",__FUNCTION__,__LINE__);
+                static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
+                msgBox.setWindowFlags(Qt::FramelessWindowHint);
+                msgBox.setStandardButtons(QMessageBox::Yes);
+                msgBox.button(QMessageBox::Yes)->setText("OK");
+                msgBox.exec();
+
+                return;
+            }
+        }
+
         if (0 == strlen(ui->configFileDisplayLineEdit->text().toLatin1().data()))
         {
             DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget not select any config file!\n");

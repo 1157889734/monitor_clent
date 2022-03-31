@@ -54,6 +54,9 @@ QPushButton:pressed
      <pointsize>12</pointsize>
     </font>
    </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
+   </property>
    <item>
     <property name="text">
      <string>预警</string>
@@ -110,6 +113,9 @@ QPushButton:pressed
     <font>
      <pointsize>12</pointsize>
     </font>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
    </property>
    <item>
     <property name="text">
@@ -230,6 +236,9 @@ QPushButton:pressed
     <font>
      <pointsize>12</pointsize>
     </font>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
    </property>
    <item>
     <property name="text">

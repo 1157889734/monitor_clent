@@ -74,6 +74,7 @@ public:
         comboBox_4->setObjectName(QString::fromUtf8("comboBox_4"));
         comboBox_4->setGeometry(QRect(220, 172, 71, 27));
         comboBox_4->setFont(font);
+        comboBox_4->setFocusPolicy(Qt::NoFocus);
         label_3 = new QLabel(inteAnalyWidget);
         label_3->setObjectName(QString::fromUtf8("label_3"));
         label_3->setGeometry(QRect(6, 41, 71, 41));
@@ -94,6 +95,7 @@ public:
         comboBox_3->setObjectName(QString::fromUtf8("comboBox_3"));
         comboBox_3->setGeometry(QRect(50, 172, 91, 27));
         comboBox_3->setFont(font);
+        comboBox_3->setFocusPolicy(Qt::NoFocus);
         pushButton_8 = new QPushButton(inteAnalyWidget);
         pushButton_8->setObjectName(QString::fromUtf8("pushButton_8"));
         pushButton_8->setGeometry(QRect(0, 580, 161, 46));
@@ -131,6 +133,7 @@ public:
         comboBox_5->setObjectName(QString::fromUtf8("comboBox_5"));
         comboBox_5->setGeometry(QRect(80, 205, 91, 27));
         comboBox_5->setFont(font);
+        comboBox_5->setFocusPolicy(Qt::NoFocus);
         label_12 = new QLabel(inteAnalyWidget);
         label_12->setObjectName(QString::fromUtf8("label_12"));
         label_12->setGeometry(QRect(300, 0, 724, 561));

@@ -30,6 +30,9 @@
      <pointsize>12</pointsize>
     </font>
    </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
+   </property>
   </widget>
   <widget class="QLabel" name="label_5">
    <property name="geometry">
@@ -744,6 +747,9 @@ border-width: 2px;border-style: solid;}
     <font>
      <pointsize>12</pointsize>
     </font>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
    </property>
   </widget>
   <widget class="QPushButton" name="plusStepPushButton">
