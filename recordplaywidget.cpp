@@ -153,11 +153,11 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
     ui->carSeletionComboBox->setEditable(true);
     ui->cameraSelectionComboBox->setEditable(true);
 
-    ui->carSeletionComboBox->setStyleSheet("QComboBox { min-height: 30px; min-width: 40px; }"
-            "QComboBox QAbstractItemView::item { min-height: 30px; min-width: 40px; }");
+    ui->carSeletionComboBox->setStyleSheet("QComboBox { min-height: 30px; min-width: 40px; font: normal normal 15px;}"
+            "QComboBox QAbstractItemView::item { min-height: 30px; min-width: 40px; font: normal normal 15px;}");
 
-    ui->cameraSelectionComboBox->setStyleSheet("QComboBox { min-height: 30px; min-width: 40px; }"
-            "QComboBox QAbstractItemView::item { min-height: 30px; min-width: 40px; }");
+    ui->cameraSelectionComboBox->setStyleSheet("QComboBox { min-height: 30px; min-width: 40px; font: normal normal 15px;}"
+            "QComboBox QAbstractItemView::item { min-height: 30px; min-width: 40px; font: normal normal 15px;}");
 
 
     setPlayButtonStyleSheet();

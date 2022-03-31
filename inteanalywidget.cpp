@@ -99,14 +99,14 @@ inteAnalyWidget::inteAnalyWidget(QWidget *parent) :
     ui->comboBox_4->setEditable(true);
     ui->comboBox_5->setEditable(true);
 
-    ui->comboBox_3->setStyleSheet("QComboBox { min-height: 30px; min-width: 40px; }"
-            "QComboBox QAbstractItemView::item { min-height: 30px; min-width: 40px; }");
+    ui->comboBox_3->setStyleSheet("QComboBox { min-height: 30px; min-width: 40px; font: normal normal 15px;}"
+            "QComboBox QAbstractItemView::item { min-height: 30px; min-width: 40px; font: normal normal 15px;}");
 
-    ui->comboBox_4->setStyleSheet("QComboBox { min-height: 30px; min-width: 40px; }"
-            "QComboBox QAbstractItemView::item { min-height: 30px; min-width: 40px; }");
+    ui->comboBox_4->setStyleSheet("QComboBox { min-height: 30px; min-width: 40px; font: normal normal 15px;}"
+            "QComboBox QAbstractItemView::item { min-height: 30px; min-width: 40px; font: normal normal 15px;}");
 
-    ui->comboBox_5->setStyleSheet("QComboBox { min-height: 30px; min-width: 40px; }"
-            "QComboBox QAbstractItemView::item { min-height: 30px; min-width: 40px; }");
+    ui->comboBox_5->setStyleSheet("QComboBox { min-height: 30px; min-width: 40px; font: normal normal 15px;}"
+            "QComboBox QAbstractItemView::item { min-height: 30px; min-width: 40px; font: normal normal 15px;}");
 
     connect(ui->canselPushButton, SIGNAL(clicked()), this, SLOT(registOutButtonClick()));
     connect(ui->alarmPushButton, SIGNAL(clicked(bool)), this, SLOT(alarmPushButoonClickSlot()));   //报警按钮按键信号响应打开报警信息界面

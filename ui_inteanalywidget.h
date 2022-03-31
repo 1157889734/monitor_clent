@@ -131,7 +131,7 @@ public:
         comboBox_5->addItem(QString());
         comboBox_5->addItem(QString());
         comboBox_5->setObjectName(QString::fromUtf8("comboBox_5"));
-        comboBox_5->setGeometry(QRect(80, 205, 91, 27));
+        comboBox_5->setGeometry(QRect(80, 205, 121, 27));
         comboBox_5->setFont(font);
         comboBox_5->setFocusPolicy(Qt::NoFocus);
         label_12 = new QLabel(inteAnalyWidget);
