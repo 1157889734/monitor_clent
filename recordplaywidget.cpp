@@ -607,8 +607,8 @@ void recordPlayWidget::recordTableWidgetFillFunc()
 
 //        QCheckBox *checkBox = new QCheckBox;
 //        checkBox->setChecked(Qt::Unchecked);
-//        QHBoxLayout *hLayout = new QHBoxLayout(); //创建布局
-//        hLayout->addWidget(checkBox); //添加checkbox
+//        QHBoxLayout *hLayout = new QHBoxLayout; //创建布局
+//        hLayout->addWidget(checkBox,Qt::AlignCenter); //添加checkbox
 //        hLayout->setMargin(0); //设置边缘距离 否则会很难看
 //        hLayout->setAlignment(checkBox, Qt::AlignCenter); //居中
 //        checkWidget->setLayout(hLayout); //设置widget的布局
@@ -807,6 +807,7 @@ void recordPlayWidget::recordQueryEndSlot()
             delete m_recorQueryTimer;
             m_recorQueryTimer = NULL;
         }
+        iRecordNum = 0;
     }
     else
     {
@@ -1517,7 +1518,6 @@ void recordPlayWidget::recordPlaySlot(QTableWidgetItem *item)    //录像文件�
     setPlayButtonStyleSheet();
     emit setRecordPlayFlagSignal(1);
 
-    //qDebug()<<"************g_fistSelctFlag="<<g_fistSelctFlag<<__LINE__;
 
     if(recordPlayFlag == 1)
     {
@@ -1750,7 +1750,7 @@ void recordPlayWidget::recordPlayCtrl(int iRow, int iDex)
         }
     }
 
-    usleep(200*1000);
+//    usleep(200*1000);
     if (0 == m_threadId)    //保证播放进度条刷新线程只创建一次
     {
         m_iThreadRunFlag = 1;

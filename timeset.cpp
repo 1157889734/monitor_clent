@@ -53,25 +53,13 @@ void timeset::okButtonClick()
 
 void timeset::stButtonClick()
 {
-    //printf("timeSet::stButtonClick (%d,%d),(%d,%d)\n",cursor().pos().x(),cursor().pos().y(),this->pos().x(),this->pos().y());
     int num = 0, mon = 0;
     QString string = "";
-    QPoint pt=cursor().pos()-((QWidget *)(this->parent()))->pos()-this->pos();
     QObject* Object=sender();
     if (Object == ui->pushButton_1 || Object == ui->pushButton_1_1)
     {
-        //printf("set year! %d-%d\n",pt.x(),pt.y());
         num = ui->label_2->text().toInt();
-//        if (((pt.x() >= ui->pushButton_1->x()) && (pt.x() < ui->pushButton_1->x() + ui->pushButton_1->width())) && ((pt.y() >= ui->pushButton_1->y() && (pt.y() < ui->pushButton_1->y() + 27))))
-//        {
-//            printf("up!\n");
-//            num +=1;
-//        }
-//        else if (((pt.x() >= ui->pushButton_1->x()) && (pt.x() < ui->pushButton_1->x() + ui->pushButton_1->width())) && ((pt.y() >= 84 && (pt.y() < 111))))
-//        {
-//            printf("down!\n");
-//            num -=1;
-//        }
+
         if(Object == ui->pushButton_1)
         {
             num +=1;
@@ -94,22 +82,7 @@ void timeset::stButtonClick()
     {
         string = "";
         num = ui->label_3->text().toInt();
-//        if (((pt.x() >= ui->pushButton_2->x()) && (pt.x() < ui->pushButton_2->x() + ui->pushButton_2->width())) && ((pt.y() >= ui->pushButton_2->y() && (pt.y() < ui->pushButton_2->y() + 27))))
-//        {
-//            num +=1;
-//            if (num > 12)
-//            {
-//                num = 1;
-//            }
-//        }
-//        else if (((pt.x() >= ui->pushButton_2->x()) && (pt.x() < ui->pushButton_2->x() + ui->pushButton_2->width())) && ((pt.y() >= 84 && (pt.y() < 111))))
-//        {
-//            num -=1;
-//            if (num < 1)
-//            {
-//                num = 12;
-//            }
-//        }
+
         if(Object == ui->pushButton_2)
         {
             num +=1;
@@ -131,7 +104,6 @@ void timeset::stButtonClick()
         {
             string += "0";
         }
-//        printf("***************num=%d\n",num);
 
         string += QString::number(num);
         ui->label_3->setText(string);
@@ -141,22 +113,7 @@ void timeset::stButtonClick()
         string = "";
         mon = ui->label_3->text().toInt();
         num = ui->label_4->text().toInt();
-//        if (((pt.x() >= ui->pushButton_3->x()) && (pt.x() < ui->pushButton_3->x() + ui->pushButton_3->width())) && ((pt.y() >= ui->pushButton_3->y() && (pt.y() < ui->pushButton_3->y() + 27))))
-//        {
-//            num +=1;
-//            if (num > idayNum[mon-1])
-//            {
-//                num = 1;
-//            }
-//        }
-//        else if (((pt.x() >= ui->pushButton_3->x()) && (pt.x() < ui->pushButton_3->x() + ui->pushButton_3->width())) && ((pt.y() >= 84 && (pt.y() < 111))))
-//        {
-//            num -=1;
-//            if (num < 1)
-//            {
-//                num = idayNum[mon-1];
-//            }
-//        }
+
         if(Object == ui->pushButton_3)
         {
             num +=1;
@@ -185,22 +142,7 @@ void timeset::stButtonClick()
     {
         string = "";
         num = ui->label_5->text().toInt();
-//        if (((pt.x() >= ui->pushButton_4->x()) && (pt.x() < ui->pushButton_4->x() + ui->pushButton_4->width())) && ((pt.y() >= ui->pushButton_4->y() && (pt.y() < ui->pushButton_4->y() + 30))))
-//        {
-//            num +=1;
-//            if (num > 23)
-//            {
-//                num = 0;
-//            }
-//        }
-//        else if (((pt.x() >= ui->pushButton_4->x()) && (pt.x() < ui->pushButton_4->x() + ui->pushButton_4->width())) && ((pt.y() >= 214 && (pt.y() < 238))))
-//        {
-//            num -=1;
-//            if (num < 0)
-//            {
-//                num = 23;
-//            }
-//        }
+
         if(Object == ui->pushButton_4)
         {
             num +=1;
@@ -229,22 +171,7 @@ void timeset::stButtonClick()
     {
         string = "";
         num = ui->label_6->text().toInt();
-//        if (((pt.x() >= ui->pushButton_5->x()) && (pt.x() < ui->pushButton_5->x() + ui->pushButton_5->width())) && ((pt.y() >= ui->pushButton_5->y() && (pt.y() < ui->pushButton_5->y() + 30))))
-//        {
-//            num +=1;
-//            if (num > 59)
-//            {
-//                num = 0;
-//            }
-//        }
-//        else if (((pt.x() >= ui->pushButton_5->x()) && (pt.x() < ui->pushButton_5->x() + ui->pushButton_5->width())) && ((pt.y() >= 214 && (pt.y() < 238))))
-//        {
-//            num -=1;
-//            if (num < 0)
-//            {
-//                num = 59;
-//            }
-//        }
+
         if(Object == ui->pushButton_5)
         {
             num +=1;
@@ -273,22 +200,7 @@ void timeset::stButtonClick()
     {
         string = "";
         num = ui->label_7->text().toInt();
-//        if (((pt.x() >= ui->pushButton_6->x()) && (pt.x() < ui->pushButton_6->x() + ui->pushButton_6->width())) && ((pt.y() >= ui->pushButton_6->y() && (pt.y() < ui->pushButton_6->y() + 30))))
-//        {
-//            num +=1;
-//            if (num > 59)
-//            {
-//                num = 0;
-//            }
-//        }
-//        else if (((pt.x() >= ui->pushButton_6->x()) && (pt.x() < ui->pushButton_6->x() + ui->pushButton_6->width())) && ((pt.y() >= 214 && (pt.y() < 238))))
-//        {
-//            num -=1;
-//            if (num < 0)
-//            {
-//                num = 59;
-//            }
-//        }
+
         if(Object == ui->pushButton_6)
         {
             num +=1;
@@ -317,10 +229,45 @@ void timeset::stButtonClick()
 
     if(ui->label_3->text().toInt() == 2)
     {
-        if(ui->label_4->text().toInt() > 28)
+        int iYear = ui->label_2->text().toInt();
+        int loop = 0;
+        if(iYear % 100 == 0)
         {
-           ui->label_4->setText("28");
+            if(iYear % 400 == 0)
+            {
+                loop = 1;
+            }
+            else
+            {
+                loop = 0;
+            }
         }
+        else
+        {
+            if(iYear % 4 == 0)
+            {
+                loop = 1;
+            }
+            else
+            {
+                loop = 0;
+            }
+        }
+        if(loop)
+        {
+            if(ui->label_4->text().toInt() > 29)
+            {
+               ui->label_4->setText("29");
+            }
+        }
+        else
+        {
+            if(ui->label_4->text().toInt() > 28)
+            {
+               ui->label_4->setText("28");
+            }
+        }
+
     }
 
 }
