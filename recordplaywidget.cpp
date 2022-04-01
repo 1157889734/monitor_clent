@@ -738,14 +738,14 @@ void recordPlayWidget::recordQuerySlot()
         tRecordSeach.tEndTime.i8Sec = endsec;
 
 
-        iDiscTime = (startyear - endyear)*366*24*3600
-            +(startmon - endmon)*30*24*3600
-            +(startday - endday)*24*3600
-            +(starthour - endhour)*3600
-            +(startmin - endmin)*60
-            +(startsec - endsec);
+        iDiscTime = (endyear - startyear)*366*24*3600
+            +(endmon - startmon)*30*24*3600
+            +(endday - startday)*24*3600
+            +(endhour - starthour)*3600
+            +(endmin - startmin)*60
+            +(endsec - startsec);
 
-        if(iDiscTime > 0)
+        if(iDiscTime < 0)
         {
             static QMessageBox box(QMessageBox::Warning,QString::fromUtf8("warning"),QString::fromUtf8("开始时间不能大于结束时间!"));
             box.setWindowFlags(Qt::FramelessWindowHint);
@@ -753,6 +753,16 @@ void recordPlayWidget::recordQuerySlot()
             box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
             box.exec();
             return;
+        }
+        if(iDiscTime > 345600)
+        {
+            static QMessageBox box(QMessageBox::Warning,QString::fromUtf8("warning"),QString::fromUtf8("搜索时间不能大于三天!"));
+            box.setWindowFlags(Qt::FramelessWindowHint);
+            box.setStandardButtons (QMessageBox::Ok);
+            box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
+            box.exec();
+            return;
+
         }
 
         tRecordSeach.iCarriageNo = tTrainConfigInfo.tNvrServerInfo[iServerIdex].iCarriageNO;
@@ -811,7 +821,7 @@ void recordPlayWidget::recordQueryEndSlot()
     }
     else
     {
-        if (iRecordNum > 10)    //5秒没查询即恢复查询按键可按*/
+        if (iRecordNum > 40)    //5秒没查询即恢复查询按键可按*/
         {
             iRecordNum = 0;
             ui->queryPushButton->setEnabled(true);
