@@ -716,8 +716,6 @@ void recordPlayWidget::recordQuerySlot()
         T_NVR_SEARCH_RECORD tRecordSeach;
         memset(&tRecordSeach, 0, sizeof(T_NVR_SEARCH_RECORD));
         sscanf(ui->startTimeLabel->text().toLatin1().data(), "%4d-%2d-%2d %2d:%2d:%2d", &startyear, &startmon, &startday, &starthour, &startmin, &startsec);
-
-
         startyr = startyear;
         tRecordSeach.tStartTime.i16Year = htons(startyr);
         tRecordSeach.tStartTime.i8Mon = startmon;
@@ -727,8 +725,6 @@ void recordPlayWidget::recordQuerySlot()
         tRecordSeach.tStartTime.i8Sec = startsec;
 
         sscanf(ui->endTimeLabel->text().toLatin1().data(), "%4d-%2d-%2d %2d:%2d:%2d", &endyear, &endmon, &endday, &endhour, &endmin, &endsec);
-
-
         endyr = endyear;
         tRecordSeach.tEndTime.i16Year = htons(endyr);
         tRecordSeach.tEndTime.i8Mon = endmon;
@@ -738,12 +734,10 @@ void recordPlayWidget::recordQuerySlot()
         tRecordSeach.tEndTime.i8Sec = endsec;
 
 
-        iDiscTime = (endyear - startyear)*366*24*3600
-            +(endmon - startmon)*30*24*3600
-            +(endday - startday)*24*3600
-            +(endhour - starthour)*3600
-            +(endmin - startmin)*60
-            +(endsec - startsec);
+        QDateTime startDate(QDate(startyr, startmon, startday), QTime(starthour, startmin, startsec));
+        QDateTime endDate(QDate(endyear, endmon, endday), QTime(endhour, endmin, endsec));
+        iDiscTime = startDate.daysTo(endDate);
+
 
         if(iDiscTime < 0)
         {
@@ -754,7 +748,7 @@ void recordPlayWidget::recordQuerySlot()
             box.exec();
             return;
         }
-        if(iDiscTime > 345600)
+        if(iDiscTime > 3)
         {
             static QMessageBox box(QMessageBox::Warning,QString::fromUtf8("warning"),QString::fromUtf8("搜索时间不能大于三天!"));
             box.setWindowFlags(Qt::FramelessWindowHint);
@@ -905,7 +899,7 @@ void recordPlayWidget::recordDownloadSlot()
     if (ui->recordFileTableWidget->rowCount() <= 0)
     {
         DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget not select record file to download!\n");
-        static QMessageBox msgBox(QMessageBox::Question,QString(tr("注意")),QString(tr("没有录像文件!")));
+        static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("没有录像文件!")));
         msgBox.setWindowFlags(Qt::FramelessWindowHint);
         msgBox.setStandardButtons(QMessageBox::Yes);
         msgBox.button(QMessageBox::Yes)->setText("OK");
@@ -941,7 +935,7 @@ void recordPlayWidget::recordDownloadSlot()
         if (row == ui->recordFileTableWidget->rowCount())
         {
             DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget not select record file to download!\n");
-            static QMessageBox msgBox(QMessageBox::Question,QString(tr("注意")),QString(tr("请选择您要下载的录像文件!")));
+            static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("请选择您要下载的录像文件!")));
             msgBox.setWindowFlags(Qt::FramelessWindowHint);
             msgBox.setStandardButtons(QMessageBox::Yes);
             msgBox.button(QMessageBox::Yes)->setText("OK");
