@@ -849,7 +849,7 @@ void recordPlayWidget::recordDownloadSlot()
 {
     int iRet = 0, idex = 0, row = 0;
     QString filename = "";
-    QString fileSavePath = "/home/data/u/";
+    QString fileSavePath = "/mnt/ramfs/u/";
     char acSaveFileName[128] = {0};
     char acIpAddr[32] = {0};
     T_TRAIN_CONFIG tTrainConfigInfo;
@@ -870,7 +870,7 @@ void recordPlayWidget::recordDownloadSlot()
         return;
     }
 
-    if (access("/home/data/u/", F_OK) < 0)
+    if (access("/mnt/ramfs/u/", F_OK) < 0)
     {
         DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget not get USB device!\n");
         static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
@@ -983,7 +983,7 @@ void recordPlayWidget::recordDownloadSlot()
                 {
                     if (parseFileName(m_acFilePath[row]) != NULL)
                     {
-                        snprintf(acSaveFileName, sizeof(acSaveFileName), "%s%s", "/home/data/u/", parseFileName(m_acFilePath[row]));
+                        snprintf(acSaveFileName, sizeof(acSaveFileName), "%s%s", "/mnt/ramfs/u/", parseFileName(m_acFilePath[row]));
                     }
 
                     DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] add download file:%s!\n", __FUNCTION__, m_acFilePath[row]);

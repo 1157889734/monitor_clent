@@ -356,7 +356,6 @@ pvmsMonitorWidget::pvmsMonitorWidget(QWidget *parent) :
      m_RealMonitorVideos.pRenderHandle = NULL;
 
 
-
     pthread_mutexattr_init(&mutexattr);
     pthread_mutexattr_settype(&mutexattr,PTHREAD_MUTEX_TIMED_NP);
     pthread_mutex_init(&tMutex, &mutexattr);
@@ -368,6 +367,7 @@ pvmsMonitorWidget::pvmsMonitorWidget(QWidget *parent) :
 
 void *monitorThread(void *param)     //实时监控线程，对通道轮询、全屏、预置点返回、设备状态等进行循环监控
 {
+    int updateStreamIndex = 0;
     int i = 0, iRet = 0;
     int iPollingTime = 0, iPresetReturnTime = 0;
     int iCameraIdex = 0;  //摄像头索引
@@ -419,6 +419,14 @@ void *monitorThread(void *param)     //实时监控线程，对通道轮询、�
             DebugPrint(DEBUG_UI_NOMAL_PRINT, "MonitorPlayThread get cmpctrl cmd:%d, ch=%d\n", tCmpPkt.iMsgCmd, tCmpPkt.iCh);
               pvmsMonitorPage->triggerCmpOptionCtrlSinal(tCmpPkt.iMsgCmd, tCmpPkt.iCh);
         }
+
+
+        if(++updateStreamIndex  > 50)
+        {
+            updateStreamIndex = 0;
+            pvmsMonitorPage->GetPollStreamState();
+        }
+
 
 
         iPollingTime = STATE_GetPollingTime();
@@ -540,7 +548,6 @@ void *monitorThread(void *param)     //实时监控线程，对通道轮询、�
             pvmsMonitorPage->triggerSetTimeSignal();
             tSetTimeOldTime = tSetTimeCurTime;
 
-
         }
 
         usleep(50*1000);
@@ -556,6 +563,29 @@ void *monitorThread(void *param)     //实时监控线程，对通道轮询、�
         tPollStateTime = s_info.uptime;
    }
     return NULL;
+
+}
+
+
+void pvmsMonitorWidget::GetPollStreamState()
+{
+
+    if(CMP_STATE_PLAY != CMP_GetPlayStatus(m_tCameraInfo[m_iCameraPlayNo].cmpHandle))
+    {
+         return;
+    }
+
+    int ret = CMP_GetStreamState(m_tCameraInfo[m_iCameraPlayNo].cmpHandle);
+
+    if(m_nodes[m_iCameraPlayNo].iStreamState != ret)
+    {
+        m_nodes[m_iCameraPlayNo].iStreamState = ret;
+        if(ret == 0)
+        {
+            CMP_FillDisplayBk(m_tCameraInfo[m_iCameraPlayNo].cmpHandle,0);  //0x35BAB400
+
+        }
+    }
 
 }
 
@@ -1699,7 +1729,7 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
         {
             cmplayInit();
             m_tCameraInfo[iCh].cmpHandle = CMP_Init(&m_RealMonitorVideos, CMP_VDEC_NORMAL);
-            CMP_OpenMediaPreview(m_tCameraInfo[iCh].cmpHandle, /*rtsp_url[iCh]*/m_tCameraInfo[iCh].acCameraRtspUrl, CMP_TCP);
+            CMP_OpenMediaPreview(m_tCameraInfo[iCh].cmpHandle, m_tCameraInfo[iCh].acCameraRtspUrl, CMP_TCP);
             CMP_PlayMedia(m_tCameraInfo[iCh].cmpHandle);
         }
 
@@ -1730,6 +1760,7 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
             if(m_playWin->isVisible())
             {
                 CMP_SetPlayEnable(m_tCameraInfo[iCh].cmpHandle, CMP_STATE_PLAY);
+                m_nodes[iCh].empty();
             }
         }
 
@@ -1753,6 +1784,8 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
     {
 
     }
+
+
 }
 
 void pvmsMonitorWidget::chLabelDisplayCtrlSlot()   //通道状态和通道号标签是否显示的处理函数

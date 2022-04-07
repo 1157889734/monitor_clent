@@ -987,6 +987,8 @@ CMPPlayer_API int CMP_FillDisplayBk(CMPHandle hPlay, uint32_t rgb)
         return -1;
     }
     SHM_FillRect(ptCmpPlayer->ptWndInfo.pRenderHandle, rgb);
+
+    return 0;
 }
 
 CMPPlayer_API int CMP_GetOpenMediaState(CMPHandle hPlay)
@@ -995,7 +997,7 @@ CMPPlayer_API int CMP_GetOpenMediaState(CMPHandle hPlay)
 
     if (NULL == ptCmpPlayer)
     {
-        return NULL;
+        return 0;
     }
     return ptCmpPlayer->iOpenMediaState;
 }

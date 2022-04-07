@@ -269,6 +269,18 @@ int SHM_DetchWnd(SHM_HANDLE hShmHandle)
 
     return 0;
 }
+struct color_yuv {
+    unsigned char y;
+    unsigned char u;
+    unsigned char v;
+};
+
+#define MAKE_YUV_601_Y(r, g, b) \
+    ((( 66 * (r) + 129 * (g) +  25 * (b) + 128) >> 8) + 16)
+#define MAKE_YUV_601_U(r, g, b) \
+    (((-38 * (r) -  74 * (g) + 112 * (b) + 128) >> 8) + 128)
+#define MAKE_YUV_601_V(r, g, b) \
+    (((112 * (r) -  94 * (g) -  18 * (b) + 128) >> 8) + 128)
 
 int SHM_FillRect(SHM_HANDLE hShmHandle, uint32_t color)
 {
@@ -281,10 +293,25 @@ int SHM_FillRect(SHM_HANDLE hShmHandle, uint32_t color)
     {
         return -1;
     }
+    uint8_t rgba[4];
+    memcpy(rgba, &color, 4);
+    color_yuv yuv_value;
+    yuv_value.y = MAKE_YUV_601_Y(rgba[3], rgba[2], rgba[1]);
+    yuv_value.v = MAKE_YUV_601_U(rgba[3], rgba[2], rgba[1]);
+    yuv_value.u = MAKE_YUV_601_V(rgba[3], rgba[2], rgba[1]);
+
+//    printf("rgb:%d,%d,%d, yuv:%x,%x,%x\n", rgba[3], rgba[2], rgba[1],
+//           yuv_value.y,yuv_value.u,yuv_value.v);
+
+
     pShmRectInfo->lock.Lock();
-    memset(pShmRectInfo->addr, 0x10, pShmRectInfo->w * pShmRectInfo->h);
+    memset(pShmRectInfo->addr, yuv_value.y, pShmRectInfo->w * pShmRectInfo->h);
+    memset(pShmRectInfo->addr + pShmRectInfo->w * pShmRectInfo->h, yuv_value.u, pShmRectInfo->w * pShmRectInfo->h * 0.5);
+    memset(pShmRectInfo->addr + (int)(pShmRectInfo->w * pShmRectInfo->h * 1.5), yuv_value.v, pShmRectInfo->w * pShmRectInfo->h * 0.5);    memset(pShmRectInfo->addr, 0x10, pShmRectInfo->w * pShmRectInfo->h);
     memset(pShmRectInfo->addr + pShmRectInfo->w * pShmRectInfo->h, 0x80, pShmRectInfo->w * pShmRectInfo->h * 0.5);
     wl_surface_attach(pShmRectInfo->window_handle, pShmRectInfo->buffer, 0, 0);
+    wl_surface_damage (pShmRectInfo->window_handle, 0, 0,
+        pShmRectInfo->w, pShmRectInfo->h);
     wl_surface_commit(pShmRectInfo->window_handle);
     //wl_display_flush(display_handle);
     pShmRectInfo->lock.Unlock();

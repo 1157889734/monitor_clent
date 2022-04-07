@@ -923,9 +923,9 @@ void *FTP_DownloadDataRecvThread(void *param)
     {		
     	if (0 == find_usbDev())
 		{
-            if (0 == access("/home/data/u/", F_OK))
+            if (0 == access("/mnt/ramfs/u/", F_OK))
             {
-                system("rm -r /home/data/u/");
+                system("rm -r /mnt/ramfs/u/");
             }
 			iPos = -1;  //暂定回调进度-1，表示告知U盘已拔出
 			goto FAIL;
@@ -1048,13 +1048,13 @@ void *FTP_DownloadDataRecvThread(void *param)
 			{	
 				if (0 == find_usbDev())
 				{
-                    if (0 == access("/home/data/u/", F_OK))
+                    if (0 == access("/mnt/ramfs/u/", F_OK))
                     {
-                        system("rm -r /home/data/u/");
+                        system("rm -r /mnt/ramfs/u/");
                     }
 					iPos = -1;  //暂定回调进度-1，表示告知U盘已拔出
-					break;
-				}
+                    break;
+                }
 				
 				read_set = ptFtpConnectionInfo->readSet;
 				time_current = ptFtpConnectionInfo->selectTime;
@@ -1079,9 +1079,9 @@ void *FTP_DownloadDataRecvThread(void *param)
 								}
 								else
 								{
-                                    if (0 == access("/home/data/u/", F_OK))
+                                    if (0 == access("/mnt/ramfs/u/", F_OK))
                                     {
-                                        system("rm -r /home/data/u/");
+                                        system("rm -r /mnt/ramfs/u/");
                                     }
 									iPos = -1;  //暂定回调进度-1，表示告知U盘已拔出
 								}
