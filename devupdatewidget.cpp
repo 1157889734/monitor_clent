@@ -1059,7 +1059,7 @@ void devUpdateWidget::devUpdateSlot()
         }
         ui->updateStatueTextEdit->append(tr("发现USB，已准备好"));
 
-        if (access("/home/data/u/monitor", F_OK) < 0)
+        if (access("/mnt/ramfs/u/monitor", F_OK) < 0)
         {
             DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget not find update file in USB device!\n");
             static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("U盘中未检测到更新文件!")));
@@ -1082,7 +1082,7 @@ void devUpdateWidget::devUpdateSlot()
 
         system("cp /home/user/bin/monitor /home/data/backup/");
         system("rm /home/user/bin/monitor");
-        system("cp /home/data/u/monitor /home/user/bin/monitor");
+        system("cp /mnt/ramfs/u/monitor /home/user/bin/monitor");
         system("sync");
 
         ui->updateStatueTextEdit->append(tr("复制文件完成"));
@@ -1292,22 +1292,22 @@ void devUpdateWidget::configFileImportSlot()
             return;
         }
 
-        if(access("/home/data/u/monitorCfg/C3SysConfig.ini",F_OK) == 0)
+        if(access("/mnt/ramfs/u/monitorCfg/C3SysConfig.ini",F_OK) == 0)
         {
-            system("cp /home/data/u/monitorCfg/C3SysConfig.ini /home/data/monitorCfg/");
+            system("cp /mnt/ramfs/u/monitorCfg/C3SysConfig.ini /home/data/monitorCfg/");
 
         }
-        if(access("/home/data/u/monitorCfg/Station.ini",F_OK) == 0)
+        if(access("/mnt/ramfs/u/monitorCfg/Station.ini",F_OK) == 0)
         {
-            system("cp /home/data/u/monitorCfg/Station.ini /home/data/monitorCfg/");
+            system("cp /mnt/ramfs/u/monitorCfg/Station.ini /home/data/monitorCfg/");
 
         }
-        if(access("/home/data/u/monitorCfg/cfg",F_OK) == 0)
+        if(access("/mnt/ramfs/u/monitorCfg/cfg",F_OK) == 0)
         {
-            system("cp /home/data/u/monitorCfg/cfg/* /home/data/monitorCfg/cfg/ -R");
+            system("cp /mnt/ramfs/u/monitorCfg/cfg/* /home/data/monitorCfg/cfg/ -R");
         }
 
-//        system("cp /home/data/u/Station.ini /home/data/monitorCfg/Station.ini");
+//        system("cp /mnt/ramfs/u/Station.ini /home/data/monitorCfg/Station.ini");
         system("sync");
 
         static QMessageBox msgBox2(QMessageBox::Information,QString(tr("注意")),QString(tr("导入成功，请拔出U盘!")));
