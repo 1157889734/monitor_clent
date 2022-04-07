@@ -27,6 +27,13 @@ static int iFirstFlag = 1;
 static PMSG_HANDLE pisServerPmsgHandle = 0;    //pis服务器pmsg句柄
 static PMSG_HANDLE nvrServerPmsgHandle[MAX_SERVER_NUM] = {0, 0, 0, 0};    //nvr服务器pmsg句柄
 
+#define USB_MOUNT_FLAG  1
+#define USB_UMOUNT_FLAG  0
+
+#define PROC_MOUNTS          "/proc/mounts"
+#define USB_MOUNT_PATH   "/mnt/ramfs/u"
+
+#define MAX_SIZE 32
 
 int STATE_GetSysVersion(char *pcVersion, int iLen)
 {
@@ -151,6 +158,37 @@ int STATE_FindUsbDev()
     fclose(pFile);
     return 0;
 }
+
+int MonitorUsbMount(void)
+{
+    FILE *fp = NULL;
+    char acBuf[MAX_SIZE];
+
+    fp = fopen(PROC_MOUNTS, "rb");
+    if (NULL == fp)
+    {
+        perror("open proc mounts");
+        return(-1);
+    }
+
+    while (fgets(acBuf, sizeof(acBuf), fp))
+    {
+        if (strstr(acBuf, USB_MOUNT_PATH) != NULL)
+        {
+            fclose(fp);
+            usleep(100000);
+            return USB_MOUNT_FLAG;
+        }
+    }
+
+    fclose(fp);
+    usleep(10000);
+
+    return USB_UMOUNT_FLAG;
+}
+
+
+
 
 int STATE_RefreshTrainTypeInfo()
 {

@@ -54,6 +54,8 @@ int STATE_GetSysVersion(char *pcVersion, int iLen);
 
 int STATE_FindUsbDev();
 
+int MonitorUsbMount(void);
+
 int STATE_RefreshTrainTypeInfo();
 
 int STATE_GetCurrentTrainType(char *pcTrainType, int iLen);

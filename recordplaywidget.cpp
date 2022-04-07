@@ -700,8 +700,17 @@ void recordPlayWidget::recordQuerySlot()
     row = ui->recordFileTableWidget->rowCount();//获取录像文件列表总行数
     for (i = 0; i < row; i++)
     {
+        QTableWidgetItem *item =
+        ui->recordFileTableWidget->item(row, 0);
+
         ui->recordFileTableWidget->removeRow(i);
+        if(item!=NULL)
+        {
+            delete item;
+        }
+
     }
+
     ui->recordFileTableWidget->setRowCount(0);
 
     memset(&tTrainConfigInfo, 0, sizeof(T_TRAIN_CONFIG));
@@ -883,7 +892,7 @@ void recordPlayWidget::recordDownloadSlot()
     }
     else
     {
-        if (0 == STATE_FindUsbDev())   //这里处理一个特殊情况:U盘拔掉是umount失败，/mnt/usb/u/路径还存在，但是实际U盘是没有再插上的
+        if (0 == MonitorUsbMount())   //这里处理一个特殊情况:U盘拔掉是umount失败，/mnt/usb/u/路径还存在，但是实际U盘是没有再插上的
         {
             DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget not get USB device!\n");
             static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));

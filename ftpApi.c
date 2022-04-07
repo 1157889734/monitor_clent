@@ -299,12 +299,15 @@ static int get_position_str(char *str ,char str_2,int num,char *str3)
     return 2;
 }
 
+
+
+
 int find_usbDev()
 {
-	FILE *pFile = 0;
+    FILE *pFile = 0;
     char acBuf[256] = {0};
 
-	pFile = fopen("/proc/partitions", "rb");
+    pFile = fopen("/proc/partitions", "rb");
     if (NULL == pFile)
     {
         return 0;
@@ -318,8 +321,8 @@ int find_usbDev()
     {
         if (strstr(acBuf, "sd") != NULL)
         {
-			fclose(pFile);
-        	return 1;
+            fclose(pFile);
+            return 1;
         }
     }
 
@@ -919,9 +922,12 @@ void *FTP_DownloadDataRecvThread(void *param)
 		return NULL;
 	}
 
+    memset(tFtpPkt.acSrcFileName, 0, sizeof(tFtpPkt.acSrcFileName));
+    memset(tFtpPkt.acDstFileName, 0, sizeof(tFtpPkt.acDstFileName));
+
     while (1 == ptFtpConnectionInfo->threadRunFlag)
     {		
-    	if (0 == find_usbDev())
+        if (0 == find_usbDev())
 		{
             if (0 == access("/mnt/ramfs/u/", F_OK))
             {
@@ -946,6 +952,8 @@ void *FTP_DownloadDataRecvThread(void *param)
 				{
 					continue;
 				}
+                printf("******%s*****tFtpPkt.acDstFileName=%s\n",__FUNCTION__,tFtpPkt.acDstFileName);
+
 			}
 			else
 			{
@@ -1046,7 +1054,7 @@ void *FTP_DownloadDataRecvThread(void *param)
 		    }
 			while (1 == ptFtpConnectionInfo->threadRunFlag)
 			{	
-				if (0 == find_usbDev())
+                if (0 == find_usbDev())
 				{
                     if (0 == access("/mnt/ramfs/u/", F_OK))
                     {
@@ -1066,14 +1074,16 @@ void *FTP_DownloadDataRecvThread(void *param)
 			        memset(acLocalDatabuf, 0, sizeof(acLocalDatabuf));
 					iRecvSize = ((ptFtpConnectionInfo->DownloadFileSize - iFileSize)>=sizeof(acLocalDatabuf))?sizeof(acLocalDatabuf):(ptFtpConnectionInfo->DownloadFileSize - iFileSize);
 			        iRecvLen = recv(ptFtpConnectionInfo->data_socket, acLocalDatabuf, iRecvSize, 0);
-					if (iRecvLen > 0)
+//                    printf("*****************DownloadFileSize=%d-----------iRecvSize=%d------iRecvLen=%d\n",ptFtpConnectionInfo->DownloadFileSize,iRecvSize,iRecvLen);
+//                    printf("******************tPkt.T_FTPDownloadFileSize=%d\n",tFtpPkt.T_FTPDownloadFileSize);
+                    if (iRecvLen > 0)
 			        {
 			        	if (fp != NULL)
 			        	{
 			                iRet = fwrite(acLocalDatabuf, 1, iRecvLen, fp);
 			                if (iRet <= 0)
 			                {
-			                	if (1 == find_usbDev())  
+                                if (1 == find_usbDev())
 								{
 									iPos = -2;  //暂定回调进度-2，表示告知U盘写入失败
 								}
@@ -1122,7 +1132,6 @@ void *FTP_DownloadDataRecvThread(void *param)
 						    	FD_CLR(ptFtpConnectionInfo->data_socket, &ptFtpConnectionInfo->readSet);
 						    	FTP_CloseClientDataSocket(ptFtpConnectionInfo);
                                 DebugPrint(DEBUG_ERROR_PRINT, "11recv err,iRecvLen=%d\n",iRecvLen);
-                                iPos = -3; //暂定回调进度-3，表示告知数据接收失败
 						    }
 
 					        break;
@@ -1163,20 +1172,28 @@ void *FTP_DownloadDataRecvThread(void *param)
 			fclose(fp);
 		    fp = NULL;
             system("sync");
-		FAIL:
-		    if ((100 == iPos) || (-1 == iPos) || (-2 == iPos) || (-3 == iPos))
-		    {
-				ptFtpConnectionInfo->pFtpProcFunc((PFTP_HANDLE)ptFtpConnectionInfo, iPos);
-				if ((-1 == iPos) || (-2 == iPos) || (-3 == iPos))
-				{
-					memset(&tLogInfo, 0, sizeof(T_LOG_INFO));
-					tLogInfo.iLogType = 0;
-					snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "Download: %s of nvr server %s failed", sendfilename, ip_str);
-					LOG_WriteLog(&tLogInfo);
-				}
-		    }
+            if(iPos < 0 || iPos == 100)
+            {
+                goto FAIL;
+            }
+
 	    }
 	    usleep(100*1000);
+    }
+
+FAIL:
+    if ((100 == iPos) || (-1 == iPos) || (-2 == iPos) || (-3 == iPos))
+    {
+        printf("***************%s----------%d\n",__FUNCTION__,__LINE__);
+        ptFtpConnectionInfo->pFtpProcFunc((PFTP_HANDLE)ptFtpConnectionInfo, iPos);
+        if ((-1 == iPos) || (-2 == iPos) || (-3 == iPos))
+        {
+            printf("***************%s----------%d\n",__FUNCTION__,__LINE__);
+            memset(&tLogInfo, 0, sizeof(T_LOG_INFO));
+            tLogInfo.iLogType = 0;
+            snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "Download: %s of nvr server %s failed", sendfilename, ip_str);
+            LOG_WriteLog(&tLogInfo);
+        }
     }
     
     return NULL;
@@ -1449,7 +1466,7 @@ int FTP_FileDownLoad(PFTP_HANDLE pFtpHandle)
 {
 	int iRet = 0;
 	PT_FTP_CONNECTION_INFO ptFtpConnectionInfo = (PT_FTP_CONNECTION_INFO)pFtpHandle;
-//    pthread_detach(pthread_self());
+    pthread_detach(pthread_self());
 
     if (NULL == ptFtpConnectionInfo)
     {
