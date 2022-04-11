@@ -98,7 +98,7 @@ int ModifyParam(const char *pcFileName, const char *pcGroupKey, const char *pcKe
 		}
 		if ((1 == iGroupKeyFindFlag) && (memcmp(acBuf, pcKey, strlen(pcKey)) == 0))
 		{
-			snprintf(acBuf, sizeof(acBuf), "%s=%s\n", pcKey, pcValue);
+			snprintf(acBuf, sizeof(acBuf), "%s=%s\r\n", pcKey, pcValue);
 			fputs(acBuf, pNewFile); 
 			iFlag++;
 			iGroupKeyFindFlag = 0;   //防止后面有重复的标签内容也被修改
@@ -115,12 +115,12 @@ int ModifyParam(const char *pcFileName, const char *pcGroupKey, const char *pcKe
 		if (0 == iGroupKeyFindFlag)    //没找到组名则先添加组名
 		{
 			memset(acBuf, 0, sizeof(acBuf));
-			snprintf(acBuf, sizeof(acBuf), "%s\n", pcGroupKey);
+			snprintf(acBuf, sizeof(acBuf), "[%s]\n", pcGroupKey);
 			fputs(acBuf, pNewFile); 
 		}
 		
 		memset(acBuf, 0, sizeof(acBuf));
-		snprintf(acBuf, sizeof(acBuf), "%s=%s\n", pcKey, pcValue);
+		snprintf(acBuf, sizeof(acBuf), "%s=%s\r\n", pcKey, pcValue);
 		fputs(acBuf, pNewFile); 
 	}
 	fflush(pNewFile);
@@ -169,8 +169,17 @@ int ReadParam(const char *pcFileName, const char *pcGroupKey, const char *pcKey,
 				break;
 			}
 			iLen = strlen(pcPos);
-			if (iLen > 1)
-				pcPos[iLen-1] = '\0';
+			if (iLen >= 2)
+			{
+			    if (pcPos[iLen-2] == '\r' && pcPos[iLen-1] == '\n')	
+			    {
+			        pcPos[iLen-2] = 0;
+			    }
+			    else if (pcPos[iLen-1] == '\n')
+			    {
+			        pcPos[iLen-1] = 0;
+			    }
+			}
 			else
 			{
 				break;	

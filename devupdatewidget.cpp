@@ -24,6 +24,8 @@
 static int g_ibShowKeyboard = 0;
 static int g_ichagepage = 0;
 static int g_iVNum = 0;
+static int g_iupdateflag = 0;
+
 #define PVMSPAGETYPE  2    //此页面类型，2表示受电弓监控页面
 
 #define NVR_RESTART_PORT 11001
@@ -164,6 +166,9 @@ devUpdateWidget::devUpdateWidget(QWidget *parent) :
     m_pFileDialog->setFilter(QDir::Dirs);
     m_pFileDialog->setFixedSize(800,600);
     m_pFileDialog->hide();
+
+    checkfilepro = new QProcess;
+    updatepro = new  QProcess;
 }
 
 devUpdateWidget::~devUpdateWidget()
@@ -872,6 +877,7 @@ void devUpdateWidget::configFileSelectionSlot()
                 }
             }
 
+            m_pFileDialog->setFileMode(QFileDialog::AnyFile);
             m_pFileDialog->setDirectory("/mnt/ramfs/u/");
             m_pFileDialog->exec();
 
@@ -970,6 +976,7 @@ void devUpdateWidget::configUpdateFileSLOT()
                 }
             }
 
+            m_pFileDialog->setFileMode(QFileDialog::AnyFile);
             m_pFileDialog->setDirectory("/mnt/ramfs/u/");
             m_pFileDialog->exec();
 
@@ -983,7 +990,7 @@ void devUpdateWidget::configUpdateFileSLOT()
             QList<QFileInfo> *fileInfo=new QList<QFileInfo>(dir->entryInfoList(filter));
            for(int i = 0;i<fileInfo->count(); i++)
            {
-               if(fileInfo->at(i).fileName() == "monitor")
+               if(fileInfo->at(i).fileName() == "UpdateShImage.tgz")
                {
                     filename =fileInfo->at(i).filePath();
 
@@ -1005,6 +1012,9 @@ void devUpdateWidget::configUpdateFileSLOT()
         }
 
 }
+
+
+
 
 void devUpdateWidget::devUpdateSlot()
 {
@@ -1059,7 +1069,17 @@ void devUpdateWidget::devUpdateSlot()
         }
         ui->updateStatueTextEdit->append(tr("发现USB，已准备好"));
 
-        if (access("/mnt/ramfs/u/monitor", F_OK) < 0)
+        if(g_iupdateflag == 1)
+        {
+            static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("已更新过!")));
+            msgBox.setWindowFlags(Qt::FramelessWindowHint);
+            msgBox.setStandardButtons(QMessageBox::Yes);
+            msgBox.button(QMessageBox::Yes)->setText("OK");
+            msgBox.exec();
+            return;
+        }
+
+        if (access("/mnt/ramfs/u/UpdateShImage.tgz", F_OK) < 0)
         {
             DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget not find update file in USB device!\n");
             static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("U盘中未检测到更新文件!")));
@@ -1074,16 +1094,30 @@ void devUpdateWidget::devUpdateSlot()
 
         ui->clientRebootPushButton->setEnabled(false);    //更新开始，设置重启按钮不可操作
 
-        ui->updateStatueTextEdit->append(tr("正在复制文件..."));
-        if (access("/home/data/backup",F_OK) < 0)
+
+
+        checkfilepro->start("tar xzf /mnt/ramfs/u/UpdateShImage.tgz -C /mnt/ramfs");
+        sleep(1);
+
+        if (access("/mnt/ramfs/UpdateShImage/monitor", F_OK) < 0)
         {
-            system("mkdir /home/data/backup");
+            static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("更新文件不匹配!")));
+            msgBox.setWindowFlags(Qt::FramelessWindowHint);
+            msgBox.setStandardButtons(QMessageBox::Yes);
+            msgBox.button(QMessageBox::Yes)->setText("OK");
+            msgBox.exec();
+            return;
+
         }
 
-        system("cp /home/user/bin/monitor /home/data/backup/");
-        system("rm /home/user/bin/monitor");
-        system("cp /mnt/ramfs/u/monitor /home/user/bin/monitor");
-        system("sync");
+        ui->updateStatueTextEdit->append(tr("正在复制文件..."));
+
+        QString s = QString("tar xzf /mnt/ramfs/u/UpdateShImage.tgz -C /mnt/ramfs;/mnt/ramfs/UpdateShImage/update.sh;sync");
+        updatepro->start("bash");
+        updatepro->write(QString(s+"\n").toUtf8());
+        sleep(1);
+
+        g_iupdateflag = 1;
 
         ui->updateStatueTextEdit->append(tr("复制文件完成"));
         ui->updateStatueTextEdit->append(tr("更新完成，请重启!"));

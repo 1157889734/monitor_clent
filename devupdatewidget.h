@@ -6,6 +6,7 @@
 #include <QWidget>
 #include <QTimer>
 #include <QDateTime>
+#include <QProcess>
 #include "state.h"
 #include "pmsgcli.h"
 #include "timeset.h"
@@ -84,6 +85,9 @@ private:
     void setTrainTypeCombox();
     void setPollingTimeRadioButton();	  //设置轮询时间单选按钮组的样式
     void setPresetReturnTimeRadioButton();	   //设置预置点返回时间单选按钮组的样式
+
+
+
     CKeyboard *mCkeybord;
 
     QString m_TrainType;
@@ -94,7 +98,8 @@ private:
     QString m_contrastText;
     usergroupManage *gusergroupManage;
 
-
+    QProcess *checkfilepro;
+    QProcess *updatepro;
 
     QFileDialog *m_pFileDialog ;
 
